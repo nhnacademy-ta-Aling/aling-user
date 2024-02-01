@@ -1,4 +1,4 @@
-package kr.aling.user.base;
+package kr.aling.user.common.base;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;
