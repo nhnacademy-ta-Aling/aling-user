@@ -1,4 +1,4 @@
-package io.aling.user;
+package kr.aling.user;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
