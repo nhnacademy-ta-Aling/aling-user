@@ -2,6 +2,8 @@ package kr.aling.user.wantjobtype.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AccessLevel;
@@ -23,6 +25,7 @@ import lombok.NoArgsConstructor;
 public class WantJobType {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Integer wantJobTypeNo;
 
