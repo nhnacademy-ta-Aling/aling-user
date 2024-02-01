@@ -31,7 +31,7 @@ public class Edu {
     private Long eduNo;
 
     @ManyToOne
-    @JoinColumn(name = "edu_state_no")
+    @JoinColumn(name = "edu_type_no")
     private EduType eduType;
 
     @ManyToOne
