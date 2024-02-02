@@ -16,7 +16,6 @@ import kr.aling.user.normaluser.type.NormalUserOpen;
 import kr.aling.user.user.entity.User;
 import kr.aling.user.wantjobtype.entity.WantJobType;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,11 +25,10 @@ import lombok.NoArgsConstructor;
  * @author : 여운석
  * @since : 1.0
  **/
-@Entity
 @Getter
-@Table(name = "normal_user")
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "normal_user")
+@Entity
 public class NormalUser {
 
     @Id
@@ -86,6 +84,5 @@ public class NormalUser {
                 ? NormalUserOpen.ALL.getValue() : this.coverLetterIsOpen;
         this.techSkillIsOpen = Objects.isNull(this.techSkillIsOpen)
                 ? NormalUserOpen.ALL.getValue() : this.techSkillIsOpen;
-
     }
 }
