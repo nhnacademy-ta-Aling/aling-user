@@ -17,13 +17,12 @@ import lombok.NoArgsConstructor;
  * @author : 여운석
  * @since : 1.0
  **/
-@Entity
 @Getter
-@Table(name = "want_job_type")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "want_job_type")
+@Entity
 public class WantJobType {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column

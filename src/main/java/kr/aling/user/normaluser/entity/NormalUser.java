@@ -16,6 +16,8 @@ import kr.aling.user.normaluser.type.NormalUserOpen;
 import kr.aling.user.user.entity.User;
 import kr.aling.user.wantjobtype.entity.WantJobType;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,6 +28,8 @@ import lombok.NoArgsConstructor;
  * @since : 1.0
  **/
 @Getter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "normal_user")
 @Entity
