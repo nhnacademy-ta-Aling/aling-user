@@ -11,6 +11,6 @@ import lombok.Getter;
  **/
 @AllArgsConstructor
 @Getter
-public class CompanyUserRegisterResponseDto {
+public class CreateCompanyUserResponseDto {
     private String name;
 }

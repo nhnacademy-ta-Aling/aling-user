@@ -8,15 +8,15 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import kr.aling.user.companyuser.dto.request.CompanyUserRegisterRequestDto;
-import kr.aling.user.companyuser.dto.response.CompanyUserRegisterResponseDto;
+import kr.aling.user.companyuser.dto.request.CreateCompanyUserRequestDto;
+import kr.aling.user.companyuser.dto.response.CreateCompanyUserResponseDto;
 import kr.aling.user.companyuser.dummy.CompanyUserDummy;
 import kr.aling.user.companyuser.entity.CompanyUser;
 import kr.aling.user.companyuser.repository.CompanyUserManageRepository;
 import kr.aling.user.companyuser.service.CompanyUserManageService;
 import kr.aling.user.user.dummy.UserDummy;
 import kr.aling.user.user.entity.User;
-import kr.aling.user.user.exception.AlreadyUsedEmailException;
+import kr.aling.user.user.exception.UserEmailAlreadyUsedException;
 import kr.aling.user.user.repository.UserManageRepository;
 import kr.aling.user.user.repository.UserReadRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -61,7 +61,7 @@ class CompanyUserManageServiceTest {
         when(companyUserManageRepository.save(any())).thenReturn(companyUser);
         when(userReadRepository.isEmailExist(anyString())).thenReturn(Boolean.FALSE);
 
-        CompanyUserRegisterRequestDto requestDto = new CompanyUserRegisterRequestDto();
+        CreateCompanyUserRequestDto requestDto = new CreateCompanyUserRequestDto();
         ReflectionTestUtils.setField(requestDto, "email", user.getId());
         ReflectionTestUtils.setField(requestDto, "password", "nhn123456");
         ReflectionTestUtils.setField(requestDto, "name", user.getName());
@@ -70,7 +70,7 @@ class CompanyUserManageServiceTest {
         ReflectionTestUtils.setField(requestDto, "companySize", companyUser.getCompanySize());
         ReflectionTestUtils.setField(requestDto, "companySector", companyUser.getSector());
 
-        CompanyUserRegisterResponseDto expects = companyUserManageService.registerCompanyUser(requestDto);
+        CreateCompanyUserResponseDto expects = companyUserManageService.registerCompanyUser(requestDto);
 
         assertThat(expects.getName()).isEqualTo(companyUser.getUser().getName());
 
@@ -91,7 +91,7 @@ class CompanyUserManageServiceTest {
         when(companyUserManageRepository.save(any())).thenReturn(companyUser);
         when(userReadRepository.isEmailExist(anyString())).thenReturn(Boolean.TRUE);
 
-        CompanyUserRegisterRequestDto requestDto = new CompanyUserRegisterRequestDto();
+        CreateCompanyUserRequestDto requestDto = new CreateCompanyUserRequestDto();
         ReflectionTestUtils.setField(requestDto, "email", user.getId());
         ReflectionTestUtils.setField(requestDto, "password", "nhn123456");
         ReflectionTestUtils.setField(requestDto, "name", user.getName());
@@ -101,6 +101,6 @@ class CompanyUserManageServiceTest {
         ReflectionTestUtils.setField(requestDto, "companySector", companyUser.getSector());
 
         assertThatThrownBy(() -> companyUserManageService.registerCompanyUser(requestDto))
-                .isInstanceOf(AlreadyUsedEmailException.class);
+                .isInstanceOf(UserEmailAlreadyUsedException.class);
     }
 }

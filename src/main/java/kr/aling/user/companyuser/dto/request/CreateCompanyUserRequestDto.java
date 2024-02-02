@@ -16,7 +16,7 @@ import org.hibernate.validator.constraints.Length;
  **/
 @NoArgsConstructor
 @Getter
-public class CompanyUserRegisterRequestDto {
+public class CreateCompanyUserRequestDto {
 
     @Email
     private String email;

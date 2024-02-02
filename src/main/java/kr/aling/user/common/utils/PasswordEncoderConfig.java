@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @since : 1.0
  **/
 @Configuration
-public class SecurityPasswordEncoder {
+public class PasswordEncoderConfig {
 
     /**
      * 회원가입과 로그인시 사용될 PasswordEncoder.
