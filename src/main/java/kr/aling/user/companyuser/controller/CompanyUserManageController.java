@@ -1,8 +1,8 @@
 package kr.aling.user.companyuser.controller;
 
 import javax.validation.Valid;
-import kr.aling.user.companyuser.dto.request.CompanyUserRegisterRequestDto;
-import kr.aling.user.companyuser.dto.response.CompanyUserRegisterResponseDto;
+import kr.aling.user.companyuser.dto.request.CreateCompanyUserRequestDto;
+import kr.aling.user.companyuser.dto.response.CreateCompanyUserResponseDto;
 import kr.aling.user.companyuser.service.CompanyUserManageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,8 +32,8 @@ public class CompanyUserManageController {
      * @return 가입한 법인명
      */
     @PostMapping("/companies")
-    public ResponseEntity<CompanyUserRegisterResponseDto>
-            registerCompanyUser(@RequestBody @Valid CompanyUserRegisterRequestDto requestDto) {
+    public ResponseEntity<CreateCompanyUserResponseDto>
+            registerCompanyUser(@RequestBody @Valid CreateCompanyUserRequestDto requestDto) {
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(companyUserManageService.registerCompanyUser(requestDto));

@@ -1,12 +1,12 @@
 package kr.aling.user.companyuser.service.impl;
 
-import kr.aling.user.companyuser.dto.request.CompanyUserRegisterRequestDto;
-import kr.aling.user.companyuser.dto.response.CompanyUserRegisterResponseDto;
+import kr.aling.user.companyuser.dto.request.CreateCompanyUserRequestDto;
+import kr.aling.user.companyuser.dto.response.CreateCompanyUserResponseDto;
 import kr.aling.user.companyuser.entity.CompanyUser;
 import kr.aling.user.companyuser.repository.CompanyUserManageRepository;
 import kr.aling.user.companyuser.service.CompanyUserManageService;
 import kr.aling.user.user.entity.User;
-import kr.aling.user.user.exception.AlreadyUsedEmailException;
+import kr.aling.user.user.exception.UserEmailAlreadyUsedException;
 import kr.aling.user.user.repository.UserManageRepository;
 import kr.aling.user.user.repository.UserReadRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,9 +34,9 @@ public class CompanyUserManageServiceImpl implements CompanyUserManageService {
      * {@inheritDoc}
      */
     @Override
-    public CompanyUserRegisterResponseDto registerCompanyUser(CompanyUserRegisterRequestDto requestDto) {
+    public CreateCompanyUserResponseDto registerCompanyUser(CreateCompanyUserRequestDto requestDto) {
         if (Boolean.TRUE.equals(userReadRepository.isEmailExist(requestDto.getEmail()))) {
-            throw new AlreadyUsedEmailException(requestDto.getEmail());
+            throw new UserEmailAlreadyUsedException(requestDto.getEmail());
         }
 
         User user = User.builder()
@@ -56,6 +56,6 @@ public class CompanyUserManageServiceImpl implements CompanyUserManageService {
 
         companyUserManageRepository.save(companyUser);
 
-        return new CompanyUserRegisterResponseDto(companyUser.getUser().getName());
+        return new CreateCompanyUserResponseDto(companyUser.getUser().getName());
     }
 }

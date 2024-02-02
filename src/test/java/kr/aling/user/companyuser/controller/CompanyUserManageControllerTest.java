@@ -18,8 +18,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import kr.aling.user.companyuser.dto.request.CompanyUserRegisterRequestDto;
-import kr.aling.user.companyuser.dto.response.CompanyUserRegisterResponseDto;
+import kr.aling.user.companyuser.dto.request.CreateCompanyUserRequestDto;
+import kr.aling.user.companyuser.dto.response.CreateCompanyUserResponseDto;
 import kr.aling.user.companyuser.dummy.CompanyUserDummy;
 import kr.aling.user.companyuser.entity.CompanyUser;
 import kr.aling.user.companyuser.service.CompanyUserManageService;
@@ -70,7 +70,7 @@ class CompanyUserManageControllerTest {
         ReflectionTestUtils.setField(user, "userNo", 10_000_000L);
         CompanyUser companyUser = CompanyUserDummy.dummy(user);
 
-        CompanyUserRegisterRequestDto requestDto = new CompanyUserRegisterRequestDto();
+        CreateCompanyUserRequestDto requestDto = new CreateCompanyUserRequestDto();
         ReflectionTestUtils.setField(requestDto, "email", user.getId());
         ReflectionTestUtils.setField(requestDto, "password", "nhn123456");
         ReflectionTestUtils.setField(requestDto, "name", user.getName());
@@ -80,7 +80,7 @@ class CompanyUserManageControllerTest {
         ReflectionTestUtils.setField(requestDto, "companySector", companyUser.getSector());
 
         when(companyUserManageService.registerCompanyUser(any()))
-                .thenReturn(new CompanyUserRegisterResponseDto(user.getName()));
+                .thenReturn(new CreateCompanyUserResponseDto(user.getName()));
 
         String url = "/companies";
 
