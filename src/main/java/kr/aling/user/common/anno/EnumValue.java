@@ -41,7 +41,7 @@ public @interface EnumValue {
      *
      * @return 메시지
      */
-    String message() default "{kr.aling.anno.EnumValue.message}";
+    String message() default "must be in enum constants";
 
     /**
      * 상황별 validation을 위한 메서드.
