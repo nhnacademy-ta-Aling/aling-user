@@ -10,9 +10,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import kr.aling.user.user.entity.User;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  * 기업회원 엔티티입니다.
@@ -23,7 +25,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @Table(name = "company_user")
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CompanyUser {
 
@@ -32,8 +33,12 @@ public class CompanyUser {
 
     @MapsId("userNo")
     @OneToOne(fetch = FetchType.LAZY)
+    @Cascade(CascadeType.MERGE)
     @JoinColumn(name = "user_no")
     private User user;
+
+    @Column(name = "company_user_registration_no")
+    private String registrationNo;
 
     @Column(name = "company_user_company_size")
     private String companySize;
@@ -47,4 +52,22 @@ public class CompanyUser {
     @Column(name = "company_user_sector")
     private String sector;
 
+    /**
+     * 법인회원가입시 필요한 생성자.
+     *
+     * @param user user entity
+     * @param registrationNo 사업자등록번호
+     * @param companySize 법인규모
+     * @param sector 업종
+     */
+    @Builder
+    public CompanyUser(User user, String registrationNo, String companySize, String sector) {
+        this.user = user;
+        this.registrationNo = registrationNo;
+        this.companySize = companySize;
+        this.sector = sector;
+        this.userNo = user.getUserNo();
+        this.employee = 0;
+        this.salary = 0;
+    }
 }

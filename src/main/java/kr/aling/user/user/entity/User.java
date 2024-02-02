@@ -11,12 +11,12 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import kr.aling.user.common.base.BaseCreateTimeEntity;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * Some description here.
+ * 유저 엔티티입니다.
  *
  * @author : 여운석
  * @since : 1.0
@@ -24,7 +24,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @Table(name = "user")
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseCreateTimeEntity {
 
@@ -63,9 +62,20 @@ public class User extends BaseCreateTimeEntity {
     @Column(name = "user_fix_post_no")
     private Long fixPostNo;
 
+    /**
+     * PrePersist.
+     */
     @PrePersist
     public void prePersist() {
         this.isBlock = Objects.isNull(this.isBlock) ? Boolean.FALSE : this.isBlock;
         this.isDelete = Objects.isNull(this.isDelete) ? Boolean.FALSE : this.isDelete;
+    }
+
+    @Builder
+    public User(String id, String password, String name, String address) {
+        this.id = id;
+        this.password = password;
+        this.name = name;
+        this.address = address;
     }
 }
