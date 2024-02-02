@@ -33,7 +33,7 @@ public class BandReadController {
     public ResponseEntity<ExistsBandNameResponseDto> groupNameExists(@RequestParam("bandName") String bandName) {
 
         return ResponseEntity
-                .status(HttpStatus.CREATED)
+                .status(HttpStatus.OK)
                 .body(bandReadService.existBandName(bandName));
     }
 }
