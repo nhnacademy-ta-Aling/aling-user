@@ -77,6 +77,5 @@ public class User extends BaseCreateTimeEntity {
         this.password = password;
         this.name = name;
         this.address = address;
-        this.prePersist();
     }
 }

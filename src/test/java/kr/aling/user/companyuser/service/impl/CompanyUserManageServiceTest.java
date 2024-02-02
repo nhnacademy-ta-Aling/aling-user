@@ -9,6 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import kr.aling.user.companyuser.dto.request.CompanyUserRegisterRequestDto;
+import kr.aling.user.companyuser.dto.response.CompanyUserRegisterResponseDto;
 import kr.aling.user.companyuser.dummy.CompanyUserDummy;
 import kr.aling.user.companyuser.entity.CompanyUser;
 import kr.aling.user.companyuser.repository.CompanyUserManageRepository;
@@ -69,9 +70,9 @@ class CompanyUserManageServiceTest {
         ReflectionTestUtils.setField(requestDto, "companySize", companyUser.getCompanySize());
         ReflectionTestUtils.setField(requestDto, "companySector", companyUser.getSector());
 
-        String expects = companyUserManageService.registerCompanyUser(requestDto);
+        CompanyUserRegisterResponseDto expects = companyUserManageService.registerCompanyUser(requestDto);
 
-        assertThat(expects).isEqualTo(companyUser.getUser().getName());
+        assertThat(expects.getName()).isEqualTo(companyUser.getUser().getName());
 
         verify(userManageRepository, times(1))
                 .save(any());

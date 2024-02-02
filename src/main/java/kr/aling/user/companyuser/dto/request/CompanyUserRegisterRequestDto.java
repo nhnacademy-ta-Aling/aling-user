@@ -1,6 +1,7 @@
 package kr.aling.user.companyuser.dto.request;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import kr.aling.user.common.anno.EnumValue;
 import kr.aling.user.companyuser.type.CompanySize;
 import lombok.Getter;
@@ -20,21 +21,26 @@ public class CompanyUserRegisterRequestDto {
     @Email
     private String email;
 
+    @NotBlank
     @Length(min = 8, max = 20)
     private String password;
 
+    @NotBlank
     @Length(min = 1, max = 50)
     private String name;
 
+    @NotBlank
     @Length(min = 1, max = 200)
     private String address;
 
+    @NotBlank
     @Length(min = 10, max = 10)
     private String companyRegistrationNo;
 
     @EnumValue(enumClass = CompanySize.class)
     private String companySize;
 
+    @NotBlank
     @Length(max = 50)
     private String companySector;
 }

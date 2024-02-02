@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user/company")
 public class CompanyUserManageController {
 
     private final CompanyUserManageService companyUserManageService;
@@ -33,12 +31,11 @@ public class CompanyUserManageController {
      * @param requestDto 회원가입시 필요한 정보
      * @return 가입한 법인명
      */
-    @PostMapping
+    @PostMapping("/companies")
     public ResponseEntity<CompanyUserRegisterResponseDto>
             registerCompanyUser(@RequestBody @Valid CompanyUserRegisterRequestDto requestDto) {
-        String userName = companyUserManageService.registerCompanyUser(requestDto);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new CompanyUserRegisterResponseDto(userName));
+                .body(companyUserManageService.registerCompanyUser(requestDto));
     }
 }

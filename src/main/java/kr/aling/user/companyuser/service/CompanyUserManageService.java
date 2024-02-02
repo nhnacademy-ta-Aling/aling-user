@@ -1,6 +1,7 @@
 package kr.aling.user.companyuser.service;
 
 import kr.aling.user.companyuser.dto.request.CompanyUserRegisterRequestDto;
+import kr.aling.user.companyuser.dto.response.CompanyUserRegisterResponseDto;
 
 /**
  * CompanyUserManageService class.
@@ -16,5 +17,5 @@ public interface CompanyUserManageService {
      * @param requestDto 회원가입시 필요한 정보
      * @return 가입한 법인 명
      */
-    String registerCompanyUser(CompanyUserRegisterRequestDto requestDto);
+    CompanyUserRegisterResponseDto registerCompanyUser(CompanyUserRegisterRequestDto requestDto);
 }

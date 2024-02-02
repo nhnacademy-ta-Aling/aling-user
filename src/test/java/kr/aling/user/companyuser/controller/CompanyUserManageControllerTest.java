@@ -19,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import kr.aling.user.companyuser.dto.request.CompanyUserRegisterRequestDto;
+import kr.aling.user.companyuser.dto.response.CompanyUserRegisterResponseDto;
 import kr.aling.user.companyuser.dummy.CompanyUserDummy;
 import kr.aling.user.companyuser.entity.CompanyUser;
 import kr.aling.user.companyuser.service.CompanyUserManageService;
@@ -79,9 +80,9 @@ class CompanyUserManageControllerTest {
         ReflectionTestUtils.setField(requestDto, "companySector", companyUser.getSector());
 
         when(companyUserManageService.registerCompanyUser(any()))
-                .thenReturn(user.getName());
+                .thenReturn(new CompanyUserRegisterResponseDto(user.getName()));
 
-        String url = "/user/company";
+        String url = "/companies";
 
         mockMvc.perform(post(url)
                 .content(objectMapper.writeValueAsString(requestDto))

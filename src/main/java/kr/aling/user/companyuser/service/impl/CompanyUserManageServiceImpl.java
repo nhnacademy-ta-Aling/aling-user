@@ -1,6 +1,7 @@
 package kr.aling.user.companyuser.service.impl;
 
 import kr.aling.user.companyuser.dto.request.CompanyUserRegisterRequestDto;
+import kr.aling.user.companyuser.dto.response.CompanyUserRegisterResponseDto;
 import kr.aling.user.companyuser.entity.CompanyUser;
 import kr.aling.user.companyuser.repository.CompanyUserManageRepository;
 import kr.aling.user.companyuser.service.CompanyUserManageService;
@@ -33,7 +34,7 @@ public class CompanyUserManageServiceImpl implements CompanyUserManageService {
      * {@inheritDoc}
      */
     @Override
-    public String registerCompanyUser(CompanyUserRegisterRequestDto requestDto) {
+    public CompanyUserRegisterResponseDto registerCompanyUser(CompanyUserRegisterRequestDto requestDto) {
         if (Boolean.TRUE.equals(userReadRepository.isEmailExist(requestDto.getEmail()))) {
             throw new AlreadyUsedEmailException(requestDto.getEmail());
         }
@@ -55,6 +56,6 @@ public class CompanyUserManageServiceImpl implements CompanyUserManageService {
 
         companyUserManageRepository.save(companyUser);
 
-        return companyUser.getUser().getName();
+        return new CompanyUserRegisterResponseDto(companyUser.getUser().getName());
     }
 }
