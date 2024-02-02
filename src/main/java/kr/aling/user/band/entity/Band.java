@@ -10,7 +10,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import kr.aling.user.common.base.BaseCreateTimeEntity;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,7 +23,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @Table(name = "band")
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Band extends BaseCreateTimeEntity {
     @Id
@@ -56,6 +55,24 @@ public class Band extends BaseCreateTimeEntity {
     private Long fixPostNo;
 
     /**
+     * 그룹 생성을 위한 빌더.
+     *
+     * @param name 그룹 이름
+     * @param info 그룹 소개글
+     * @param isEnter 즉시 가입 여부
+     * @param isViewContent 게시글 외부 노출 여부
+     * @param fileNo 그룹 프로필 사진 파일 번호
+     */
+    @Builder
+    public Band(String name, String info, Boolean isEnter, Boolean isViewContent, Long fileNo) {
+        this.name = name;
+        this.info = info;
+        this.isEnter = isEnter;
+        this.isViewContent = isViewContent;
+        this.fileNo = fileNo;
+    }
+
+    /**
      * PrePersist.
      */
     @PrePersist
@@ -70,5 +87,4 @@ public class Band extends BaseCreateTimeEntity {
                 ? Boolean.FALSE : this.isDelete;
 
     }
-
 }
