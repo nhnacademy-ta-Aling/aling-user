@@ -41,7 +41,7 @@ public class NormalUser {
     @JoinColumn(name = "user_no")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "want_job_type_no")
     private WantJobType wantJobType;
 
