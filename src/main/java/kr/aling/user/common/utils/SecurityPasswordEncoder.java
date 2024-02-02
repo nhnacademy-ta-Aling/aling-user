@@ -1,9 +1,9 @@
 package kr.aling.user.common.utils;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 
 /**
  * The class for BCryptPasswordEncoder.
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @author : 여운석
  * @since : 1.0
  **/
-@Component
+@Configuration
 public class SecurityPasswordEncoder {
 
     /**

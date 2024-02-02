@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import kr.aling.user.common.anno.EnumValue;
+import org.apache.logging.log4j.util.Strings;
 
 /**
  * Enum으로 관리하는 클래스들을 검증하기 위한 검증기입니다.
@@ -25,8 +26,8 @@ public class EnumValidator implements ConstraintValidator<EnumValue, String> {
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (value == null) {
-            return true;
+        if (value == null || Strings.isEmpty(value)) {
+            return false;
         }
 
         return enumValues.contains(value);

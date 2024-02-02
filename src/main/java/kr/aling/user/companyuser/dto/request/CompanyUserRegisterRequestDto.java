@@ -37,7 +37,7 @@ public class CompanyUserRegisterRequestDto {
     @Length(min = 10, max = 10)
     private String companyRegistrationNo;
 
-    @EnumValue(enumClass = CompanySize.class)
+    @EnumValue(enumClass = CompanySize.class, message = "기업규모 검증 실패")
     private String companySize;
 
     @NotBlank
