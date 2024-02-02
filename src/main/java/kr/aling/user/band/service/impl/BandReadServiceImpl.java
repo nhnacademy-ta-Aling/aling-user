@@ -19,6 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class BandReadServiceImpl implements BandReadService {
     private final BandReadRepository bandReadRepository;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ExistsBandNameResponseDto existBandName(String bandName) {
         return new ExistsBandNameResponseDto(bandReadRepository.existsBandByName(bandName));

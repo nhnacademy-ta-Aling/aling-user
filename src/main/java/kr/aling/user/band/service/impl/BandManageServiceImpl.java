@@ -23,6 +23,9 @@ public class BandManageServiceImpl implements BandManageService {
     private final BandReadRepository bandReadRepository;
     private final BandManageRepository bandManageRepository;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void makeBand(Long userNo, CreateBandRequestDto createBandRequestDto) {
         // user 로직 추가 예정
