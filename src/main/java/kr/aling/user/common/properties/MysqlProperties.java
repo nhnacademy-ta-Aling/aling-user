@@ -5,16 +5,15 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * Some description here.
+ * Mysql 설정 프로퍼티.
  *
- * @author 정유진
- * @since 1.0
+ * @author : 정유진
+ * @since : 1.0
  **/
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "aling.mysql")
 public class MysqlProperties {
-
     private String driver;
     private String url;
     private String username;
