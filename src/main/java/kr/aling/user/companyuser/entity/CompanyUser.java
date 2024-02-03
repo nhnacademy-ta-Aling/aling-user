@@ -34,7 +34,7 @@ public class CompanyUser {
     @MapsId("userNo")
     @OneToOne(fetch = FetchType.LAZY)
     @Cascade(CascadeType.MERGE)
-    @JoinColumn(name = "user_no")
+    @JoinColumn(name = "aling_user_no")
     private User user;
 
     @Column(name = "company_user_registration_no")

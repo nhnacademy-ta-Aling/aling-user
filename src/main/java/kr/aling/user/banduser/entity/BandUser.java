@@ -46,7 +46,7 @@ public class BandUser {
     private Band band;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_no")
+    @JoinColumn(name = "aling_user_no")
     private User user;
 
     @Column(name = "band_user_enter_at")

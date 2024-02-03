@@ -10,13 +10,5 @@ import lombok.Getter;
  **/
 @Getter
 public enum NormalUserOpen {
-    ALL("ALL"),
-    COMPANY("COMPANY"),
-    PRIVATE("PRIVATE");
-
-    private final String value;
-
-    NormalUserOpen(String value) {
-        this.value = value;
-    }
+    ALL, COMPANY, PRIVATE;
 }

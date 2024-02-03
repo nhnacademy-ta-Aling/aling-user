@@ -34,7 +34,7 @@ public class Cert {
     private Long certNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "aling_user_no")
+    @JoinColumn(name = "normal_user_no")
     private NormalUser normalUser;
 
     @Column(name = "cert_name")
