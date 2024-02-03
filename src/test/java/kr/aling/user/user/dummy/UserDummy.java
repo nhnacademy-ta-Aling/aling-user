@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @since : 1.0
  **/
 public class UserDummy {
+
     public static User dummy(PasswordEncoder passwordEncoder) {
         return User.builder()
                 .id("test@test.com")

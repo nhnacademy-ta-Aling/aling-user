@@ -13,5 +13,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ReadWantJobTypeResponseDto {
+
     private final WantJobType wantJobType;
 }

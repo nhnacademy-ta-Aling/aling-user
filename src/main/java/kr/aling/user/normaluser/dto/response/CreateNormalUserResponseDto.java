@@ -12,6 +12,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class CreateNormalUserResponseDto {
+
     private final String id;
     private final String name;
 }

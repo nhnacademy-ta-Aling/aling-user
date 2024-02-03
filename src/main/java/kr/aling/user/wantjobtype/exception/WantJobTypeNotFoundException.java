@@ -7,6 +7,7 @@ package kr.aling.user.wantjobtype.exception;
  * @since : 1.0
  */
 public class WantJobTypeNotFoundException extends RuntimeException {
+
     private static final String MSG = "WantJobTypeNo %s is Not Found.";
 
     public WantJobTypeNotFoundException(Integer wantJobTypeNo) {

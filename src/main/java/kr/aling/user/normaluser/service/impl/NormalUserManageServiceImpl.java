@@ -26,6 +26,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class NormalUserManageServiceImpl implements NormalUserManageService {
 
+    public static final String BIRTH_PATTERN = "yyyyMMdd";
+
     private final NormalUserManageRepository normalUserManageRepository;
 
     private final UserManageService userManageService;
@@ -37,14 +39,14 @@ public class NormalUserManageServiceImpl implements NormalUserManageService {
     @Override
     public CreateNormalUserResponseDto registerNormalUser(CreateNormalUserRequestDto requestDto) {
         Long userNo = userManageService.registerUser(
-                new CreateUserRequestDto(requestDto.getId(), requestDto.getPassword(), requestDto.getName())).getUserNo();
+                        new CreateUserRequestDto(requestDto.getId(), requestDto.getPassword(), requestDto.getName())).getUserNo();
         WantJobType wantJobType = wantJobTypeReadService.findByWantJobTypeNo(requestDto.getWantJobTypeNo()).getWantJobType();
 
         NormalUser normalUser = NormalUser.builder()
                 .userNo(userNo)
                 .wantJobType(wantJobType)
                 .phoneNo(requestDto.getPhoneNo())
-                .birth(LocalDate.parse(requestDto.getBirth(), DateTimeFormatter.ofPattern("yyyyMMdd")))
+                .birth(LocalDate.parse(requestDto.getBirth(), DateTimeFormatter.ofPattern(BIRTH_PATTERN)))
                 .build();
         normalUser = normalUserManageRepository.save(normalUser);
 

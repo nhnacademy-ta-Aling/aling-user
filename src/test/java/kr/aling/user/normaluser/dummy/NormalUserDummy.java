@@ -12,8 +12,10 @@ import kr.aling.user.wantjobtype.entity.WantJobType;
  * @since : 1.0
  */
 public class NormalUserDummy {
+
     public static NormalUser dummy(User user, WantJobType wantJobType) {
         return NormalUser.builder()
+                .userNo(user.getUserNo())
                 .user(user)
                 .wantJobType(wantJobType)
                 .phoneNo("01000000000")

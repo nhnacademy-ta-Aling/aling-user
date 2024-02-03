@@ -10,5 +10,5 @@ import lombok.Getter;
  **/
 @Getter
 public enum NormalUserOpen {
-    ALL, COMPANY, PRIVATE;
+    ALL, COMPANY, PRIVATE
 }

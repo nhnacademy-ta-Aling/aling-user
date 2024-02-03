@@ -9,6 +9,7 @@ import kr.aling.user.wantjobtype.entity.WantJobType;
  * @since : 1.0
  */
 public class WantJobTypeDummy {
+
     public static WantJobType dummy() {
         return new WantJobType(1, "ALLOWANCE");
     }

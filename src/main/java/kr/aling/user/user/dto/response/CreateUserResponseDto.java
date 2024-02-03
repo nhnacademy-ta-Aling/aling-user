@@ -12,5 +12,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class CreateUserResponseDto {
+
     private final Long userNo;
 }

@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CreateUserRequestDto {
+
     @NotBlank
     @Size(min = 3, max = 100)
     @Email

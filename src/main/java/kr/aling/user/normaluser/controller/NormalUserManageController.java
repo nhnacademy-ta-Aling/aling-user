@@ -40,7 +40,8 @@ public class NormalUserManageController {
     public ResponseEntity<CreateNormalUserResponseDto> signUpNormalUser(
             @Valid @RequestBody CreateNormalUserRequestDto requestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            throw new CustomException(HttpStatus.BAD_REQUEST, "signup normal valid error - " + bindingResult.getAllErrors());
+            throw new CustomException(HttpStatus.BAD_REQUEST,
+                    "signup normal valid error - " + bindingResult.getAllErrors());
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(normalUserManageService.registerNormalUser(requestDto));
     }

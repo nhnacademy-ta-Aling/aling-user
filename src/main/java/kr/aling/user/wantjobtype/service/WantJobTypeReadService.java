@@ -11,9 +11,9 @@ import kr.aling.user.wantjobtype.dto.response.ReadWantJobTypeResponseDto;
 public interface WantJobTypeReadService {
 
     /**
-     * 구직희망타입 Id로 조회하여 구직희망타입을 담은 Dto를 반환합니다.
+     * 구직희망타입 ID로 조회하여 구직희망타입을 담은 Dto를 반환합니다.
      *
-     * @param wantJobTypeNo 구직희망타입 Id
+     * @param wantJobTypeNo 구직희망타입 ID
      * @return 구직 구직희망타입을 담은 Dto
      * @author : 이수정
      * @since : 1.0

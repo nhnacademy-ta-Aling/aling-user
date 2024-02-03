@@ -84,32 +84,32 @@ class NormalUserManageControllerTest {
 
         // when
         ResultActions perform = mockMvc.perform(post("/normals")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(requestDto)));
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(requestDto)));
 
         // then
         perform.andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id", equalTo(user.getId())))
-                .andExpect(jsonPath("$.name", equalTo(user.getName())));
+                .andExpect(jsonPath("$.id", equalTo(normalUser.getUser().getId())))
+                .andExpect(jsonPath("$.name", equalTo(normalUser.getUser().getName())));
 
         // docs
         perform.andDo(document("normal-user-signup",
-                        preprocessRequest(prettyPrint()),
-                        preprocessResponse(prettyPrint()),
-                        requestFields(
-                                fieldWithPath("id").type(JsonFieldType.STRING).description("아이디"),
-                                fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호"),
-                                fieldWithPath("name").type(JsonFieldType.STRING).description("이름"),
-                                fieldWithPath("wantJobTypeNo").type(JsonFieldType.NUMBER).description("구직희망타입"),
-                                fieldWithPath("phoneNo").type(JsonFieldType.STRING).description("연락처"),
-                                fieldWithPath("birth").type(JsonFieldType.STRING).description("생년월일")
-                        ),
-                        responseFields(
-                                fieldWithPath("id").type(JsonFieldType.STRING).description("아이디"),
-                                fieldWithPath("name").type(JsonFieldType.STRING).description("이름")
-                        )));
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                requestFields(
+                        fieldWithPath("id").type(JsonFieldType.STRING).description("아이디"),
+                        fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호"),
+                        fieldWithPath("name").type(JsonFieldType.STRING).description("이름"),
+                        fieldWithPath("wantJobTypeNo").type(JsonFieldType.NUMBER).description("구직희망타입"),
+                        fieldWithPath("phoneNo").type(JsonFieldType.STRING).description("연락처"),
+                        fieldWithPath("birth").type(JsonFieldType.STRING).description("생년월일")
+                ),
+                responseFields(
+                        fieldWithPath("id").type(JsonFieldType.STRING).description("아이디"),
+                        fieldWithPath("name").type(JsonFieldType.STRING).description("이름")
+                )));
     }
 
     @Test
