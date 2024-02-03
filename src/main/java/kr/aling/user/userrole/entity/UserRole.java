@@ -36,7 +36,7 @@ public class UserRole {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("userNo")
-    @JoinColumn(name = "user_no")
+    @JoinColumn(name = "aling_user_no")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -53,7 +53,7 @@ public class UserRole {
     @AllArgsConstructor
     @Embeddable
     public static class Pk implements Serializable {
-        @Column(name = "user_no")
+        @Column(name = "aling_user_no")
         private Long userNo;
 
         @Column(name = "role_no")

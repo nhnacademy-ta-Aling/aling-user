@@ -17,6 +17,7 @@ import kr.aling.user.user.entity.User;
 import kr.aling.user.wantjobtype.entity.WantJobType;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,11 +27,12 @@ import lombok.NoArgsConstructor;
  * @author : 여운석
  * @since : 1.0
  **/
-@Entity
 @Getter
-@Table(name = "normal_user")
-@AllArgsConstructor
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "normal_user")
+@Entity
 public class NormalUser {
 
     @Id
@@ -38,7 +40,7 @@ public class NormalUser {
 
     @MapsId("userNo")
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_no")
+    @JoinColumn(name = "aling_user_no")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -75,17 +77,16 @@ public class NormalUser {
     @PrePersist
     public void prePersist() {
         this.eduIsOpen = Objects.isNull(this.eduIsOpen)
-                ? NormalUserOpen.ALL.getValue() : this.eduIsOpen;
+                ? NormalUserOpen.ALL.name() : this.eduIsOpen;
         this.careerIsOpen = Objects.isNull(this.careerIsOpen)
-                ? NormalUserOpen.ALL.getValue() : this.careerIsOpen;
+                ? NormalUserOpen.ALL.name() : this.careerIsOpen;
         this.certIsOpen = Objects.isNull(this.certIsOpen)
-                ? NormalUserOpen.ALL.getValue() : this.certIsOpen;
+                ? NormalUserOpen.ALL.name() : this.certIsOpen;
         this.resumeIsOpen = Objects.isNull(this.resumeIsOpen)
-                ? NormalUserOpen.ALL.getValue() : this.resumeIsOpen;
+                ? NormalUserOpen.ALL.name() : this.resumeIsOpen;
         this.coverLetterIsOpen = Objects.isNull(this.coverLetterIsOpen)
-                ? NormalUserOpen.ALL.getValue() : this.coverLetterIsOpen;
+                ? NormalUserOpen.ALL.name() : this.coverLetterIsOpen;
         this.techSkillIsOpen = Objects.isNull(this.techSkillIsOpen)
-                ? NormalUserOpen.ALL.getValue() : this.techSkillIsOpen;
-
+                ? NormalUserOpen.ALL.name() : this.techSkillIsOpen;
     }
 }

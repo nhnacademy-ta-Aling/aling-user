@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
  **/
 @Entity
 @Getter
-@Table(name = "user")
+@Table(name = "aling_user")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseCreateTimeEntity {
 
@@ -32,34 +32,34 @@ public class User extends BaseCreateTimeEntity {
     @Column
     private Long userNo;
 
-    @Column(name = "user_id")
+    @Column(name = "aling_user_id")
     private String id;
 
-    @Column(name = "user_password")
+    @Column(name = "aling_user_password")
     private String password;
 
-    @Column(name = "user_name")
+    @Column(name = "aling_user_name")
     private String name;
 
-    @Column(name = "user_is_delete")
+    @Column(name = "aling_user_is_delete")
     private Boolean isDelete;
 
-    @Column(name = "user_delete_at")
+    @Column(name = "aling_user_delete_at")
     private LocalDateTime deleteAt;
 
     @Column(name = "file_no")
     private Long fileNo;
 
-    @Column(name = "user_is_block")
+    @Column(name = "aling_user_is_block")
     private Boolean isBlock;
 
-    @Column(name = "user_description")
+    @Column(name = "aling_user_description")
     private String description;
 
-    @Column(name = "user_address")
+    @Column(name = "aling_user_address")
     private String address;
 
-    @Column(name = "user_fix_post_no")
+    @Column(name = "aling_user_fix_post_no")
     private Long fixPostNo;
 
     /**

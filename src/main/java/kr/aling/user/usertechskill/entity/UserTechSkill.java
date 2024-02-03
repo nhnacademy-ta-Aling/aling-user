@@ -10,8 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
+import kr.aling.user.normaluser.entity.NormalUser;
 import kr.aling.user.techskill.entity.TechSkill;
-import kr.aling.user.user.entity.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -35,9 +35,9 @@ public class UserTechSkill {
     private Pk pk;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("userNo")
+    @MapsId("normalUserNo")
     @JoinColumn(name = "normal_user_no")
-    private User user;
+    private NormalUser normalUser;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("techSkillNo")
@@ -55,7 +55,7 @@ public class UserTechSkill {
     public static class Pk implements Serializable {
 
         @Column(name = "normal_user_no")
-        private Long userNo;
+        private Long normalUserNo;
         @Column(name = "tech_skill_no")
         private Integer techSkillNo;
     }

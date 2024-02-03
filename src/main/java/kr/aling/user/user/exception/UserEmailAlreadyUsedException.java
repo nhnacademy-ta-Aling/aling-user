@@ -7,7 +7,9 @@ package kr.aling.user.user.exception;
  * @since : 1.0
  **/
 public class UserEmailAlreadyUsedException extends RuntimeException {
+
     private static final String MESSAGE = "Already Used Email! email: ";
+
     public UserEmailAlreadyUsedException(String email) {
         super(MESSAGE + email);
     }

@@ -34,7 +34,7 @@ public class RecruitPostScrap {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("userNo")
-    @JoinColumn(name = "user_no")
+    @JoinColumn(name = "aling_user_no")
     private User user;
 
     /**
@@ -46,7 +46,7 @@ public class RecruitPostScrap {
     @AllArgsConstructor
     @Embeddable
     public static class Pk implements Serializable {
-        @Column(name = "user_no")
+        @Column(name = "aling_user_no")
         private Long userNo;
 
         @Column(name = "recruit_post_no")

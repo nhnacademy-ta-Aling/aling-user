@@ -2,8 +2,6 @@ package kr.aling.user.role.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AccessLevel;
@@ -17,15 +15,14 @@ import lombok.NoArgsConstructor;
  * @author : 여운석
  * @since : 1.0
  **/
-@Entity
 @Getter
-@Table(name = "role")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "role")
+@Entity
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "role_no")
     private Integer roleNo;
 
     @Column(name = "role_name")
