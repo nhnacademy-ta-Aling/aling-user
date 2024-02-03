@@ -35,11 +35,11 @@ public class Follow {
     private Long followNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_no")
+    @JoinColumn(name = "aling_user_no")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "following_user_no")
+    @JoinColumn(name = "following_aling_user_no")
     private User followingUser;
 
     @Column(name = "follow_is_alarm")
