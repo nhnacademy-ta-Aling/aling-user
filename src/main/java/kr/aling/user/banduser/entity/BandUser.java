@@ -17,6 +17,7 @@ import kr.aling.user.banduserrole.entity.BandUserRole;
 import kr.aling.user.user.entity.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -60,6 +61,22 @@ public class BandUser {
 
     @Column(name = "band_user_is_delete")
     private Boolean isDelete;
+
+    /**
+     * BandUser 생성을 위한 빌더.
+     *
+     * @param bandUserRole 그룹회원권한
+     * @param band         그룹
+     * @param user         회원
+     * @param enterAt      가입일
+     */
+    @Builder
+    public BandUser(BandUserRole bandUserRole, Band band, User user, LocalDateTime enterAt) {
+        this.bandUserRole = bandUserRole;
+        this.band = band;
+        this.user = user;
+        this.enterAt = enterAt;
+    }
 
     /**
      * PrePersist.

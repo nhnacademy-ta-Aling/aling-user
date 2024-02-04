@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,7 +20,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @Table(name = "band_user_role")
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BandUserRole {
     @Id
@@ -30,4 +29,10 @@ public class BandUserRole {
 
     @Column(name = "band_user_role_name")
     private String roleName;
+
+    @Builder
+    public BandUserRole(Integer bandUserRoleNo, String roleName) {
+        this.bandUserRoleNo = bandUserRoleNo;
+        this.roleName = roleName;
+    }
 }

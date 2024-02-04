@@ -29,7 +29,7 @@ public class User extends BaseCreateTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "aling_user_no")
     private Long userNo;
 
     @Column(name = "aling_user_id")
@@ -63,19 +63,27 @@ public class User extends BaseCreateTimeEntity {
     private Long fixPostNo;
 
     /**
-     * PrePersist.
+     * 회원 생성을 위한 빌더.
+     *
+     * @param id       아이디
+     * @param password 비밀번호
+     * @param name     이름
+     * @param address  주소
      */
-    @PrePersist
-    public void prePersist() {
-        this.isBlock = Objects.isNull(this.isBlock) ? Boolean.FALSE : this.isBlock;
-        this.isDelete = Objects.isNull(this.isDelete) ? Boolean.FALSE : this.isDelete;
-    }
-
     @Builder
     public User(String id, String password, String name, String address) {
         this.id = id;
         this.password = password;
         this.name = name;
         this.address = address;
+    }
+
+    /**
+     * PrePersist.
+     */
+    @PrePersist
+    public void prePersist() {
+        this.isBlock = Objects.isNull(this.isBlock) ? Boolean.FALSE : this.isBlock;
+        this.isDelete = Objects.isNull(this.isDelete) ? Boolean.FALSE : this.isDelete;
     }
 }
