@@ -52,11 +52,11 @@ class UserManageServiceImplTest {
     @DisplayName("회원 등록 성공")
     void registerUser() {
         // given
-        User user = UserDummy.dummy(new BCryptPasswordEncoder());
+        User user = UserDummy.dummyEncoder(new BCryptPasswordEncoder());
 
         CreateUserRequestDto requestDto = new CreateUserRequestDto(user.getId(), TMP_PASSWORD, user.getName());
 
-        when(userReadRepository.isEmailExist(any())).thenReturn(Boolean.FALSE);
+        when(userReadRepository.existsByEmail(any())).thenReturn(Boolean.FALSE);
         when(userManageRepository.save(any())).thenReturn(user);
 
         // when
@@ -65,7 +65,7 @@ class UserManageServiceImplTest {
         // then
         assertThat(responseDto).isNotNull();
 
-        verify(userReadRepository, times(1)).isEmailExist(any());
+        verify(userReadRepository, times(1)).existsByEmail(any());
         verify(userManageRepository, times(1)).save(any());
     }
 
@@ -73,18 +73,18 @@ class UserManageServiceImplTest {
     @DisplayName("회원 등록 실패 - 이미 존재하는 ID(Email)인 경우")
     void registerUser_alreadyExistsEmail() {
         // given
-        User user = UserDummy.dummy(new BCryptPasswordEncoder());
+        User user = UserDummy.dummyEncoder(new BCryptPasswordEncoder());
 
         CreateUserRequestDto requestDto = new CreateUserRequestDto(user.getId(), TMP_PASSWORD, user.getName());
 
-        when(userReadRepository.isEmailExist(any())).thenReturn(Boolean.TRUE);
+        when(userReadRepository.existsByEmail(any())).thenReturn(Boolean.TRUE);
 
         // when
         // then
         assertThatThrownBy(() -> userManageService.registerUser(requestDto))
                 .isInstanceOf(UserEmailAlreadyUsedException.class);
 
-        verify(userReadRepository, times(1)).isEmailExist(any());
+        verify(userReadRepository, times(1)).existsByEmail(any());
         verify(userManageRepository, never()).save(any());
     }
 }

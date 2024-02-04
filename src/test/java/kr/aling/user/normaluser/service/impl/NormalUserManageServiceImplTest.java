@@ -60,7 +60,7 @@ class NormalUserManageServiceImplTest {
     @DisplayName("일반회원 등록 성공")
     void registerNormalUser() {
         // given
-        User user = UserDummy.dummy(new BCryptPasswordEncoder());
+        User user = UserDummy.dummyEncoder(new BCryptPasswordEncoder());
         WantJobType wantJobType = WantJobTypeDummy.dummy();
         NormalUser normalUser = NormalUserDummy.dummy(user, wantJobType);
 
@@ -90,7 +90,7 @@ class NormalUserManageServiceImplTest {
     @DisplayName("일반회원 등록 실패 - 이미 존재하는 ID(Email)인 경우")
     void registerNormalUser_alreadyExistsEmail() {
         // given
-        User user = UserDummy.dummy(new BCryptPasswordEncoder());
+        User user = UserDummy.dummyEncoder(new BCryptPasswordEncoder());
         WantJobType wantJobType = WantJobTypeDummy.dummy();
         NormalUser normalUser = NormalUserDummy.dummy(user, wantJobType);
 
