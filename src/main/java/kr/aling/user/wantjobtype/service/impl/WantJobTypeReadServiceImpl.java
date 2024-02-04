@@ -27,6 +27,7 @@ public class WantJobTypeReadServiceImpl implements WantJobTypeReadService {
     @Override
     public ReadWantJobTypeResponseDto findByWantJobTypeNo(Integer wantJobTypeNo) {
         return new ReadWantJobTypeResponseDto(
-                wantJobTypeReadRepository.findById(wantJobTypeNo).orElseThrow(() -> new WantJobTypeNotFoundException(wantJobTypeNo)));
+                wantJobTypeReadRepository.findById(wantJobTypeNo)
+                        .orElseThrow(() -> new WantJobTypeNotFoundException(wantJobTypeNo)));
     }
 }
