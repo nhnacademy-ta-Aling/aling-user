@@ -4,6 +4,7 @@ import kr.aling.user.user.repository.UserReadRepository;
 import kr.aling.user.user.service.UserReadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 회원 읽기 전용 서비스 구현체.
@@ -21,6 +22,7 @@ public class UserReadServiceImpl implements UserReadService {
     /**
      * {@inheritDoc}
      */
+    @Transactional(readOnly = true)
     @Override
     public boolean existsEmail(String email) {
         return userReadRepository.existsByEmail(email);
