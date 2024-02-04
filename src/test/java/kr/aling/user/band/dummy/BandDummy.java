@@ -3,7 +3,7 @@ package kr.aling.user.band.dummy;
 import kr.aling.user.band.entity.Band;
 
 /**
- * Some description here.
+ * 그룹 더미.
  *
  * @author : 정유진
  * @since : 1.0

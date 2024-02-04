@@ -29,7 +29,7 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
- * Some description here.
+ * 그룹 조회 컨트롤러 테스트.
  *
  * @author : 정유진
  * @since : 1.0

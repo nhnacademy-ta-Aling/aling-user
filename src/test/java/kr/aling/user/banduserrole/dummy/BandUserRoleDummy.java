@@ -3,7 +3,7 @@ package kr.aling.user.banduserrole.dummy;
 import kr.aling.user.banduserrole.entity.BandUserRole;
 
 /**
- * Some description here.
+ * 그룹 회원 권한 더미.
  *
  * @author : 정유진
  * @since : 1.0

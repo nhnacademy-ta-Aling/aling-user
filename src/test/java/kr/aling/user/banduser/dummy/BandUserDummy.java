@@ -8,7 +8,7 @@ import kr.aling.user.banduserrole.entity.BandUserRole;
 import kr.aling.user.user.entity.User;
 
 /**
- * Some description here.
+ * 그룹 회원 더미.
  *
  * @author : 정유진
  * @since : 1.0

@@ -16,7 +16,7 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
- * Some description here.
+ * 그룹 조회 서비스 테스트.
  *
  * @author : 정유진
  * @since : 1.0

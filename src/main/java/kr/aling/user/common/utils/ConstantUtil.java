@@ -1,7 +1,7 @@
 package kr.aling.user.common.utils;
 
 /**
- * Some description here.
+ * 상수를 관리하는 유틸 클래스.
  *
  * @author : 정유진
  * @since : 1.0
