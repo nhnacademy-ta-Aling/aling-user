@@ -11,12 +11,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  **/
 public class UserDummy {
 
-    public static User dummy(PasswordEncoder passwordEncoder) {
+    public static User dummyEncoder(PasswordEncoder passwordEncoder) {
         return User.builder()
                 .id("test@test.com")
                 .password(passwordEncoder.encode("nhn123!@#"))
                 .name("NHN-Test")
                 .address("경기도 성남시 분당구 대왕판교로 645번길 16")
+                .build();
+    }
+
+    public static User dummy() {
+        return User.builder()
+                .id("testId@test.com")
+                .password("testPwd")
+                .name("testName")
+                .address("testAddress")
                 .build();
     }
 }
