@@ -23,6 +23,6 @@ public class UserReadServiceImpl implements UserReadService {
      */
     @Override
     public boolean existsEmail(String email) {
-        return userReadRepository.isEmailExist(email);
+        return userReadRepository.existsByEmail(email);
     }
 }

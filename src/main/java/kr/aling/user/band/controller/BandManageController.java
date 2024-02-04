@@ -3,6 +3,7 @@ package kr.aling.user.band.controller;
 import javax.validation.Valid;
 import kr.aling.user.band.dto.request.CreateBandRequestDto;
 import kr.aling.user.band.service.BandManageService;
+import kr.aling.user.common.utils.ConstantUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,20 +21,20 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/bands")
+@RequestMapping("/api/v1/bands")
 public class BandManageController {
     private final BandManageService bandManageService;
 
     /**
      * 그룹 생성을 위한 메서드.
      *
-     * @param userNo 그룹 생성 요청 유저 번호
+     * @param userNo               그룹 생성 요청 유저 번호
      * @param createBandRequestDto 그룹 생성 요청 dto
      * @return ResponseEntity
      */
     @PostMapping
-    public ResponseEntity<Void> makeBand(@RequestHeader("X-TEMP-USER-NO") Long userNo,
-                                     @Valid @RequestBody CreateBandRequestDto createBandRequestDto) {
+    public ResponseEntity<Void> makeBand(@RequestHeader(ConstantUtil.X_TEMP_USER_NO) Long userNo,
+                                         @Valid @RequestBody CreateBandRequestDto createBandRequestDto) {
         bandManageService.makeBand(userNo, createBandRequestDto);
 
         return ResponseEntity

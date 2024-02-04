@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/bands")
+@RequestMapping("/api/v1/bands")
 public class BandReadController {
     private final BandReadService bandReadService;
 

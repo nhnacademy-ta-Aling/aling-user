@@ -21,7 +21,7 @@ public class UserReadRepositoryImpl extends QuerydslRepositorySupport implements
      * {@inheritDoc}
      */
     @Override
-    public Boolean isEmailExist(String email) {
+    public Boolean existsByEmail(String email) {
         QUser user = QUser.user;
 
         return from(user).select(user.id).where(user.id.eq(email)).fetchCount() >= 1;

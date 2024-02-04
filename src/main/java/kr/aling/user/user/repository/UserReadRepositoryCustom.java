@@ -17,5 +17,5 @@ public interface UserReadRepositoryCustom {
      * @param email 이메일
      * @return 중복 여부(중복시 true)
      */
-    Boolean isEmailExist(String email);
+    Boolean existsByEmail(String email);
 }
