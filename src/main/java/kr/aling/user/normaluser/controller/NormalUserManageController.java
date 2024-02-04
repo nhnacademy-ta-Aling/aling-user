@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since : 1.0
  */
 @RequiredArgsConstructor
-@RequestMapping("/normals")
+@RequestMapping("/api/v1/normals")
 @RestController
 public class NormalUserManageController {
 

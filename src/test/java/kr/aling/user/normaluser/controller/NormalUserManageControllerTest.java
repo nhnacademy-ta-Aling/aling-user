@@ -83,7 +83,7 @@ class NormalUserManageControllerTest {
         Mockito.when(normalUserManageService.registerNormalUser(any())).thenReturn(responseDto);
 
         // when
-        ResultActions perform = mockMvc.perform(post("/normals")
+        ResultActions perform = mockMvc.perform(post("/api/v1/normals")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestDto)));
 
@@ -119,7 +119,7 @@ class NormalUserManageControllerTest {
         CreateNormalUserRequestDto requestDto = new CreateNormalUserRequestDto("", "", "", null, "", "");
 
         // when
-        ResultActions perform = mockMvc.perform(post("/normals")
+        ResultActions perform = mockMvc.perform(post("/api/v1/normals")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestDto)));
 
@@ -140,7 +140,7 @@ class NormalUserManageControllerTest {
                 .thenThrow(new UserEmailAlreadyUsedException(user.getId()));
 
         // when
-        ResultActions perform = mockMvc.perform(post("/normals")
+        ResultActions perform = mockMvc.perform(post("/api/v1/normals")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestDto)));
 
