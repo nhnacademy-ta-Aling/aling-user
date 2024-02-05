@@ -53,13 +53,13 @@ class CompanyUserManageServiceTest {
     @Test
     @DisplayName("법인 회원가입 성공")
     void registerCompanyUser() {
-        User user = UserDummy.dummy(passwordEncoder);
+        User user = UserDummy.dummyEncoder(passwordEncoder);
         ReflectionTestUtils.setField(user, "userNo", 10_000_000L);
         CompanyUser companyUser = CompanyUserDummy.dummy(user);
 
         when(userManageRepository.save(any())).thenReturn(user);
         when(companyUserManageRepository.save(any())).thenReturn(companyUser);
-        when(userReadRepository.isEmailExist(anyString())).thenReturn(Boolean.FALSE);
+        when(userReadRepository.existsByEmail(anyString())).thenReturn(Boolean.FALSE);
 
         CreateCompanyUserRequestDto requestDto = new CreateCompanyUserRequestDto();
         ReflectionTestUtils.setField(requestDto, "email", user.getId());
@@ -83,13 +83,13 @@ class CompanyUserManageServiceTest {
     @Test
     @DisplayName("법인 회원가입 실패")
     void registerCompanyUserFailedExistEmail() {
-        User user = UserDummy.dummy(passwordEncoder);
+        User user = UserDummy.dummyEncoder(passwordEncoder);
         ReflectionTestUtils.setField(user, "userNo", 10_000_000L);
         CompanyUser companyUser = CompanyUserDummy.dummy(user);
 
         when(userManageRepository.save(any())).thenReturn(user);
         when(companyUserManageRepository.save(any())).thenReturn(companyUser);
-        when(userReadRepository.isEmailExist(anyString())).thenReturn(Boolean.TRUE);
+        when(userReadRepository.existsByEmail(anyString())).thenReturn(Boolean.TRUE);
 
         CreateCompanyUserRequestDto requestDto = new CreateCompanyUserRequestDto();
         ReflectionTestUtils.setField(requestDto, "email", user.getId());

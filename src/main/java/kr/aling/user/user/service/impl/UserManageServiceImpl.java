@@ -33,7 +33,7 @@ public class UserManageServiceImpl implements UserManageService {
      */
     @Override
     public CreateUserResponseDto registerUser(CreateUserRequestDto requestDto) {
-        if (Boolean.TRUE.equals(userReadRepository.isEmailExist(requestDto.getId()))) {
+        if (Boolean.TRUE.equals(userReadRepository.existsByEmail(requestDto.getId()))) {
             throw new UserEmailAlreadyUsedException(requestDto.getId());
         }
 

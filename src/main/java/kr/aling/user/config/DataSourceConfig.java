@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Some description here.
+ * 데이터 소스 설정.
  *
  * @author 정유진
  * @since 1.0

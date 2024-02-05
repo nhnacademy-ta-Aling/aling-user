@@ -39,8 +39,10 @@ public class NormalUserManageServiceImpl implements NormalUserManageService {
     @Override
     public CreateNormalUserResponseDto registerNormalUser(CreateNormalUserRequestDto requestDto) {
         Long userNo = userManageService.registerUser(
-                        new CreateUserRequestDto(requestDto.getId(), requestDto.getPassword(), requestDto.getName())).getUserNo();
-        WantJobType wantJobType = wantJobTypeReadService.findByWantJobTypeNo(requestDto.getWantJobTypeNo()).getWantJobType();
+                        new CreateUserRequestDto(requestDto.getId(), requestDto.getPassword(), requestDto.getName()))
+                .getUserNo();
+        WantJobType wantJobType =
+                wantJobTypeReadService.findByWantJobTypeNo(requestDto.getWantJobTypeNo()).getWantJobType();
 
         NormalUser normalUser = NormalUser.builder()
                 .userNo(userNo)

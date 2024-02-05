@@ -29,7 +29,7 @@ class UserReadServiceImplTest {
         // given
         String email = "test@aling.kr";
 
-        when(userReadRepository.isEmailExist(email)).thenReturn(true);
+        when(userReadRepository.existsByEmail(email)).thenReturn(true);
 
         // when
         boolean isExists = userReadService.existsEmail(email);
@@ -44,7 +44,7 @@ class UserReadServiceImplTest {
         // given
         String email = "test@aling.kr";
 
-        when(userReadRepository.isEmailExist(email)).thenReturn(false);
+        when(userReadRepository.existsByEmail(email)).thenReturn(false);
 
         // when
         boolean isExists = userReadService.existsEmail(email);

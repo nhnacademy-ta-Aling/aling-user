@@ -66,7 +66,7 @@ class CompanyUserManageControllerTest {
     @DisplayName("법인 회원가입 성공")
     void registerCompanyUser() throws Exception {
         passwordEncoder = new BCryptPasswordEncoder();
-        User user = UserDummy.dummy(passwordEncoder);
+        User user = UserDummy.dummyEncoder(passwordEncoder);
         ReflectionTestUtils.setField(user, "userNo", 10_000_000L);
         CompanyUser companyUser = CompanyUserDummy.dummy(user);
 

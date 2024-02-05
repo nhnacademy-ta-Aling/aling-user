@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 회원가입 이메일 인증을 위한 Controller
+ * 회원가입 이메일 인증을 위한 Controller.
  *
  * @author : 이수정
  * @since : 1.0
@@ -34,7 +34,8 @@ public class MailController {
      * @since : 1.0
      */
     @GetMapping("/api/v1/emailcheck")
-    public ResponseEntity<CheckMailResponseDto> emailCheck(@Valid @RequestBody CheckMailRequestDto requestDto, BindingResult bindingResult) {
+    public ResponseEntity<CheckMailResponseDto> emailCheck(@Valid @RequestBody CheckMailRequestDto requestDto,
+                                                           BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "email valid error - " + bindingResult.getAllErrors());
         }

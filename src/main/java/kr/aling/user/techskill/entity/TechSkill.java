@@ -12,7 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * Some description here.
+ * 기술 스택 Entity.
  *
  * @author : 여운석
  * @since : 1.0

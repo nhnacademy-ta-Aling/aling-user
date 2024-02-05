@@ -35,7 +35,7 @@ public class CompanyUserManageServiceImpl implements CompanyUserManageService {
      */
     @Override
     public CreateCompanyUserResponseDto registerCompanyUser(CreateCompanyUserRequestDto requestDto) {
-        if (Boolean.TRUE.equals(userReadRepository.isEmailExist(requestDto.getEmail()))) {
+        if (Boolean.TRUE.equals(userReadRepository.existsByEmail(requestDto.getEmail()))) {
             throw new UserEmailAlreadyUsedException(requestDto.getEmail());
         }
 

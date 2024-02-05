@@ -32,7 +32,7 @@ class NormalUserManageRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        user = UserDummy.dummy(new BCryptPasswordEncoder());
+        user = UserDummy.dummyEncoder(new BCryptPasswordEncoder());
         wantJobType = WantJobTypeDummy.dummy();
 
         testEntityManager.persist(user);

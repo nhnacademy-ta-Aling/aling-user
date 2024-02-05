@@ -66,7 +66,7 @@ class NormalUserManageControllerTest {
 
     @BeforeEach
     void setUp() {
-        user = UserDummy.dummy(new BCryptPasswordEncoder());
+        user = UserDummy.dummyEncoder(new BCryptPasswordEncoder());
         wantJobType = WantJobTypeDummy.dummy();
         normalUser = NormalUserDummy.dummy(user, wantJobType);
     }
