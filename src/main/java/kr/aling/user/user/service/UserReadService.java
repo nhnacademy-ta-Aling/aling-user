@@ -17,5 +17,15 @@ public interface UserReadService {
      * @author : 이수정
      * @since : 1.0
      */
-    boolean existsEmail(String email);
+    boolean isExistsEmail(String email);
+
+    /**
+     * 존재하는 회원인지 확인합니다.
+     *
+     * @param userNo 확인할 회원의 번호
+     * @return 회원 존재 여부
+     * @author : 이수정
+     * @since : 1.0
+     */
+    boolean isExistsUserNo(Long userNo);
 }
