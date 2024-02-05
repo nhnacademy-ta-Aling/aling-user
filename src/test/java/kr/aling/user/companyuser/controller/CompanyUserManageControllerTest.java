@@ -11,6 +11,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -94,14 +95,14 @@ class CompanyUserManageControllerTest {
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestFields(
-                                PayloadDocumentation.subsectionWithPath("email").description("가입 이메일"),
-                                PayloadDocumentation.subsectionWithPath("password").description("비밀번호"),
-                                PayloadDocumentation.subsectionWithPath("name").description("법인 이름"),
-                                PayloadDocumentation.subsectionWithPath("address").description("소재지"),
+                                PayloadDocumentation.subsectionWithPath("email").description("가입 이메일").attributes(key("valid").value("Email 형식")),
+                                PayloadDocumentation.subsectionWithPath("password").description("비밀번호").attributes(key("valid").value("Not Blank, 최대 20글자")),
+                                PayloadDocumentation.subsectionWithPath("name").description("법인 이름").attributes(key("valid").value("Not Blank, 최대 50글자")),
+                                PayloadDocumentation.subsectionWithPath("address").description("소재지").attributes(key("valid").value("Not Blank, 최대 200글자")),
                                 PayloadDocumentation.subsectionWithPath("companyRegistrationNo")
-                                        .description("사업자등록번호"),
-                                PayloadDocumentation.subsectionWithPath("companySize").description("법인 규모"),
-                                PayloadDocumentation.subsectionWithPath("companySector").description("법인 업종")),
+                                        .description("사업자등록번호").attributes(key("valid").value("Not Blank, 10글자")),
+                                PayloadDocumentation.subsectionWithPath("companySize").description("법인 규모").attributes(key("valid").value("기업 규모 값")),
+                                PayloadDocumentation.subsectionWithPath("companySector").description("법인 업종").attributes(key("valid").value("Not Blank, 최대 50글자"))),
                         responseFields(fieldWithPath("name").description("법인 이름"))
                         ));
 

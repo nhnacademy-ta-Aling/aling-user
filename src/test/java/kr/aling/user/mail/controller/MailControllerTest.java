@@ -13,6 +13,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -76,7 +77,7 @@ class MailControllerTest {
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 requestFields(
-                       fieldWithPath("email").type(JsonFieldType.STRING).description("인증번호를 받을 이메일")
+                       fieldWithPath("email").type(JsonFieldType.STRING).description("인증번호를 받을 이메일").attributes(key("valid").value("Email 형식, 3~100 글자"))
                 ),
                 responseFields(
                         fieldWithPath("authNumber").type(JsonFieldType.NUMBER).description("생성된 인증번호")
