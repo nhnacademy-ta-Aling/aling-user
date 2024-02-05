@@ -11,6 +11,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -99,12 +100,18 @@ class NormalUserManageControllerTest {
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 requestFields(
-                        fieldWithPath("id").type(JsonFieldType.STRING).description("아이디"),
-                        fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호"),
-                        fieldWithPath("name").type(JsonFieldType.STRING).description("이름"),
-                        fieldWithPath("wantJobTypeNo").type(JsonFieldType.NUMBER).description("구직희망타입"),
-                        fieldWithPath("phoneNo").type(JsonFieldType.STRING).description("연락처"),
+                        fieldWithPath("id").type(JsonFieldType.STRING).description("아이디")
+                                .attributes(key("valid").value("Not Blank, 최소 3자, 최대 100자, 이메일형식")),
+                        fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호")
+                                .attributes(key("valid").value("Not Blank, 최소 8자, 최대 20자")),
+                        fieldWithPath("name").type(JsonFieldType.STRING).description("이름")
+                                .attributes(key("valid").value("Not Blank, 최소 1자, 최대 50자")),
+                        fieldWithPath("wantJobTypeNo").type(JsonFieldType.NUMBER).description("구직희망타입")
+                                .attributes(key("valid").value("Not Null, 양수")),
+                        fieldWithPath("phoneNo").type(JsonFieldType.STRING).description("연락처")
+                                .attributes(key("valid").value("Not Blank, 최소 9자, 최대 11자, 전화번호 \\'-\\' 부호 없이")),
                         fieldWithPath("birth").type(JsonFieldType.STRING).description("생년월일")
+                                .attributes(key("valid").value("Not Blank, 최소 8자, 최대 8자, 생년월일"))
                 ),
                 responseFields(
                         fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("응답 성공여부"),

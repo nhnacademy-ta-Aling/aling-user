@@ -33,7 +33,7 @@ public class MailController {
      * @author : 이수정
      * @since : 1.0
      */
-    @GetMapping("/api/v1/emailcheck")
+    @GetMapping("/api/v1/email-check")
     public ApiResponse<CheckMailResponseDto> emailCheck(@Valid @RequestBody CheckMailRequestDto requestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "email valid error - " + bindingResult.getAllErrors());

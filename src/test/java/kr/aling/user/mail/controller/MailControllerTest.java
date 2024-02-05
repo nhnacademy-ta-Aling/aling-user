@@ -60,7 +60,7 @@ class MailControllerTest {
         Mockito.when(mailService.sendAuthNumber(any())).thenReturn(authNumber);
 
         // when
-        ResultActions perform = mockMvc.perform(get("/api/v1/emailcheck")
+        ResultActions perform = mockMvc.perform(get("/api/v1/email-check")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestDto)));
 
@@ -92,7 +92,7 @@ class MailControllerTest {
         CheckMailRequestDto requestDto = new CheckMailRequestDto("test");
 
         // when
-        ResultActions perform = mockMvc.perform(get("/api/v1/emailcheck")
+        ResultActions perform = mockMvc.perform(get("/api/v1/email-check")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestDto)));
 
@@ -111,7 +111,7 @@ class MailControllerTest {
         when(mailService.sendAuthNumber(any())).thenThrow(new UserEmailAlreadyUsedException(email));
 
         // when
-        ResultActions perform = mockMvc.perform(get("/api/v1/emailcheck")
+        ResultActions perform = mockMvc.perform(get("/api/v1/email-check")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestDto)));
 
