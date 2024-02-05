@@ -1,4 +1,4 @@
-package kr.aling.user.common.anno;
+package kr.aling.user.common.valid.anno;
 
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
@@ -14,7 +14,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import kr.aling.user.common.validator.EnumValidator;
+import kr.aling.user.common.valid.validator.EnumValidator;
 
 /**
  * Enum으로 관리하는 클래스들을 검증하기 위한 어노테이션입니다.

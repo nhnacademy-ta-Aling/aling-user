@@ -2,7 +2,7 @@ package kr.aling.user.companyuser.dto.request;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import kr.aling.user.common.anno.EnumValue;
+import kr.aling.user.common.valid.anno.EnumValue;
 import kr.aling.user.companyuser.type.CompanySize;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -29,7 +29,7 @@ public class MailServiceImpl implements MailService {
      */
     @Override
     public int sendAuthNumber(String email) {
-        if (userReadService.existsEmail(email)) {
+        if (userReadService.isExistsEmail(email)) {
             throw new UserEmailAlreadyUsedException(email);
         }
 
