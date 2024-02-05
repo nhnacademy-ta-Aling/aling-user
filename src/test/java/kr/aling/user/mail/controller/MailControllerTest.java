@@ -68,7 +68,7 @@ class MailControllerTest {
         perform.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.authNumber", equalTo(authNumber)));
+                .andExpect(jsonPath("$.data.authNumber", equalTo(authNumber)));
         verify(mailService, times(1)).sendAuthNumber(requestDto.getEmail());
 
         // docs
@@ -79,7 +79,10 @@ class MailControllerTest {
                        fieldWithPath("email").type(JsonFieldType.STRING).description("인증번호를 받을 이메일")
                 ),
                 responseFields(
-                        fieldWithPath("authNumber").type(JsonFieldType.NUMBER).description("생성된 인증번호")
+                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("응답 성공여부"),
+                        fieldWithPath("status").type(JsonFieldType.STRING).description("HTTP Status"),
+                        fieldWithPath("data.authNumber").type(JsonFieldType.NUMBER).description("생성된 인증번호"),
+                        fieldWithPath("errorMessage").type(JsonFieldType.STRING).description("에러 메세지")
                 )));
     }
 
