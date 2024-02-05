@@ -14,9 +14,9 @@
         </root>
 
 <!--        sql 문을 조회 하고 싶을 때 사용-->
-<!--        <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="trace" additivity="false">-->
-<!--            <appender-ref ref="console"/>-->
-<!--        </logger>-->
+        <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="trace" additivity="false">
+            <appender-ref ref="console"/>
+        </logger>
     </springProfile>
 
     <springProfile name="prod">
