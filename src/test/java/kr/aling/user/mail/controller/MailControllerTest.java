@@ -61,7 +61,7 @@ class MailControllerTest {
         Mockito.when(mailService.sendAuthNumber(any())).thenReturn(authNumber);
 
         // when
-        ResultActions perform = mockMvc.perform(get("/api/v1/emailcheck")
+        ResultActions perform = mockMvc.perform(get("/api/v1/email-check")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestDto)));
 
@@ -69,7 +69,7 @@ class MailControllerTest {
         perform.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.authNumber", equalTo(authNumber)));
+                .andExpect(jsonPath("$.data.authNumber", equalTo(authNumber)));
         verify(mailService, times(1)).sendAuthNumber(requestDto.getEmail());
 
         // docs
@@ -80,7 +80,9 @@ class MailControllerTest {
                        fieldWithPath("email").type(JsonFieldType.STRING).description("인증번호를 받을 이메일").attributes(key("valid").value("Email 형식, 3~100 글자"))
                 ),
                 responseFields(
-                        fieldWithPath("authNumber").type(JsonFieldType.NUMBER).description("생성된 인증번호")
+                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("응답 성공여부"),
+                        fieldWithPath("message").type(JsonFieldType.STRING).description("에러 시 메세지"),
+                        fieldWithPath("data.authNumber").type(JsonFieldType.NUMBER).description("생성된 인증번호")
                 )));
     }
 
@@ -91,7 +93,7 @@ class MailControllerTest {
         CheckMailRequestDto requestDto = new CheckMailRequestDto("test");
 
         // when
-        ResultActions perform = mockMvc.perform(get("/api/v1/emailcheck")
+        ResultActions perform = mockMvc.perform(get("/api/v1/email-check")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestDto)));
 
@@ -110,7 +112,7 @@ class MailControllerTest {
         when(mailService.sendAuthNumber(any())).thenThrow(new UserEmailAlreadyUsedException(email));
 
         // when
-        ResultActions perform = mockMvc.perform(get("/api/v1/emailcheck")
+        ResultActions perform = mockMvc.perform(get("/api/v1/email-check")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestDto)));
 

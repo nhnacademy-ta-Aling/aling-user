@@ -44,7 +44,7 @@ class MailServiceImplTest {
         // given
         String email = "test@aling.kr";
 
-        when(userReadService.existsEmail(any())).thenReturn(false);
+        when(userReadService.isExistsEmail(any())).thenReturn(false);
 
         // when
         int authNumber = mailService.sendAuthNumber(email);
@@ -52,7 +52,7 @@ class MailServiceImplTest {
         // then
         assertThat(authNumber).isBetween(100_000, 999_999);
 
-        verify(userReadService, times(1)).existsEmail(any());
+        verify(userReadService, times(1)).isExistsEmail(any());
         verify(javaMailSender, times(1)).send((SimpleMailMessage) any());
     }
 
@@ -62,13 +62,13 @@ class MailServiceImplTest {
         // given
         String email = "test@aling.kr";
 
-        when(userReadService.existsEmail(any())).thenReturn(true);
+        when(userReadService.isExistsEmail(any())).thenReturn(true);
 
         // when
         // then
         assertThatThrownBy(() -> mailService.sendAuthNumber(email)).isInstanceOf(UserEmailAlreadyUsedException.class);
 
-        verify(userReadService, times(1)).existsEmail(any());
+        verify(userReadService, times(1)).isExistsEmail(any());
         verify(javaMailSender, never()).send((SimpleMailMessage) any());
     }
 }

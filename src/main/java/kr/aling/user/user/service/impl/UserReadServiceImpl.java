@@ -24,7 +24,16 @@ public class UserReadServiceImpl implements UserReadService {
      */
     @Transactional(readOnly = true)
     @Override
-    public boolean existsEmail(String email) {
+    public boolean isExistsEmail(String email) {
         return userReadRepository.existsByEmail(email);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Transactional(readOnly = true)
+    @Override
+    public boolean isExistsUserNo(Long userNo) {
+        return userReadRepository.existsById(userNo);
     }
 }

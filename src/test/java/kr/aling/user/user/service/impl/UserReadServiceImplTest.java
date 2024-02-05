@@ -25,14 +25,14 @@ class UserReadServiceImplTest {
 
     @Test
     @DisplayName("존재하는 이메일인지 확인 성공 - 존재함")
-    void existsEmail_found() {
+    void isExistsEmail_found() {
         // given
         String email = "test@aling.kr";
 
         when(userReadRepository.existsByEmail(email)).thenReturn(true);
 
         // when
-        boolean isExists = userReadService.existsEmail(email);
+        boolean isExists = userReadService.isExistsEmail(email);
 
         // then
         assertThat(isExists).isTrue();
@@ -40,14 +40,44 @@ class UserReadServiceImplTest {
 
     @Test
     @DisplayName("존재하는 이메일인지 확인 성공 - 존재하지 않음")
-    void existsEmail_notFound() {
+    void isExistsEmail_notFound() {
         // given
-        String email = "test@aling.kr";
+        String email = "test_null@aling.kr";
 
         when(userReadRepository.existsByEmail(email)).thenReturn(false);
 
         // when
-        boolean isExists = userReadService.existsEmail(email);
+        boolean isExists = userReadService.isExistsEmail(email);
+
+        // then
+        assertThat(isExists).isFalse();
+    }
+
+    @Test
+    @DisplayName("존재하는 회원번호인지 확인 성공 - 존재함")
+    void isExistsUserNo_found() {
+        // given
+        Long userNo = 1L;
+
+        when(userReadRepository.existsById(userNo)).thenReturn(true);
+
+        // when
+        boolean isExists = userReadService.isExistsUserNo(userNo);
+
+        // then
+        assertThat(isExists).isTrue();
+    }
+
+    @Test
+    @DisplayName("존재하는 회원번호인지 확인 성공 - 존재하지 않음")
+    void isExistsUserNo_notFound() {
+        // given
+        Long userNo = 99L;
+
+        when(userReadRepository.existsById(userNo)).thenReturn(false);
+
+        // when
+        boolean isExists = userReadService.isExistsUserNo(userNo);
 
         // then
         assertThat(isExists).isFalse();

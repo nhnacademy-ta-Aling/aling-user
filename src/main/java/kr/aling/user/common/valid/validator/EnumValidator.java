@@ -1,11 +1,11 @@
-package kr.aling.user.common.validator;
+package kr.aling.user.common.valid.validator;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import kr.aling.user.common.anno.EnumValue;
+import kr.aling.user.common.valid.anno.EnumValue;
 import org.apache.logging.log4j.util.Strings;
 
 /**

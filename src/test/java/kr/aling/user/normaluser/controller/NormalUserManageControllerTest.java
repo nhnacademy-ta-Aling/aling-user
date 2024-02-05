@@ -92,24 +92,32 @@ class NormalUserManageControllerTest {
         perform.andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id", equalTo(normalUser.getUser().getId())))
-                .andExpect(jsonPath("$.name", equalTo(normalUser.getUser().getName())));
+                .andExpect(jsonPath("$.data.id", equalTo(normalUser.getUser().getId())))
+                .andExpect(jsonPath("$.data.name", equalTo(normalUser.getUser().getName())));
 
         // docs
         perform.andDo(document("normal-user-signup",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 requestFields(
-                        fieldWithPath("id").type(JsonFieldType.STRING).description("아이디").attributes(key("valid").value("Email 형식, 3~100 글자")),
-                        fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호").attributes(key("valid").value("Not Blank, 8~20글자")),
-                        fieldWithPath("name").type(JsonFieldType.STRING).description("이름").attributes(key("valid").value("Not Blank, 최대 50글자")),
-                        fieldWithPath("wantJobTypeNo").type(JsonFieldType.NUMBER).description("구직희망타입").attributes(key("valid").value("Not Null, 양수값")),
-                        fieldWithPath("phoneNo").type(JsonFieldType.STRING).description("연락처").attributes(key("valid").value("Not Blank, 9~11 글자")),
-                        fieldWithPath("birth").type(JsonFieldType.STRING).description("생년월일").attributes(key("valid").value("Not Blank, 8글자"))
+                        fieldWithPath("id").type(JsonFieldType.STRING).description("아이디")
+                                .attributes(key("valid").value("Not Blank, 최소 3자, 최대 100자, 이메일형식")),
+                        fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호")
+                                .attributes(key("valid").value("Not Blank, 최소 8자, 최대 20자")),
+                        fieldWithPath("name").type(JsonFieldType.STRING).description("이름")
+                                .attributes(key("valid").value("Not Blank, 최소 1자, 최대 50자")),
+                        fieldWithPath("wantJobTypeNo").type(JsonFieldType.NUMBER).description("구직희망타입")
+                                .attributes(key("valid").value("Not Null, 양수")),
+                        fieldWithPath("phoneNo").type(JsonFieldType.STRING).description("연락처")
+                                .attributes(key("valid").value("Not Blank, 최소 9자, 최대 11자, 전화번호 \\'-\\' 부호 없이")),
+                        fieldWithPath("birth").type(JsonFieldType.STRING).description("생년월일")
+                                .attributes(key("valid").value("Not Blank, 최소 8자, 최대 8자, 생년월일"))
                 ),
                 responseFields(
-                        fieldWithPath("id").type(JsonFieldType.STRING).description("아이디"),
-                        fieldWithPath("name").type(JsonFieldType.STRING).description("이름")
+                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("응답 성공여부"),
+                        fieldWithPath("message").type(JsonFieldType.STRING).description("에러 시 메세지"),
+                        fieldWithPath("data.id").type(JsonFieldType.STRING).description("아이디"),
+                        fieldWithPath("data.name").type(JsonFieldType.STRING).description("이름")
                 )));
     }
 
