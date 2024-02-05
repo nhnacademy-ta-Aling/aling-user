@@ -67,9 +67,8 @@ class UserReadControllerTest {
                 pathParameters(parameterWithName("userNo").description("확인할 유저번호")),
                 responseFields(
                         fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("응답 성공여부"),
-                        fieldWithPath("status").type(JsonFieldType.STRING).description("HTTP Status"),
-                        fieldWithPath("data").type(JsonFieldType.BOOLEAN).description("이메일 존재여부"),
-                        fieldWithPath("errorMessage").type(JsonFieldType.STRING).description("에러 메세지")
+                        fieldWithPath("message").type(JsonFieldType.STRING).description("에러 시 메세지"),
+                        fieldWithPath("data").type(JsonFieldType.BOOLEAN).description("이메일 존재여부")
                 )));
     }
 }

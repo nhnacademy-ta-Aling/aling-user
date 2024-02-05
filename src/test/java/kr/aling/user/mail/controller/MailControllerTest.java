@@ -80,9 +80,8 @@ class MailControllerTest {
                 ),
                 responseFields(
                         fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("응답 성공여부"),
-                        fieldWithPath("status").type(JsonFieldType.STRING).description("HTTP Status"),
-                        fieldWithPath("data.authNumber").type(JsonFieldType.NUMBER).description("생성된 인증번호"),
-                        fieldWithPath("errorMessage").type(JsonFieldType.STRING).description("에러 메세지")
+                        fieldWithPath("message").type(JsonFieldType.STRING).description("에러 시 메세지"),
+                        fieldWithPath("data.authNumber").type(JsonFieldType.NUMBER).description("생성된 인증번호")
                 )));
     }
 

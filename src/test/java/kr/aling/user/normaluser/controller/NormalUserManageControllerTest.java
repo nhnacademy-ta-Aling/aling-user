@@ -108,10 +108,9 @@ class NormalUserManageControllerTest {
                 ),
                 responseFields(
                         fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("응답 성공여부"),
-                        fieldWithPath("status").type(JsonFieldType.STRING).description("HTTP Status"),
+                        fieldWithPath("message").type(JsonFieldType.STRING).description("에러 시 메세지"),
                         fieldWithPath("data.id").type(JsonFieldType.STRING).description("아이디"),
-                        fieldWithPath("data.name").type(JsonFieldType.STRING).description("이름"),
-                        fieldWithPath("errorMessage").type(JsonFieldType.STRING).description("에러 메세지")
+                        fieldWithPath("data.name").type(JsonFieldType.STRING).description("이름")
                 )));
     }
 

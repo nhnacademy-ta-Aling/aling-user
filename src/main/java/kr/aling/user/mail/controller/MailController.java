@@ -38,6 +38,6 @@ public class MailController {
         if (bindingResult.hasErrors()) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "email valid error - " + bindingResult.getAllErrors());
         }
-        return new ApiResponse<>(true, HttpStatus.OK, new CheckMailResponseDto(mailService.sendAuthNumber(requestDto.getEmail())), "");
+        return new ApiResponse<>(true, "", new CheckMailResponseDto(mailService.sendAuthNumber(requestDto.getEmail())));
     }
 }

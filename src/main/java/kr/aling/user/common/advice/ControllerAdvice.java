@@ -24,12 +24,12 @@ public class ControllerAdvice {
     @ExceptionHandler(UserEmailAlreadyUsedException.class)
     public ApiResponse<String> handleConflictException(Exception e) {
         log.error("[{}] {}", HttpStatus.CONFLICT, e.getMessage());
-        return new ApiResponse<>(false, HttpStatus.CONFLICT, null, e.getMessage());
+        return new ApiResponse<>(false, e.getMessage(), null);
     }
 
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<ApiResponse<String>> handleCustomException(CustomException e) {
         log.error("[{}] {}", e.getHttpStatus(), e.getMessage());
-        return ResponseEntity.status(e.getHttpStatus()).body(new ApiResponse<>(false, e.getHttpStatus(), null, e.getMessage()));
+        return ResponseEntity.status(e.getHttpStatus()).body(new ApiResponse<>(false, e.getMessage(), null));
     }
 }

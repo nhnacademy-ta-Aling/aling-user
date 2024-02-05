@@ -2,7 +2,6 @@ package kr.aling.user.common.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
 
 /**
  * REST-API 공통 응답 포맷 Class.

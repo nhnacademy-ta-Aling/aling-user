@@ -45,6 +45,6 @@ public class NormalUserManageController {
             throw new CustomException(HttpStatus.BAD_REQUEST,
                     "signup normal valid error - " + bindingResult.getAllErrors());
         }
-        return new ApiResponse<>(true, HttpStatus.CREATED, normalUserManageService.registerNormalUser(requestDto), "");
+        return new ApiResponse<>(true, "", normalUserManageService.registerNormalUser(requestDto));
     }
 }

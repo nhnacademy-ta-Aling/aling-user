@@ -3,7 +3,6 @@ package kr.aling.user.user.controller;
 import kr.aling.user.common.response.ApiResponse;
 import kr.aling.user.user.service.UserReadService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +31,6 @@ public class UserReadController {
      */
     @GetMapping("/check/{userNo}")
     public ApiResponse<Boolean> isExistsUser(@PathVariable Long userNo) {
-        return new ApiResponse<>(
-                true, HttpStatus.OK, userReadService.isExistsUserNo(userNo), "");
+        return new ApiResponse<>(true, "", userReadService.isExistsUserNo(userNo));
     }
 }
