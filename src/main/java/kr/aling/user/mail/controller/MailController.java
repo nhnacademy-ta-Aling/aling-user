@@ -2,12 +2,12 @@ package kr.aling.user.mail.controller;
 
 import javax.validation.Valid;
 import kr.aling.user.common.exception.CustomException;
-import kr.aling.user.common.response.ApiResponse;
 import kr.aling.user.mail.dto.request.CheckMailRequestDto;
 import kr.aling.user.mail.dto.response.CheckMailResponseDto;
 import kr.aling.user.mail.service.MailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,10 +34,10 @@ public class MailController {
      * @since : 1.0
      */
     @GetMapping("/api/v1/email-check")
-    public ApiResponse<CheckMailResponseDto> emailCheck(@Valid @RequestBody CheckMailRequestDto requestDto, BindingResult bindingResult) {
+    public ResponseEntity<CheckMailResponseDto> emailCheck(@Valid @RequestBody CheckMailRequestDto requestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "email valid error - " + bindingResult.getAllErrors());
         }
-        return new ApiResponse<>(true, "", new CheckMailResponseDto(mailService.sendAuthNumber(requestDto.getEmail())));
+        return ResponseEntity.status(HttpStatus.OK).body(new CheckMailResponseDto(mailService.sendAuthNumber(requestDto.getEmail())));
     }
 }
