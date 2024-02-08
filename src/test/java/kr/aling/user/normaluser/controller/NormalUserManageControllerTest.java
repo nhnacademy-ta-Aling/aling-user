@@ -92,8 +92,8 @@ class NormalUserManageControllerTest {
         perform.andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.data.id", equalTo(normalUser.getUser().getId())))
-                .andExpect(jsonPath("$.data.name", equalTo(normalUser.getUser().getName())));
+                .andExpect(jsonPath("$.id", equalTo(normalUser.getUser().getId())))
+                .andExpect(jsonPath("$.name", equalTo(normalUser.getUser().getName())));
 
         // docs
         perform.andDo(document("normal-user-signup",
@@ -114,10 +114,8 @@ class NormalUserManageControllerTest {
                                 .attributes(key("valid").value("Not Blank, 최소 8자, 최대 8자, 생년월일"))
                 ),
                 responseFields(
-                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("응답 성공여부"),
-                        fieldWithPath("message").type(JsonFieldType.STRING).description("에러 시 메세지"),
-                        fieldWithPath("data.id").type(JsonFieldType.STRING).description("아이디"),
-                        fieldWithPath("data.name").type(JsonFieldType.STRING).description("이름")
+                        fieldWithPath("id").type(JsonFieldType.STRING).description("아이디"),
+                        fieldWithPath("name").type(JsonFieldType.STRING).description("이름")
                 )));
     }
 
