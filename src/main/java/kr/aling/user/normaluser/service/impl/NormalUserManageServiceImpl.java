@@ -8,6 +8,7 @@ import kr.aling.user.normaluser.dto.response.CreateNormalUserResponseDto;
 import kr.aling.user.normaluser.entity.NormalUser;
 import kr.aling.user.normaluser.repository.NormalUserManageRepository;
 import kr.aling.user.normaluser.service.NormalUserManageService;
+import kr.aling.user.user.dto.response.CreateUserResponseDto;
 import kr.aling.user.user.dto.resquest.CreateUserRequestDto;
 import kr.aling.user.user.service.UserManageService;
 import kr.aling.user.wantjobtype.entity.WantJobType;
@@ -38,20 +39,19 @@ public class NormalUserManageServiceImpl implements NormalUserManageService {
      */
     @Override
     public CreateNormalUserResponseDto registerNormalUser(CreateNormalUserRequestDto requestDto) {
-        Long userNo = userManageService.registerUser(
-                        new CreateUserRequestDto(requestDto.getId(), requestDto.getPassword(), requestDto.getName()))
-                .getUserNo();
+        CreateUserResponseDto createUserResponseDto = userManageService.registerUser(
+                        new CreateUserRequestDto(requestDto.getId(), requestDto.getPassword(), requestDto.getName()));
         WantJobType wantJobType =
                 wantJobTypeReadService.findByWantJobTypeNo(requestDto.getWantJobTypeNo()).getWantJobType();
 
         NormalUser normalUser = NormalUser.builder()
-                .userNo(userNo)
+                .userNo(createUserResponseDto.getUserNo())
                 .wantJobType(wantJobType)
                 .phoneNo(requestDto.getPhoneNo())
                 .birth(LocalDate.parse(requestDto.getBirth(), DateTimeFormatter.ofPattern(BIRTH_PATTERN)))
                 .build();
-        normalUser = normalUserManageRepository.save(normalUser);
+        normalUserManageRepository.save(normalUser);
 
-        return new CreateNormalUserResponseDto(normalUser.getUser().getId(), normalUser.getUser().getName());
+        return new CreateNormalUserResponseDto(createUserResponseDto.getId(), createUserResponseDto.getName());
     }
 }

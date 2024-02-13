@@ -92,8 +92,8 @@ class NormalUserManageControllerTest {
         perform.andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id", equalTo(normalUser.getUser().getId())))
-                .andExpect(jsonPath("$.name", equalTo(normalUser.getUser().getName())));
+                .andExpect(jsonPath("$.id", equalTo(user.getId())))
+                .andExpect(jsonPath("$.name", equalTo(user.getName())));
 
         // docs
         perform.andDo(document("normal-user-signup",

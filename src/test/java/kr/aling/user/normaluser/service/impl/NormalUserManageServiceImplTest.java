@@ -69,7 +69,7 @@ class NormalUserManageServiceImplTest {
                 normalUser.getPhoneNo(), normalUser.getBirth().format(DateTimeFormatter.ofPattern(BIRTH_PATTERN))
         );
 
-        when(userManageService.registerUser(any())).thenReturn(new CreateUserResponseDto(user.getUserNo()));
+        when(userManageService.registerUser(any())).thenReturn(new CreateUserResponseDto(user.getUserNo(), user.getId(), user.getName()));
         when(wantJobTypeReadService.findByWantJobTypeNo(any())).thenReturn(new ReadWantJobTypeResponseDto(wantJobType));
         when(normalUserManageRepository.save(any())).thenReturn(normalUser);
 
@@ -78,8 +78,8 @@ class NormalUserManageServiceImplTest {
 
         // then
         assertThat(responseDto).isNotNull();
-        assertThat(responseDto.getId()).isEqualTo(normalUser.getUser().getId());
-        assertThat(responseDto.getName()).isEqualTo(normalUser.getUser().getName());
+        assertThat(responseDto.getId()).isEqualTo(user.getId());
+        assertThat(responseDto.getName()).isEqualTo(user.getName());
 
         verify(userManageService, times(1)).registerUser(any());
         verify(wantJobTypeReadService, times(1)).findByWantJobTypeNo(any());
