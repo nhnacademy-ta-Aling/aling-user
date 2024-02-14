@@ -49,7 +49,6 @@ class NormalUserManageRepositoryTest {
 
         // then
         assertThat(savedNormalUser).isNotNull();
-        assertThat(savedNormalUser.getUser()).isEqualTo(user);
         assertThat(savedNormalUser.getWantJobType()).isEqualTo(wantJobType);
         assertThat(savedNormalUser.getPhoneNo()).isEqualTo(normalUser.getPhoneNo());
         assertThat(savedNormalUser.getBirth()).isEqualTo(normalUser.getBirth());

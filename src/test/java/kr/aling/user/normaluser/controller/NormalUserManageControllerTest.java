@@ -2,8 +2,11 @@ package kr.aling.user.normaluser.controller;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
@@ -21,7 +24,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.format.DateTimeFormatter;
 import kr.aling.user.normaluser.dto.request.CreateNormalUserRequestDto;
-import kr.aling.user.normaluser.dto.response.CreateNormalUserResponseDto;
 import kr.aling.user.normaluser.dummy.NormalUserDummy;
 import kr.aling.user.normaluser.entity.NormalUser;
 import kr.aling.user.normaluser.service.NormalUserManageService;
@@ -80,8 +82,6 @@ class NormalUserManageControllerTest {
                 user.getId(), TMP_PASSWORD, user.getName(), normalUser.getWantJobType().getWantJobTypeNo(),
                 normalUser.getPhoneNo(), normalUser.getBirth().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
         );
-        CreateNormalUserResponseDto responseDto = new CreateNormalUserResponseDto(user.getId(), user.getName());
-        Mockito.when(normalUserManageService.registerNormalUser(any())).thenReturn(responseDto);
 
         // when
         ResultActions perform = mockMvc.perform(post("/api/v1/normals")
@@ -90,10 +90,7 @@ class NormalUserManageControllerTest {
 
         // then
         perform.andDo(print())
-                .andExpect(status().isCreated())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id", equalTo(normalUser.getUser().getId())))
-                .andExpect(jsonPath("$.name", equalTo(normalUser.getUser().getName())));
+                .andExpect(status().isCreated());
 
         // docs
         perform.andDo(document("normal-user-signup",
@@ -112,10 +109,6 @@ class NormalUserManageControllerTest {
                                 .attributes(key("valid").value("Not Blank, 최소 9자, 최대 11자, 전화번호 \\'-\\' 부호 없이")),
                         fieldWithPath("birth").type(JsonFieldType.STRING).description("생년월일")
                                 .attributes(key("valid").value("Not Blank, 최소 8자, 최대 8자, 생년월일"))
-                ),
-                responseFields(
-                        fieldWithPath("id").type(JsonFieldType.STRING).description("아이디"),
-                        fieldWithPath("name").type(JsonFieldType.STRING).description("이름")
                 )));
     }
 
@@ -143,8 +136,7 @@ class NormalUserManageControllerTest {
                 user.getId(), TMP_PASSWORD, user.getName(), normalUser.getWantJobType().getWantJobTypeNo(),
                 normalUser.getPhoneNo(), normalUser.getBirth().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
         );
-        Mockito.when(normalUserManageService.registerNormalUser(any()))
-                .thenThrow(new UserEmailAlreadyUsedException(user.getId()));
+        doThrow(UserEmailAlreadyUsedException.class).when(normalUserManageService).registerNormalUser(any());
 
         // when
         ResultActions perform = mockMvc.perform(post("/api/v1/normals")
