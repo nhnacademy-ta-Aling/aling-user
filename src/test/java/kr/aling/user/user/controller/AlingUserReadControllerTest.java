@@ -58,7 +58,7 @@ class AlingUserReadControllerTest {
         perform.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.data", equalTo(Boolean.TRUE)));
+                .andExpect(jsonPath("$.isExists", equalTo(Boolean.TRUE)));
 
         // docs
         perform.andDo(document("user-is-exists-user",
@@ -66,9 +66,7 @@ class AlingUserReadControllerTest {
                 preprocessResponse(prettyPrint()),
                 pathParameters(parameterWithName("userNo").description("확인할 유저번호")),
                 responseFields(
-                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("응답 성공여부"),
-                        fieldWithPath("message").type(JsonFieldType.STRING).description("에러 시 메세지"),
-                        fieldWithPath("data").type(JsonFieldType.BOOLEAN).description("이메일 존재여부")
+                        fieldWithPath("isExists").type(JsonFieldType.BOOLEAN).description("이메일 존재여부")
                 )));
     }
 }

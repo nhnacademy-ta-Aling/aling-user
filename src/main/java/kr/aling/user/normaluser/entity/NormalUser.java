@@ -36,6 +36,7 @@ import lombok.NoArgsConstructor;
 public class NormalUser {
 
     @Id
+    @Column(name = "aling_user_no")
     private Long userNo;
 
     @MapsId("userNo")

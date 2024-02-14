@@ -1,7 +1,6 @@
 package kr.aling.user.normaluser.service;
 
 import kr.aling.user.normaluser.dto.request.CreateNormalUserRequestDto;
-import kr.aling.user.normaluser.dto.response.CreateNormalUserResponseDto;
 
 /**
  * 일반회원 CUD Service interface.
@@ -19,5 +18,5 @@ public interface NormalUserManageService {
      * @author : 이수정
      * @since : 1.0
      */
-    CreateNormalUserResponseDto registerNormalUser(CreateNormalUserRequestDto requestDto);
+    void registerNormalUser(CreateNormalUserRequestDto requestDto);
 }

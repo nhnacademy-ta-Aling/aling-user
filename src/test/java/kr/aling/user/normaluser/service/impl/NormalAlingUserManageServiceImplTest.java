@@ -1,6 +1,5 @@
 package kr.aling.user.normaluser.service.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -11,7 +10,6 @@ import static org.mockito.Mockito.when;
 
 import java.time.format.DateTimeFormatter;
 import kr.aling.user.normaluser.dto.request.CreateNormalUserRequestDto;
-import kr.aling.user.normaluser.dto.response.CreateNormalUserResponseDto;
 import kr.aling.user.normaluser.dummy.NormalUserDummy;
 import kr.aling.user.normaluser.entity.NormalUser;
 import kr.aling.user.normaluser.repository.NormalUserManageRepository;
@@ -30,7 +28,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-class NormalAlingUserManageServiceImplTest {
+class NormalUserManageServiceImplTest {
 
     public static final String BIRTH_PATTERN = "yyyyMMdd";
     private final String TMP_PASSWORD = "########";
@@ -74,13 +72,9 @@ class NormalAlingUserManageServiceImplTest {
         when(normalUserManageRepository.save(any())).thenReturn(normalUser);
 
         // when
-        CreateNormalUserResponseDto responseDto = normalUserManageService.registerNormalUser(requestDto);
+        normalUserManageService.registerNormalUser(requestDto);
 
         // then
-        assertThat(responseDto).isNotNull();
-        assertThat(responseDto.getId()).isEqualTo(normalUser.getAlingUser().getId());
-        assertThat(responseDto.getName()).isEqualTo(normalUser.getAlingUser().getName());
-
         verify(userManageService, times(1)).registerUser(any());
         verify(wantJobTypeReadService, times(1)).findByWantJobTypeNo(any());
         verify(normalUserManageRepository, times(1)).save(any());

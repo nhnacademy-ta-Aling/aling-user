@@ -1,7 +1,7 @@
 package kr.aling.user.user.controller;
 
+import kr.aling.user.user.dto.response.IsExistsUserResponseDto;
 import java.util.List;
-import kr.aling.user.common.response.ApiResponse;
 import kr.aling.user.common.utils.ConstantUtil;
 import kr.aling.user.user.dto.response.GetBandInfoResponseDto;
 import kr.aling.user.user.service.UserReadService;
@@ -36,8 +36,8 @@ public class UserReadController {
      * @since : 1.0
      */
     @GetMapping("/check/{userNo}")
-    public ApiResponse<Boolean> isExistsUser(@PathVariable Long userNo) {
-        return new ApiResponse<>(true, "", userReadService.isExistsUserNo(userNo));
+    public ResponseEntity<IsExistsUserResponseDto> isExistsUser(@PathVariable Long userNo) {
+        return ResponseEntity.status(HttpStatus.OK).body(new IsExistsUserResponseDto(userReadService.isExistsUserNo(userNo)));
     }
 
     /**

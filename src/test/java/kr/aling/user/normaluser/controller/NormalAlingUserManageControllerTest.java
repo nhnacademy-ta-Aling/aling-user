@@ -1,7 +1,7 @@
 package kr.aling.user.normaluser.controller;
 
-import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -10,18 +10,14 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.format.DateTimeFormatter;
 import kr.aling.user.normaluser.dto.request.CreateNormalUserRequestDto;
-import kr.aling.user.normaluser.dto.response.CreateNormalUserResponseDto;
 import kr.aling.user.normaluser.dummy.NormalUserDummy;
 import kr.aling.user.normaluser.entity.NormalUser;
 import kr.aling.user.normaluser.service.NormalUserManageService;
@@ -33,7 +29,6 @@ import kr.aling.user.wantjobtype.entity.WantJobType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -48,7 +43,7 @@ import org.springframework.test.web.servlet.ResultActions;
 @AutoConfigureRestDocs(outputDir = "target/snippets")
 @MockBean(JpaMetamodelMappingContext.class)
 @WebMvcTest(NormalUserManageController.class)
-class NormalAlingUserManageControllerTest {
+class NormalUserManageControllerTest {
 
     private final String TMP_PASSWORD = "########";
 
@@ -80,8 +75,6 @@ class NormalAlingUserManageControllerTest {
                 alingUser.getId(), TMP_PASSWORD, alingUser.getName(), normalUser.getWantJobType().getWantJobTypeNo(),
                 normalUser.getPhoneNo(), normalUser.getBirth().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
         );
-        CreateNormalUserResponseDto responseDto = new CreateNormalUserResponseDto(alingUser.getId(), alingUser.getName());
-        Mockito.when(normalUserManageService.registerNormalUser(any())).thenReturn(responseDto);
 
         // when
         ResultActions perform = mockMvc.perform(post("/api/v1/normals")
@@ -90,10 +83,7 @@ class NormalAlingUserManageControllerTest {
 
         // then
         perform.andDo(print())
-                .andExpect(status().isCreated())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.data.id", equalTo(normalUser.getAlingUser().getId())))
-                .andExpect(jsonPath("$.data.name", equalTo(normalUser.getAlingUser().getName())));
+                .andExpect(status().isCreated());
 
         // docs
         perform.andDo(document("normal-user-signup",
@@ -112,12 +102,6 @@ class NormalAlingUserManageControllerTest {
                                 .attributes(key("valid").value("Not Blank, 최소 9자, 최대 11자, 전화번호 \\'-\\' 부호 없이")),
                         fieldWithPath("birth").type(JsonFieldType.STRING).description("생년월일")
                                 .attributes(key("valid").value("Not Blank, 최소 8자, 최대 8자, 생년월일"))
-                ),
-                responseFields(
-                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("응답 성공여부"),
-                        fieldWithPath("message").type(JsonFieldType.STRING).description("에러 시 메세지"),
-                        fieldWithPath("data.id").type(JsonFieldType.STRING).description("아이디"),
-                        fieldWithPath("data.name").type(JsonFieldType.STRING).description("이름")
                 )));
     }
 
@@ -145,8 +129,7 @@ class NormalAlingUserManageControllerTest {
                 alingUser.getId(), TMP_PASSWORD, alingUser.getName(), normalUser.getWantJobType().getWantJobTypeNo(),
                 normalUser.getPhoneNo(), normalUser.getBirth().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
         );
-        Mockito.when(normalUserManageService.registerNormalUser(any()))
-                .thenThrow(new UserEmailAlreadyUsedException(alingUser.getId()));
+        doThrow(UserEmailAlreadyUsedException.class).when(normalUserManageService).registerNormalUser(any());
 
         // when
         ResultActions perform = mockMvc.perform(post("/api/v1/normals")

@@ -2,17 +2,15 @@ package kr.aling.user.normaluser.controller;
 
 import javax.validation.Valid;
 import kr.aling.user.common.exception.CustomException;
-import kr.aling.user.common.response.ApiResponse;
 import kr.aling.user.normaluser.dto.request.CreateNormalUserRequestDto;
-import kr.aling.user.normaluser.dto.response.CreateNormalUserResponseDto;
 import kr.aling.user.normaluser.service.NormalUserManageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -37,14 +35,14 @@ public class NormalUserManageController {
      * @author : 이수정
      * @since : 1.0
      */
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ApiResponse<CreateNormalUserResponseDto> signUpNormalUser(
+    public ResponseEntity<Void> signUpNormalUser(
             @Valid @RequestBody CreateNormalUserRequestDto requestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new CustomException(HttpStatus.BAD_REQUEST,
                     "signup normal valid error - " + bindingResult.getAllErrors());
         }
-        return new ApiResponse<>(true, "", normalUserManageService.registerNormalUser(requestDto));
+        normalUserManageService.registerNormalUser(requestDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

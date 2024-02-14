@@ -18,7 +18,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @DataJpaTest
-class NormalAlingUserManageRepositoryTest {
+class NormalUserManageRepositoryTest {
 
     @Autowired
     private TestEntityManager testEntityManager;
