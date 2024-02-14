@@ -11,8 +11,9 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -20,8 +21,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import kr.aling.user.mail.dto.request.CheckMailRequestDto;
 import kr.aling.user.mail.service.MailService;
 import kr.aling.user.user.exception.UserEmailAlreadyUsedException;
 import org.junit.jupiter.api.DisplayName;
@@ -48,37 +47,33 @@ class MailControllerTest {
     @MockBean
     private MailService mailService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
     @Test
     @DisplayName("이메일 인증번호 전송 성공")
     void emailCheck() throws Exception {
         // given
         int authNumber = 999999;
-        CheckMailRequestDto requestDto = new CheckMailRequestDto("test@aling.kr");
+        String email = "test@aling.kr";
 
         Mockito.when(mailService.sendAuthNumber(any())).thenReturn(authNumber);
 
         // when
         ResultActions perform = mockMvc.perform(get("/api/v1/email-check")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(requestDto)));
+                .param("email", email));
 
         // then
         perform.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.authNumber", equalTo(authNumber)));
-        verify(mailService, times(1)).sendAuthNumber(requestDto.getEmail());
+        verify(mailService, times(1)).sendAuthNumber(email);
 
         // docs
         perform.andDo(document("email-check",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
-                requestFields(
-                       fieldWithPath("email").type(JsonFieldType.STRING).description("인증번호를 받을 이메일")
-                               .attributes(key("valid").value("Email 형식, 3~100 글자"))
+                requestParameters(
+                        parameterWithName("email").description("인증번호를 받을 이메일")
+                                .attributes(key("valid").value("Email 형식, 3~100 글자"))
                 ),
                 responseFields(
                         fieldWithPath("authNumber").type(JsonFieldType.NUMBER).description("생성된 인증번호")
@@ -86,19 +81,18 @@ class MailControllerTest {
     }
 
     @Test
-    @DisplayName("이메일 인증번호 전송 실패 - 입력 데이터가 @Valid 검증 조건에 맞지 않은 경우")
+    @DisplayName("이메일 인증번호 전송 실패 - 입력 이메일이 검증 조건에 맞지 않은 경우")
     void signUpNormalUser_invalidInput() throws Exception {
         // given
-        CheckMailRequestDto requestDto = new CheckMailRequestDto("test");
+        String email = "test";
 
         // when
         ResultActions perform = mockMvc.perform(get("/api/v1/email-check")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(requestDto)));
+                .param("email", email));
 
         // then
         perform.andDo(print()).andExpect(status().isBadRequest());
-        verify(mailService, never()).sendAuthNumber(requestDto.getEmail());
+        verify(mailService, never()).sendAuthNumber(email);
     }
 
     @Test
@@ -106,17 +100,15 @@ class MailControllerTest {
     void signUpNormalUser_alreadyExistsEmail() throws Exception {
         // given
         String email = "test@aling.kr";
-        CheckMailRequestDto requestDto = new CheckMailRequestDto(email);
 
         when(mailService.sendAuthNumber(any())).thenThrow(new UserEmailAlreadyUsedException(email));
 
         // when
         ResultActions perform = mockMvc.perform(get("/api/v1/email-check")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(requestDto)));
+                .param("email", email));
 
         // then
         perform.andDo(print()).andExpect(status().isConflict());
-        verify(mailService, times(1)).sendAuthNumber(requestDto.getEmail());
+        verify(mailService, times(1)).sendAuthNumber(email);
     }
 }
