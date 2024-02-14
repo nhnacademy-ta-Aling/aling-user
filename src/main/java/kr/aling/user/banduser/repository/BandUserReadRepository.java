@@ -18,5 +18,5 @@ public interface BandUserReadRepository extends JpaRepository<BandUser, Long>, B
      * @param roleName 그룹 회원 권한 이름
      * @return 특정 회원의 특정 그룹 회원 권한 보유 개수
      */
-    long countByUser_UserNoAndBandUserRole_RoleName(Long userNo, String roleName);
+    long countByAlingUser_UserNoAndBandUserRole_RoleName(Long userNo, String roleName);
 }

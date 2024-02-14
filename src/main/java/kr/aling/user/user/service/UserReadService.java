@@ -1,5 +1,8 @@
 package kr.aling.user.user.service;
 
+import java.util.List;
+import kr.aling.user.user.dto.response.GetBandInfoResponseDto;
+
 /**
  * 회원 읽기 전용 서비스.
  *
@@ -28,4 +31,12 @@ public interface UserReadService {
      * @since : 1.0
      */
     boolean isExistsUserNo(Long userNo);
+
+    /**
+     * 해당 회원이 가입한 그룹 정보 목록 조회 메서드.
+     *
+     * @param userNo 회원 번호
+     * @return 해당 회원이 가입한 그룹 정보 목록
+     */
+    List<GetBandInfoResponseDto> getJoinedBandInfoList(Long userNo);
 }

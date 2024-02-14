@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import kr.aling.user.normaluser.type.NormalUserOpen;
-import kr.aling.user.user.entity.User;
+import kr.aling.user.user.entity.AlingUser;
 import kr.aling.user.wantjobtype.entity.WantJobType;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -42,7 +42,7 @@ public class NormalUser {
     @MapsId("userNo")
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "aling_user_no")
-    private User user;
+    private AlingUser alingUser;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "want_job_type_no")

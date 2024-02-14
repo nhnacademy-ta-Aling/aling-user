@@ -8,7 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import kr.aling.user.user.entity.User;
+import kr.aling.user.user.entity.AlingUser;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,7 +35,7 @@ public class CompanyUser {
     @OneToOne(fetch = FetchType.LAZY)
     @Cascade(CascadeType.MERGE)
     @JoinColumn(name = "aling_user_no")
-    private User user;
+    private AlingUser alingUser;
 
     @Column(name = "company_user_registration_no")
     private String registrationNo;
@@ -55,18 +55,18 @@ public class CompanyUser {
     /**
      * 법인회원가입시 필요한 생성자.
      *
-     * @param user user entity
+     * @param alingUser user entity
      * @param registrationNo 사업자등록번호
      * @param companySize 법인규모
      * @param sector 업종
      */
     @Builder
-    public CompanyUser(User user, String registrationNo, String companySize, String sector) {
-        this.user = user;
+    public CompanyUser(AlingUser alingUser, String registrationNo, String companySize, String sector) {
+        this.alingUser = alingUser;
         this.registrationNo = registrationNo;
         this.companySize = companySize;
         this.sector = sector;
-        this.userNo = user.getUserNo();
+        this.userNo = alingUser.getUserNo();
         this.employee = 0;
         this.salary = 0;
     }

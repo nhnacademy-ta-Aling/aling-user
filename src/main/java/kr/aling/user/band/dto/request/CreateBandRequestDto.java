@@ -25,7 +25,6 @@ public class CreateBandRequestDto {
     @NotNull
     private Boolean isViewContent;
 
-    @NotBlank
     @Size(max = 1000)
     private String bandInfo;
 
