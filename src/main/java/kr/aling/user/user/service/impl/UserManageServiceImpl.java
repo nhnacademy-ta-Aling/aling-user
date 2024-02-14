@@ -3,7 +3,7 @@ package kr.aling.user.user.service.impl;
 import javax.transaction.Transactional;
 import kr.aling.user.user.dto.response.CreateUserResponseDto;
 import kr.aling.user.user.dto.resquest.CreateUserRequestDto;
-import kr.aling.user.user.entity.User;
+import kr.aling.user.user.entity.AlingUser;
 import kr.aling.user.user.exception.UserEmailAlreadyUsedException;
 import kr.aling.user.user.repository.UserManageRepository;
 import kr.aling.user.user.repository.UserReadRepository;
@@ -37,12 +37,12 @@ public class UserManageServiceImpl implements UserManageService {
             throw new UserEmailAlreadyUsedException(requestDto.getId());
         }
 
-        User user = User.builder()
+        AlingUser alingUser = AlingUser.builder()
                 .id(requestDto.getId())
                 .password(passwordEncoder.encode(requestDto.getPassword()))
                 .name(requestDto.getName())
                 .build();
-        user = userManageRepository.save(user);
-        return new CreateUserResponseDto(user.getUserNo());
+        alingUser = userManageRepository.save(alingUser);
+        return new CreateUserResponseDto(alingUser.getUserNo());
     }
 }

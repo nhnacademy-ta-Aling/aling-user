@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
-import kr.aling.user.user.entity.User;
+import kr.aling.user.user.entity.AlingUser;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -35,7 +35,7 @@ public class PostScrap {
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("userNo")
     @JoinColumn(name = "aling_user_no")
-    private User user;
+    private AlingUser alingUser;
 
     /**
      * 게시물 스크랩의 pk 클래스입니다.

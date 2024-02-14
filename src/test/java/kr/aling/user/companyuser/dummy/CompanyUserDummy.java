@@ -1,7 +1,7 @@
 package kr.aling.user.companyuser.dummy;
 
 import kr.aling.user.companyuser.entity.CompanyUser;
-import kr.aling.user.user.entity.User;
+import kr.aling.user.user.entity.AlingUser;
 
 /**
  * 법인회원 테스트용 더미 클래스.
@@ -10,9 +10,9 @@ import kr.aling.user.user.entity.User;
  * @since : 1.0
  **/
 public class CompanyUserDummy {
-    public static CompanyUser dummy(User user) {
+    public static CompanyUser dummy(AlingUser alingUser) {
         return CompanyUser.builder()
-                .user(user)
+                .alingUser(alingUser)
                 .companySize("CORPORATE")
                 .registrationNo("1234567890")
                 .sector("IT 업종")

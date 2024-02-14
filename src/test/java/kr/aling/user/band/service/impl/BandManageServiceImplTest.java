@@ -26,7 +26,7 @@ import kr.aling.user.banduserrole.entity.BandUserRole;
 import kr.aling.user.banduserrole.exception.BandUserRoleNotFoundException;
 import kr.aling.user.banduserrole.repository.BandUserRoleReadRepository;
 import kr.aling.user.user.dummy.UserDummy;
-import kr.aling.user.user.entity.User;
+import kr.aling.user.user.entity.AlingUser;
 import kr.aling.user.user.exception.UserNotFoundException;
 import kr.aling.user.user.repository.UserReadRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -63,7 +63,7 @@ class BandManageServiceImplTest {
     private BandUserManageRepository bandUserManageRepository;
 
     private BandUserRole bandUserRoleCreator;
-    private User user;
+    private AlingUser alingUser;
     private Band band;
     private BandUser bandUserCreator;
     private Long userNo;
@@ -72,9 +72,9 @@ class BandManageServiceImplTest {
     @BeforeEach
     void setUp() {
         bandUserRoleCreator = BandUserRoleDummy.dummyCreator();
-        user = UserDummy.dummy();
+        alingUser = UserDummy.dummy();
         band = BandDummy.dummyPublicBand();
-        bandUserCreator = BandUserDummy.dummy(bandUserRoleCreator, band, user);
+        bandUserCreator = BandUserDummy.dummy(bandUserRoleCreator, band, alingUser);
 
         userNo = 1L;
 
@@ -93,10 +93,10 @@ class BandManageServiceImplTest {
         // when
         when(bandUserRoleReadRepository.findByRoleName(any())).thenReturn(
                 Optional.of(bandUserRoleCreator));
-        when(bandUserReadRepository.countByUser_UserNoAndBandUserRole_RoleName(any(), any())).thenReturn(
+        when(bandUserReadRepository.countByAlingUser_UserNoAndBandUserRole_RoleName(any(), any())).thenReturn(
                 Long.MIN_VALUE);
         when(bandReadRepository.existsBandByName(any())).thenReturn(false);
-        when(userReadRepository.findById(any())).thenReturn(Optional.of(user));
+        when(userReadRepository.findById(any())).thenReturn(Optional.of(alingUser));
         when(bandManageRepository.save(any())).thenReturn(band);
         when(bandUserManageRepository.save(any())).thenReturn(bandUserCreator);
 
@@ -104,7 +104,7 @@ class BandManageServiceImplTest {
         assertDoesNotThrow(() -> bandManageServiceImpl.makeBand(userNo, createBandRequestDto));
 
         verify(bandUserRoleReadRepository, times(1)).findByRoleName(anyString());
-        verify(bandUserReadRepository, times(1)).countByUser_UserNoAndBandUserRole_RoleName(anyLong(), anyString());
+        verify(bandUserReadRepository, times(1)).countByAlingUser_UserNoAndBandUserRole_RoleName(anyLong(), anyString());
         verify(bandReadRepository, times(1)).existsBandByName(anyString());
         verify(userReadRepository, times(1)).findById(anyLong());
         verify(bandManageRepository, times(1)).save(any());
@@ -117,10 +117,10 @@ class BandManageServiceImplTest {
         // when
         when(bandUserRoleReadRepository.findByRoleName(any())).thenReturn(
                 Optional.ofNullable(null));
-        when(bandUserReadRepository.countByUser_UserNoAndBandUserRole_RoleName(any(), any())).thenReturn(
+        when(bandUserReadRepository.countByAlingUser_UserNoAndBandUserRole_RoleName(any(), any())).thenReturn(
                 Long.MIN_VALUE);
         when(bandReadRepository.existsBandByName(any())).thenReturn(false);
-        when(userReadRepository.findById(any())).thenReturn(Optional.of(user));
+        when(userReadRepository.findById(any())).thenReturn(Optional.of(alingUser));
         when(bandManageRepository.save(any())).thenReturn(band);
         when(bandUserManageRepository.save(any())).thenReturn(bandUserCreator);
 
@@ -130,7 +130,7 @@ class BandManageServiceImplTest {
                 .hasMessage(BandUserRoleNotFoundException.MESSAGE);
 
         verify(bandUserRoleReadRepository, times(1)).findByRoleName(anyString());
-        verify(bandUserReadRepository, times(0)).countByUser_UserNoAndBandUserRole_RoleName(anyLong(), anyString());
+        verify(bandUserReadRepository, times(0)).countByAlingUser_UserNoAndBandUserRole_RoleName(anyLong(), anyString());
         verify(bandReadRepository, times(0)).existsBandByName(anyString());
         verify(userReadRepository, times(0)).findById(anyLong());
         verify(bandManageRepository, times(0)).save(any());
@@ -143,10 +143,10 @@ class BandManageServiceImplTest {
         // when
         when(bandUserRoleReadRepository.findByRoleName(any())).thenReturn(
                 Optional.of(bandUserRoleCreator));
-        when(bandUserReadRepository.countByUser_UserNoAndBandUserRole_RoleName(any(), any())).thenReturn(
+        when(bandUserReadRepository.countByAlingUser_UserNoAndBandUserRole_RoleName(any(), any())).thenReturn(
                 Long.MAX_VALUE);
         when(bandReadRepository.existsBandByName(any())).thenReturn(false);
-        when(userReadRepository.findById(any())).thenReturn(Optional.of(user));
+        when(userReadRepository.findById(any())).thenReturn(Optional.of(alingUser));
         when(bandManageRepository.save(any())).thenReturn(band);
         when(bandUserManageRepository.save(any())).thenReturn(bandUserCreator);
 
@@ -156,7 +156,7 @@ class BandManageServiceImplTest {
                 .hasMessage(BandLimitExceededException.MESSAGE);
 
         verify(bandUserRoleReadRepository, times(1)).findByRoleName(anyString());
-        verify(bandUserReadRepository, times(1)).countByUser_UserNoAndBandUserRole_RoleName(anyLong(), anyString());
+        verify(bandUserReadRepository, times(1)).countByAlingUser_UserNoAndBandUserRole_RoleName(anyLong(), anyString());
         verify(bandReadRepository, times(0)).existsBandByName(anyString());
         verify(userReadRepository, times(0)).findById(anyLong());
         verify(bandManageRepository, times(0)).save(any());
@@ -169,10 +169,10 @@ class BandManageServiceImplTest {
         // when
         when(bandUserRoleReadRepository.findByRoleName(any())).thenReturn(
                 Optional.of(bandUserRoleCreator));
-        when(bandUserReadRepository.countByUser_UserNoAndBandUserRole_RoleName(any(), any())).thenReturn(
+        when(bandUserReadRepository.countByAlingUser_UserNoAndBandUserRole_RoleName(any(), any())).thenReturn(
                 Long.MIN_VALUE);
         when(bandReadRepository.existsBandByName(any())).thenReturn(true);
-        when(userReadRepository.findById(any())).thenReturn(Optional.of(user));
+        when(userReadRepository.findById(any())).thenReturn(Optional.of(alingUser));
         when(bandManageRepository.save(any())).thenReturn(band);
         when(bandUserManageRepository.save(any())).thenReturn(bandUserCreator);
 
@@ -182,7 +182,7 @@ class BandManageServiceImplTest {
                 .hasMessage(BandAlreadyExistsException.MESSAGE);
 
         verify(bandUserRoleReadRepository, times(1)).findByRoleName(anyString());
-        verify(bandUserReadRepository, times(1)).countByUser_UserNoAndBandUserRole_RoleName(anyLong(), anyString());
+        verify(bandUserReadRepository, times(1)).countByAlingUser_UserNoAndBandUserRole_RoleName(anyLong(), anyString());
         verify(bandReadRepository, times(1)).existsBandByName(anyString());
         verify(userReadRepository, times(0)).findById(anyLong());
         verify(bandManageRepository, times(0)).save(any());
@@ -195,7 +195,7 @@ class BandManageServiceImplTest {
         // when
         when(bandUserRoleReadRepository.findByRoleName(any())).thenReturn(
                 Optional.of(bandUserRoleCreator));
-        when(bandUserReadRepository.countByUser_UserNoAndBandUserRole_RoleName(any(), any())).thenReturn(
+        when(bandUserReadRepository.countByAlingUser_UserNoAndBandUserRole_RoleName(any(), any())).thenReturn(
                 Long.MIN_VALUE);
         when(bandReadRepository.existsBandByName(any())).thenReturn(false);
         when(userReadRepository.findById(any())).thenReturn(Optional.ofNullable(null));
@@ -208,7 +208,7 @@ class BandManageServiceImplTest {
                 .hasMessage(UserNotFoundException.MESSAGE);
 
         verify(bandUserRoleReadRepository, times(1)).findByRoleName(anyString());
-        verify(bandUserReadRepository, times(1)).countByUser_UserNoAndBandUserRole_RoleName(anyLong(), anyString());
+        verify(bandUserReadRepository, times(1)).countByAlingUser_UserNoAndBandUserRole_RoleName(anyLong(), anyString());
         verify(bandReadRepository, times(1)).existsBandByName(anyString());
         verify(userReadRepository, times(1)).findById(anyLong());
         verify(bandManageRepository, times(0)).save(any());

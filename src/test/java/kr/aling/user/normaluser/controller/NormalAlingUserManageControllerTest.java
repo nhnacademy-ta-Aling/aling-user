@@ -26,7 +26,7 @@ import kr.aling.user.normaluser.dummy.NormalUserDummy;
 import kr.aling.user.normaluser.entity.NormalUser;
 import kr.aling.user.normaluser.service.NormalUserManageService;
 import kr.aling.user.user.dummy.UserDummy;
-import kr.aling.user.user.entity.User;
+import kr.aling.user.user.entity.AlingUser;
 import kr.aling.user.user.exception.UserEmailAlreadyUsedException;
 import kr.aling.user.wantjobtype.dummy.WantJobTypeDummy;
 import kr.aling.user.wantjobtype.entity.WantJobType;
@@ -48,7 +48,7 @@ import org.springframework.test.web.servlet.ResultActions;
 @AutoConfigureRestDocs(outputDir = "target/snippets")
 @MockBean(JpaMetamodelMappingContext.class)
 @WebMvcTest(NormalUserManageController.class)
-class NormalUserManageControllerTest {
+class NormalAlingUserManageControllerTest {
 
     private final String TMP_PASSWORD = "########";
 
@@ -61,15 +61,15 @@ class NormalUserManageControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private User user;
+    private AlingUser alingUser;
     private WantJobType wantJobType;
     private NormalUser normalUser;
 
     @BeforeEach
     void setUp() {
-        user = UserDummy.dummyEncoder(new BCryptPasswordEncoder());
+        alingUser = UserDummy.dummyEncoder(new BCryptPasswordEncoder());
         wantJobType = WantJobTypeDummy.dummy();
-        normalUser = NormalUserDummy.dummy(user, wantJobType);
+        normalUser = NormalUserDummy.dummy(alingUser, wantJobType);
     }
 
     @Test
@@ -77,10 +77,10 @@ class NormalUserManageControllerTest {
     void signUpNormalUser() throws Exception {
         // given
         CreateNormalUserRequestDto requestDto = new CreateNormalUserRequestDto(
-                user.getId(), TMP_PASSWORD, user.getName(), normalUser.getWantJobType().getWantJobTypeNo(),
+                alingUser.getId(), TMP_PASSWORD, alingUser.getName(), normalUser.getWantJobType().getWantJobTypeNo(),
                 normalUser.getPhoneNo(), normalUser.getBirth().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
         );
-        CreateNormalUserResponseDto responseDto = new CreateNormalUserResponseDto(user.getId(), user.getName());
+        CreateNormalUserResponseDto responseDto = new CreateNormalUserResponseDto(alingUser.getId(), alingUser.getName());
         Mockito.when(normalUserManageService.registerNormalUser(any())).thenReturn(responseDto);
 
         // when
@@ -92,8 +92,8 @@ class NormalUserManageControllerTest {
         perform.andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.data.id", equalTo(normalUser.getUser().getId())))
-                .andExpect(jsonPath("$.data.name", equalTo(normalUser.getUser().getName())));
+                .andExpect(jsonPath("$.data.id", equalTo(normalUser.getAlingUser().getId())))
+                .andExpect(jsonPath("$.data.name", equalTo(normalUser.getAlingUser().getName())));
 
         // docs
         perform.andDo(document("normal-user-signup",
@@ -142,11 +142,11 @@ class NormalUserManageControllerTest {
     void signUpNormalUser_alreadyExistsEmail() throws Exception {
         // given
         CreateNormalUserRequestDto requestDto = new CreateNormalUserRequestDto(
-                user.getId(), TMP_PASSWORD, user.getName(), normalUser.getWantJobType().getWantJobTypeNo(),
+                alingUser.getId(), TMP_PASSWORD, alingUser.getName(), normalUser.getWantJobType().getWantJobTypeNo(),
                 normalUser.getPhoneNo(), normalUser.getBirth().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
         );
         Mockito.when(normalUserManageService.registerNormalUser(any()))
-                .thenThrow(new UserEmailAlreadyUsedException(user.getId()));
+                .thenThrow(new UserEmailAlreadyUsedException(alingUser.getId()));
 
         // when
         ResultActions perform = mockMvc.perform(post("/api/v1/normals")

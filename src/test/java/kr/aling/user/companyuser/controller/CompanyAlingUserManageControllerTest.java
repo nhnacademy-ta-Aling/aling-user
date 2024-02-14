@@ -25,7 +25,7 @@ import kr.aling.user.companyuser.dummy.CompanyUserDummy;
 import kr.aling.user.companyuser.entity.CompanyUser;
 import kr.aling.user.companyuser.service.CompanyUserManageService;
 import kr.aling.user.user.dummy.UserDummy;
-import kr.aling.user.user.entity.User;
+import kr.aling.user.user.entity.AlingUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,7 +50,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest(CompanyUserManageController.class)
 @AutoConfigureRestDocs(outputDir = "target/snippets")
 @MockBean(JpaMetamodelMappingContext.class)
-class CompanyUserManageControllerTest {
+class CompanyAlingUserManageControllerTest {
     @Autowired
     MockMvc mockMvc;
     @MockBean
@@ -67,21 +67,21 @@ class CompanyUserManageControllerTest {
     @DisplayName("법인 회원가입 성공")
     void registerCompanyUser() throws Exception {
         passwordEncoder = new BCryptPasswordEncoder();
-        User user = UserDummy.dummyEncoder(passwordEncoder);
-        ReflectionTestUtils.setField(user, "userNo", 10_000_000L);
-        CompanyUser companyUser = CompanyUserDummy.dummy(user);
+        AlingUser alingUser = UserDummy.dummyEncoder(passwordEncoder);
+        ReflectionTestUtils.setField(alingUser, "userNo", 10_000_000L);
+        CompanyUser companyUser = CompanyUserDummy.dummy(alingUser);
 
         CreateCompanyUserRequestDto requestDto = new CreateCompanyUserRequestDto();
-        ReflectionTestUtils.setField(requestDto, "email", user.getId());
+        ReflectionTestUtils.setField(requestDto, "email", alingUser.getId());
         ReflectionTestUtils.setField(requestDto, "password", "nhn123456");
-        ReflectionTestUtils.setField(requestDto, "name", user.getName());
-        ReflectionTestUtils.setField(requestDto, "address", user.getAddress());
+        ReflectionTestUtils.setField(requestDto, "name", alingUser.getName());
+        ReflectionTestUtils.setField(requestDto, "address", alingUser.getAddress());
         ReflectionTestUtils.setField(requestDto, "companyRegistrationNo", companyUser.getRegistrationNo());
         ReflectionTestUtils.setField(requestDto, "companySize", companyUser.getCompanySize());
         ReflectionTestUtils.setField(requestDto, "companySector", companyUser.getSector());
 
         when(companyUserManageService.registerCompanyUser(any()))
-                .thenReturn(new CreateCompanyUserResponseDto(user.getName()));
+                .thenReturn(new CreateCompanyUserResponseDto(alingUser.getName()));
 
         String url = "/companies";
 
@@ -89,7 +89,7 @@ class CompanyUserManageControllerTest {
                 .content(objectMapper.writeValueAsString(requestDto))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name").value(user.getName()))
+                .andExpect(jsonPath("$.name").value(alingUser.getName()))
                 .andDo(print())
                 .andDo(document("company-user-registration",
                         preprocessRequest(prettyPrint()),

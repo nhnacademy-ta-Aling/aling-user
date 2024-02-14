@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import kr.aling.user.user.entity.User;
+import kr.aling.user.user.entity.AlingUser;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,11 +36,11 @@ public class Follow {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "aling_user_no")
-    private User user;
+    private AlingUser alingUser;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "following_aling_user_no")
-    private User followingUser;
+    private AlingUser followingAlingUser;
 
     @Column(name = "follow_is_alarm")
     private Boolean isAlarm;

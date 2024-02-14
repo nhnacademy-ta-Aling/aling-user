@@ -52,6 +52,6 @@ public class NormalUserManageServiceImpl implements NormalUserManageService {
                 .build();
         normalUser = normalUserManageRepository.save(normalUser);
 
-        return new CreateNormalUserResponseDto(normalUser.getUser().getId(), normalUser.getUser().getName());
+        return new CreateNormalUserResponseDto(normalUser.getAlingUser().getId(), normalUser.getAlingUser().getName());
     }
 }
