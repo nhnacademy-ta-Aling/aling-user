@@ -29,10 +29,7 @@ public class BandReadRepositoryImpl extends QuerydslRepositorySupport implements
     }
 
     /**
-     * 그룹 명을 통해 그룹 상세 정보를 조회 하는 메서드.
-     *
-     * @param bandName 그룹 명
-     * @return Optional 그룹 상세 정보
+     * {@inheritDoc}
      */
     @Override
     public Optional<GetBandDetailInfoResponseDto> getBandDetailInfoByBandName(String bandName) {
@@ -63,10 +60,7 @@ public class BandReadRepositoryImpl extends QuerydslRepositorySupport implements
     }
 
     /**
-     * 그룹 명을 통해 그룹 목록을 조회 하는 메서드.
-     *
-     * @param bandName 그룹 명
-     * @return 그룹 정보 리스트
+     * {@inheritDoc}
      */
     @Override
     public List<GetBandInfoResponseDto> getSearchBandInfoListByBandName(String bandName) {

@@ -1,9 +1,9 @@
 package kr.aling.user.user.controller;
 
-import kr.aling.user.user.dto.response.IsExistsUserResponseDto;
 import java.util.List;
 import kr.aling.user.common.utils.ConstantUtil;
 import kr.aling.user.user.dto.response.GetBandInfoResponseDto;
+import kr.aling.user.user.dto.response.IsExistsUserResponseDto;
 import kr.aling.user.user.service.UserReadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,7 +37,8 @@ public class UserReadController {
      */
     @GetMapping("/check/{userNo}")
     public ResponseEntity<IsExistsUserResponseDto> isExistsUser(@PathVariable Long userNo) {
-        return ResponseEntity.status(HttpStatus.OK).body(new IsExistsUserResponseDto(userReadService.isExistsUserNo(userNo)));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new IsExistsUserResponseDto(userReadService.isExistsUserNo(userNo)));
     }
 
     /**
