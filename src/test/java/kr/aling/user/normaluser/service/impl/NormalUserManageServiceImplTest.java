@@ -1,6 +1,5 @@
 package kr.aling.user.normaluser.service.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -11,7 +10,6 @@ import static org.mockito.Mockito.when;
 
 import java.time.format.DateTimeFormatter;
 import kr.aling.user.normaluser.dto.request.CreateNormalUserRequestDto;
-import kr.aling.user.normaluser.dto.response.CreateNormalUserResponseDto;
 import kr.aling.user.normaluser.dummy.NormalUserDummy;
 import kr.aling.user.normaluser.entity.NormalUser;
 import kr.aling.user.normaluser.repository.NormalUserManageRepository;
@@ -69,18 +67,14 @@ class NormalUserManageServiceImplTest {
                 normalUser.getPhoneNo(), normalUser.getBirth().format(DateTimeFormatter.ofPattern(BIRTH_PATTERN))
         );
 
-        when(userManageService.registerUser(any())).thenReturn(new CreateUserResponseDto(user.getUserNo(), user.getId(), user.getName()));
+        when(userManageService.registerUser(any())).thenReturn(new CreateUserResponseDto(user.getUserNo()));
         when(wantJobTypeReadService.findByWantJobTypeNo(any())).thenReturn(new ReadWantJobTypeResponseDto(wantJobType));
         when(normalUserManageRepository.save(any())).thenReturn(normalUser);
 
         // when
-        CreateNormalUserResponseDto responseDto = normalUserManageService.registerNormalUser(requestDto);
+        normalUserManageService.registerNormalUser(requestDto);
 
         // then
-        assertThat(responseDto).isNotNull();
-        assertThat(responseDto.getId()).isEqualTo(user.getId());
-        assertThat(responseDto.getName()).isEqualTo(user.getName());
-
         verify(userManageService, times(1)).registerUser(any());
         verify(wantJobTypeReadService, times(1)).findByWantJobTypeNo(any());
         verify(normalUserManageRepository, times(1)).save(any());

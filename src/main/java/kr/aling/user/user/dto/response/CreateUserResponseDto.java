@@ -14,6 +14,4 @@ import lombok.Getter;
 public class CreateUserResponseDto {
 
     private final Long userNo;
-    private final String id;
-    private final String name;
 }

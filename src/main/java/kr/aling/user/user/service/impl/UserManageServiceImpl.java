@@ -43,6 +43,6 @@ public class UserManageServiceImpl implements UserManageService {
                 .name(requestDto.getName())
                 .build();
         user = userManageRepository.save(user);
-        return new CreateUserResponseDto(user.getUserNo(), user.getId(), user.getName());
+        return new CreateUserResponseDto(user.getUserNo());
     }
 }
