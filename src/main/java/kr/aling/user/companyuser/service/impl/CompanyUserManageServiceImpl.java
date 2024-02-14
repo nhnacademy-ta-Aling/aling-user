@@ -5,7 +5,7 @@ import kr.aling.user.companyuser.dto.response.CreateCompanyUserResponseDto;
 import kr.aling.user.companyuser.entity.CompanyUser;
 import kr.aling.user.companyuser.repository.CompanyUserManageRepository;
 import kr.aling.user.companyuser.service.CompanyUserManageService;
-import kr.aling.user.user.entity.User;
+import kr.aling.user.user.entity.AlingUser;
 import kr.aling.user.user.exception.UserEmailAlreadyUsedException;
 import kr.aling.user.user.repository.UserManageRepository;
 import kr.aling.user.user.repository.UserReadRepository;
@@ -39,16 +39,16 @@ public class CompanyUserManageServiceImpl implements CompanyUserManageService {
             throw new UserEmailAlreadyUsedException(requestDto.getEmail());
         }
 
-        User user = User.builder()
+        AlingUser alingUser = AlingUser.builder()
                 .id(requestDto.getEmail())
                 .password(passwordEncoder.encode(requestDto.getPassword()))
                 .name(requestDto.getName())
                 .address(requestDto.getAddress()).build();
 
-        user = userManageRepository.save(user);
+        alingUser = userManageRepository.save(alingUser);
 
         CompanyUser companyUser = CompanyUser.builder()
-                .user(user)
+                .alingUser(alingUser)
                 .registrationNo(requestDto.getCompanyRegistrationNo())
                 .companySize(requestDto.getCompanySize())
                 .sector(requestDto.getCompanySector())
@@ -56,6 +56,6 @@ public class CompanyUserManageServiceImpl implements CompanyUserManageService {
 
         companyUserManageRepository.save(companyUser);
 
-        return new CreateCompanyUserResponseDto(companyUser.getUser().getName());
+        return new CreateCompanyUserResponseDto(companyUser.getAlingUser().getName());
     }
 }

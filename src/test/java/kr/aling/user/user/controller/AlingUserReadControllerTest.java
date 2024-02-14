@@ -33,7 +33,7 @@ import org.springframework.test.web.servlet.ResultActions;
 @AutoConfigureRestDocs(outputDir = "target/snippets")
 @MockBean(JpaMetamodelMappingContext.class)
 @WebMvcTest(UserReadController.class)
-class UserReadControllerTest {
+class AlingUserReadControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

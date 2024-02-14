@@ -1,6 +1,7 @@
 package kr.aling.user.common.advice;
 
 import javax.validation.ConstraintViolationException;
+import kr.aling.user.band.exception.BandLimitExceededException;
 import kr.aling.user.common.exception.CustomException;
 import kr.aling.user.user.exception.UserEmailAlreadyUsedException;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ public class ControllerAdvice {
      * @author : 이수정
      * @since : 1.0
      */
-    @ExceptionHandler(ConstraintViolationException.class)
+    @ExceptionHandler({ConstraintViolationException.class, BandLimitExceededException.class})
     public ResponseEntity<String> handleBadRequestException(Exception e) {
         log.error("[{}] {}", HttpStatus.BAD_REQUEST, e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

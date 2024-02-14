@@ -92,7 +92,7 @@ class BandManageControllerTest {
                                 fieldWithPath("isViewContent").type(JsonFieldType.BOOLEAN).description("게시글 공개 여부")
                                         .attributes(key("valid").value("Not Null")),
                                 fieldWithPath("bandInfo").type(JsonFieldType.STRING).description("그룹 소개글")
-                                        .attributes(key("valid").value("Not Blank, 최대 1000글자")),
+                                        .attributes(key("valid").value("최대 1000글자")),
                                 fieldWithPath("fileNo").type(JsonFieldType.NUMBER).description("그룹 프로필 파일 번호")
                                         .attributes(key("valid").value(""))
                         )));
@@ -216,32 +216,6 @@ class BandManageControllerTest {
         ReflectionTestUtils.setField(createBandRequestDto, "isEnter", false);
         ReflectionTestUtils.setField(createBandRequestDto, "isViewContent", null);
         ReflectionTestUtils.setField(createBandRequestDto, "bandInfo", "I'm band!");
-        ReflectionTestUtils.setField(createBandRequestDto, "fileNo", null);
-
-        // when
-        doNothing().when(bandManageService).makeBand(anyLong(), any());
-
-        // then
-        mockMvc.perform(post(bandUrl)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .header(ConstantUtil.X_TEMP_USER_NO, userNo)
-                        .content(objectMapper.writeValueAsString(createBandRequestDto)))
-                .andExpect(status().isBadRequest());
-
-        verify(bandManageService, times(0)).makeBand(anyLong(), any());
-    }
-
-    @Test
-    @DisplayName("그룹 생성 실패_그룹 소개글이 blank")
-    void makeBand_failTest_bandInfo_blank() throws Exception {
-        // given
-        Long userNo = 1L;
-
-        CreateBandRequestDto createBandRequestDto = new CreateBandRequestDto();
-        ReflectionTestUtils.setField(createBandRequestDto, "bandName", "testBandName");
-        ReflectionTestUtils.setField(createBandRequestDto, "isEnter", false);
-        ReflectionTestUtils.setField(createBandRequestDto, "isViewContent", false);
-        ReflectionTestUtils.setField(createBandRequestDto, "bandInfo", "   ");
         ReflectionTestUtils.setField(createBandRequestDto, "fileNo", null);
 
         // when

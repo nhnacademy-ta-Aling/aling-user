@@ -22,7 +22,7 @@ import kr.aling.user.normaluser.dummy.NormalUserDummy;
 import kr.aling.user.normaluser.entity.NormalUser;
 import kr.aling.user.normaluser.service.NormalUserManageService;
 import kr.aling.user.user.dummy.UserDummy;
-import kr.aling.user.user.entity.User;
+import kr.aling.user.user.entity.AlingUser;
 import kr.aling.user.user.exception.UserEmailAlreadyUsedException;
 import kr.aling.user.wantjobtype.dummy.WantJobTypeDummy;
 import kr.aling.user.wantjobtype.entity.WantJobType;
@@ -56,15 +56,15 @@ class NormalUserManageControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private User user;
+    private AlingUser alingUser;
     private WantJobType wantJobType;
     private NormalUser normalUser;
 
     @BeforeEach
     void setUp() {
-        user = UserDummy.dummyEncoder(new BCryptPasswordEncoder());
+        alingUser = UserDummy.dummyEncoder(new BCryptPasswordEncoder());
         wantJobType = WantJobTypeDummy.dummy();
-        normalUser = NormalUserDummy.dummy(user, wantJobType);
+        normalUser = NormalUserDummy.dummy(alingUser, wantJobType);
     }
 
     @Test
@@ -72,7 +72,7 @@ class NormalUserManageControllerTest {
     void signUpNormalUser() throws Exception {
         // given
         CreateNormalUserRequestDto requestDto = new CreateNormalUserRequestDto(
-                user.getId(), TMP_PASSWORD, user.getName(), normalUser.getWantJobType().getWantJobTypeNo(),
+                alingUser.getId(), TMP_PASSWORD, alingUser.getName(), normalUser.getWantJobType().getWantJobTypeNo(),
                 normalUser.getPhoneNo(), normalUser.getBirth().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
         );
 
@@ -126,7 +126,7 @@ class NormalUserManageControllerTest {
     void signUpNormalUser_alreadyExistsEmail() throws Exception {
         // given
         CreateNormalUserRequestDto requestDto = new CreateNormalUserRequestDto(
-                user.getId(), TMP_PASSWORD, user.getName(), normalUser.getWantJobType().getWantJobTypeNo(),
+                alingUser.getId(), TMP_PASSWORD, alingUser.getName(), normalUser.getWantJobType().getWantJobTypeNo(),
                 normalUser.getPhoneNo(), normalUser.getBirth().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
         );
         doThrow(UserEmailAlreadyUsedException.class).when(normalUserManageService).registerNormalUser(any());

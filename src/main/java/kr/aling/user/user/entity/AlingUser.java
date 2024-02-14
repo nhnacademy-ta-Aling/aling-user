@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "aling_user")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User extends BaseCreateTimeEntity {
+public class AlingUser extends BaseCreateTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,7 +71,7 @@ public class User extends BaseCreateTimeEntity {
      * @param address  주소
      */
     @Builder
-    public User(String id, String password, String name, String address) {
+    public AlingUser(String id, String password, String name, String address) {
         this.id = id;
         this.password = password;
         this.name = name;

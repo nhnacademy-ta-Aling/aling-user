@@ -1,6 +1,6 @@
 package kr.aling.user.user.dummy;
 
-import kr.aling.user.user.entity.User;
+import kr.aling.user.user.entity.AlingUser;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
@@ -11,8 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  **/
 public class UserDummy {
 
-    public static User dummyEncoder(PasswordEncoder passwordEncoder) {
-        return User.builder()
+    public static AlingUser dummyEncoder(PasswordEncoder passwordEncoder) {
+        return AlingUser.builder()
                 .id("test@test.com")
                 .password(passwordEncoder.encode("nhn123!@#"))
                 .name("NHN-Test")
@@ -20,8 +20,8 @@ public class UserDummy {
                 .build();
     }
 
-    public static User dummy() {
-        return User.builder()
+    public static AlingUser dummy() {
+        return AlingUser.builder()
                 .id("testId@test.com")
                 .password("testPwd")
                 .name("testName")

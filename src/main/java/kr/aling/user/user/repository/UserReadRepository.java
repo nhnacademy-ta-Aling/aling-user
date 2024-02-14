@@ -1,6 +1,6 @@
 package kr.aling.user.user.repository;
 
-import kr.aling.user.user.entity.User;
+import kr.aling.user.user.entity.AlingUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author : 여운석
  * @since : 1.0
  **/
-public interface UserReadRepository extends JpaRepository<User, Long>, UserReadRepositoryCustom {
+public interface UserReadRepository extends JpaRepository<AlingUser, Long>, UserReadRepositoryCustom {
 
 }

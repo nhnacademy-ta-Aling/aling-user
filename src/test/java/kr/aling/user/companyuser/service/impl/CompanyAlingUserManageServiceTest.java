@@ -15,7 +15,7 @@ import kr.aling.user.companyuser.entity.CompanyUser;
 import kr.aling.user.companyuser.repository.CompanyUserManageRepository;
 import kr.aling.user.companyuser.service.CompanyUserManageService;
 import kr.aling.user.user.dummy.UserDummy;
-import kr.aling.user.user.entity.User;
+import kr.aling.user.user.entity.AlingUser;
 import kr.aling.user.user.exception.UserEmailAlreadyUsedException;
 import kr.aling.user.user.repository.UserManageRepository;
 import kr.aling.user.user.repository.UserReadRepository;
@@ -33,7 +33,7 @@ import org.springframework.test.util.ReflectionTestUtils;
  * @author : 여운석
  * @since : 1.0
  **/
-class CompanyUserManageServiceTest {
+class CompanyAlingUserManageServiceTest {
     CompanyUserManageService companyUserManageService;
     CompanyUserManageRepository companyUserManageRepository;
     UserManageRepository userManageRepository;
@@ -53,26 +53,26 @@ class CompanyUserManageServiceTest {
     @Test
     @DisplayName("법인 회원가입 성공")
     void registerCompanyUser() {
-        User user = UserDummy.dummyEncoder(passwordEncoder);
-        ReflectionTestUtils.setField(user, "userNo", 10_000_000L);
-        CompanyUser companyUser = CompanyUserDummy.dummy(user);
+        AlingUser alingUser = UserDummy.dummyEncoder(passwordEncoder);
+        ReflectionTestUtils.setField(alingUser, "userNo", 10_000_000L);
+        CompanyUser companyUser = CompanyUserDummy.dummy(alingUser);
 
-        when(userManageRepository.save(any())).thenReturn(user);
+        when(userManageRepository.save(any())).thenReturn(alingUser);
         when(companyUserManageRepository.save(any())).thenReturn(companyUser);
         when(userReadRepository.existsByEmail(anyString())).thenReturn(Boolean.FALSE);
 
         CreateCompanyUserRequestDto requestDto = new CreateCompanyUserRequestDto();
-        ReflectionTestUtils.setField(requestDto, "email", user.getId());
+        ReflectionTestUtils.setField(requestDto, "email", alingUser.getId());
         ReflectionTestUtils.setField(requestDto, "password", "nhn123456");
-        ReflectionTestUtils.setField(requestDto, "name", user.getName());
-        ReflectionTestUtils.setField(requestDto, "address", user.getAddress());
+        ReflectionTestUtils.setField(requestDto, "name", alingUser.getName());
+        ReflectionTestUtils.setField(requestDto, "address", alingUser.getAddress());
         ReflectionTestUtils.setField(requestDto, "companyRegistrationNo", companyUser.getRegistrationNo());
         ReflectionTestUtils.setField(requestDto, "companySize", companyUser.getCompanySize());
         ReflectionTestUtils.setField(requestDto, "companySector", companyUser.getSector());
 
         CreateCompanyUserResponseDto expects = companyUserManageService.registerCompanyUser(requestDto);
 
-        assertThat(expects.getName()).isEqualTo(companyUser.getUser().getName());
+        assertThat(expects.getName()).isEqualTo(companyUser.getAlingUser().getName());
 
         verify(userManageRepository, times(1))
                 .save(any());
@@ -83,19 +83,19 @@ class CompanyUserManageServiceTest {
     @Test
     @DisplayName("법인 회원가입 실패")
     void registerCompanyUserFailedExistEmail() {
-        User user = UserDummy.dummyEncoder(passwordEncoder);
-        ReflectionTestUtils.setField(user, "userNo", 10_000_000L);
-        CompanyUser companyUser = CompanyUserDummy.dummy(user);
+        AlingUser alingUser = UserDummy.dummyEncoder(passwordEncoder);
+        ReflectionTestUtils.setField(alingUser, "userNo", 10_000_000L);
+        CompanyUser companyUser = CompanyUserDummy.dummy(alingUser);
 
-        when(userManageRepository.save(any())).thenReturn(user);
+        when(userManageRepository.save(any())).thenReturn(alingUser);
         when(companyUserManageRepository.save(any())).thenReturn(companyUser);
         when(userReadRepository.existsByEmail(anyString())).thenReturn(Boolean.TRUE);
 
         CreateCompanyUserRequestDto requestDto = new CreateCompanyUserRequestDto();
-        ReflectionTestUtils.setField(requestDto, "email", user.getId());
+        ReflectionTestUtils.setField(requestDto, "email", alingUser.getId());
         ReflectionTestUtils.setField(requestDto, "password", "nhn123456");
-        ReflectionTestUtils.setField(requestDto, "name", user.getName());
-        ReflectionTestUtils.setField(requestDto, "address", user.getAddress());
+        ReflectionTestUtils.setField(requestDto, "name", alingUser.getName());
+        ReflectionTestUtils.setField(requestDto, "address", alingUser.getAddress());
         ReflectionTestUtils.setField(requestDto, "companyRegistrationNo", companyUser.getRegistrationNo());
         ReflectionTestUtils.setField(requestDto, "companySize", companyUser.getCompanySize());
         ReflectionTestUtils.setField(requestDto, "companySector", companyUser.getSector());

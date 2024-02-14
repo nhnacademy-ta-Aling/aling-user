@@ -15,7 +15,7 @@ import kr.aling.user.banduserrole.entity.BandUserRole;
 import kr.aling.user.banduserrole.exception.BandUserRoleNotFoundException;
 import kr.aling.user.banduserrole.repository.BandUserRoleReadRepository;
 import kr.aling.user.common.enums.BandUserRoleEnum;
-import kr.aling.user.user.entity.User;
+import kr.aling.user.user.entity.AlingUser;
 import kr.aling.user.user.exception.UserNotFoundException;
 import kr.aling.user.user.repository.UserReadRepository;
 import lombok.RequiredArgsConstructor;
@@ -50,7 +50,7 @@ public class BandManageServiceImpl implements BandManageService {
         BandUserRole bandUserRole = bandUserRoleReadRepository.findByRoleName(BandUserRoleEnum.CREATOR.getRoleName())
                 .orElseThrow(BandUserRoleNotFoundException::new);
 
-        if (bandUserReadRepository.countByUser_UserNoAndBandUserRole_RoleName(userNo, bandUserRole.getRoleName())
+        if (bandUserReadRepository.countByAlingUser_UserNoAndBandUserRole_RoleName(userNo, bandUserRole.getRoleName())
                 >= USER_OWN_BAND_LIMIT) {
             throw new BandLimitExceededException();
         }
@@ -59,7 +59,7 @@ public class BandManageServiceImpl implements BandManageService {
             throw new BandAlreadyExistsException();
         }
 
-        User user = userReadRepository.findById(userNo).orElseThrow(UserNotFoundException::new);
+        AlingUser alingUser = userReadRepository.findById(userNo).orElseThrow(UserNotFoundException::new);
 
         Band band = bandManageRepository.save(Band.builder()
                 .name(createBandRequestDto.getBandName())
@@ -72,7 +72,7 @@ public class BandManageServiceImpl implements BandManageService {
         bandUserManageRepository.save(BandUser.builder()
                 .bandUserRole(bandUserRole)
                 .band(band)
-                .user(user)
+                .alingUser(alingUser)
                 .enterAt(LocalDateTime.now())
                 .build());
     }

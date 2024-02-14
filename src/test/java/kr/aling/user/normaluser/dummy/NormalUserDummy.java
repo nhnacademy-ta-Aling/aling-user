@@ -2,7 +2,7 @@ package kr.aling.user.normaluser.dummy;
 
 import java.time.LocalDate;
 import kr.aling.user.normaluser.entity.NormalUser;
-import kr.aling.user.user.entity.User;
+import kr.aling.user.user.entity.AlingUser;
 import kr.aling.user.wantjobtype.entity.WantJobType;
 
 /**
@@ -13,9 +13,10 @@ import kr.aling.user.wantjobtype.entity.WantJobType;
  */
 public class NormalUserDummy {
 
-    public static NormalUser dummy(User user, WantJobType wantJobType) {
+    public static NormalUser dummy(AlingUser alingUser, WantJobType wantJobType) {
         return NormalUser.builder()
-                .userNo(user.getUserNo())
+                .userNo(alingUser.getUserNo())
+                .alingUser(alingUser)
                 .wantJobType(wantJobType)
                 .phoneNo("01000000000")
                 .birth(LocalDate.now())
