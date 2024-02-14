@@ -1,5 +1,6 @@
 package kr.aling.user.common.advice;
 
+import javax.validation.ConstraintViolationException;
 import kr.aling.user.common.exception.CustomException;
 import kr.aling.user.user.exception.UserEmailAlreadyUsedException;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,20 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 public class ControllerAdvice {
+
+    /**
+     * Http Status 400에 해당하는 예외를 공통 처리합니다.
+     *
+     * @param e 400에 해당하는 예외
+     * @return 400 status response
+     * @author : 이수정
+     * @since : 1.0
+     */
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<String> handleBadRequestException(Exception e) {
+        log.error("[{}] {}", HttpStatus.BAD_REQUEST, e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
 
     /**
      * Http Status 409에 해당하는 예외를 공통 처리합니다.
