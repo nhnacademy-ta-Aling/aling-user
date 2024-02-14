@@ -39,6 +39,8 @@ class NormalUserManageRepositoryTest {
         testEntityManager.persist(wantJobType);
 
         normalUser = NormalUserDummy.dummy(alingUser, wantJobType);
+
+        testEntityManager.persist(normalUser);
     }
 
     @Test
