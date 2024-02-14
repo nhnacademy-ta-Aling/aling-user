@@ -1,7 +1,19 @@
 package kr.aling.user.band.repository.impl;
 
+import static com.querydsl.core.group.GroupBy.groupBy;
+
+import com.querydsl.core.group.GroupBy;
+import com.querydsl.core.types.Projections;
+import java.util.List;
+import java.util.Optional;
+import kr.aling.user.band.dto.response.GetBandDetailInfoResponseDto;
 import kr.aling.user.band.entity.Band;
+import kr.aling.user.band.entity.QBand;
 import kr.aling.user.band.repository.BandReadRepositoryCustom;
+import kr.aling.user.banduser.entity.QBandUser;
+import kr.aling.user.user.dto.response.GetBandInfoResponseDto;
+import kr.aling.user.user.dto.response.GetBandUserInfoResponseDto;
+import kr.aling.user.user.entity.QAlingUser;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 /**
@@ -14,5 +26,60 @@ public class BandReadRepositoryImpl extends QuerydslRepositorySupport implements
 
     public BandReadRepositoryImpl() {
         super(Band.class);
+    }
+
+    /**
+     * 그룹 명을 통해 그룹 상세 정보를 조회 하는 메서드.
+     *
+     * @param bandName 그룹 명
+     * @return Optional 그룹 상세 정보
+     */
+    @Override
+    public Optional<GetBandDetailInfoResponseDto> getBandDetailInfoByBandName(String bandName) {
+        QBand band = QBand.band;
+        QBandUser bandUser = QBandUser.bandUser;
+        QAlingUser alingUser = QAlingUser.alingUser;
+
+        List<GetBandDetailInfoResponseDto> result = from(band)
+                .innerJoin(bandUser)
+                .on(band.bandNo.eq(bandUser.band.bandNo))
+                .innerJoin(alingUser)
+                .on(bandUser.alingUser.userNo.eq(alingUser.userNo))
+                .where(bandUser.isDelete.isFalse()
+                        .and(band.name.eq(bandName)))
+                .transform(groupBy(band.bandNo).list(Projections.constructor(GetBandDetailInfoResponseDto.class,
+                        band.name,
+                        band.fileNo,
+                        band.info,
+                        band.isEnter,
+                        band.isViewContent,
+                        band.isUpload,
+                        GroupBy.list(Projections.constructor(GetBandUserInfoResponseDto.class,
+                                alingUser.userNo,
+                                alingUser.fileNo,
+                                alingUser.name)))));
+
+        return Optional.ofNullable(result.isEmpty() ? null : result.get(0));
+    }
+
+    /**
+     * 그룹 명을 통해 그룹 목록을 조회 하는 메서드.
+     *
+     * @param bandName 그룹 명
+     * @return 그룹 정보 리스트
+     */
+    @Override
+    public List<GetBandInfoResponseDto> getSearchBandInfoListByBandName(String bandName) {
+        QBand band = QBand.band;
+
+        return from(band)
+                .where(band.name.contains(bandName)
+                        .and(band.isDelete.isFalse()))
+                .select(Projections.constructor(GetBandInfoResponseDto.class,
+                        band.bandNo,
+                        band.name,
+                        band.fileNo,
+                        band.info))
+                .fetch();
     }
 }
