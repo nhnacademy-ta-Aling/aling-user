@@ -1,7 +1,10 @@
 package kr.aling.user.user.service;
 
+
 import java.util.List;
 import kr.aling.user.user.dto.response.GetBandInfoResponseDto;
+import kr.aling.user.user.dto.response.LoginResponseDto;
+import kr.aling.user.user.dto.resquest.LoginRequestDto;
 
 /**
  * 회원 읽기 전용 서비스.
@@ -31,6 +34,16 @@ public interface UserReadService {
      * @since : 1.0
      */
     boolean isExistsUserNo(Long userNo);
+
+    /**
+     * 로그인합니다.
+     *
+     * @param loginRequestDto 이메일과 비밀번호
+     * @return 로그인한 회원의 정보
+     * @author : 여운석
+     * @since : 1.0
+     */
+    LoginResponseDto login(LoginRequestDto loginRequestDto);
 
     /**
      * 해당 회원이 가입한 그룹 정보 목록 조회 메서드.
