@@ -1,6 +1,7 @@
 package kr.aling.user.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import kr.aling.user.common.properties.RedisProperties;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -14,14 +15,11 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @author : 이수정
  * @since : 1.0
  */
+@RequiredArgsConstructor
 @Configuration
 public class RedisConfig {
 
-    @Value("${aling.redis.host}")
-    private String host;
-
-    @Value("${aling.redis.port}")
-    private int port;
+    private final RedisProperties redisProperties;
 
     /**
      * RedisConnectionFactory를 LettuceConnectionFactory로 설정.
@@ -32,7 +30,7 @@ public class RedisConfig {
      */
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-        return new LettuceConnectionFactory(host, port);
+        return new LettuceConnectionFactory(redisProperties.getHost(), redisProperties.getPort());
     }
 
     /**
