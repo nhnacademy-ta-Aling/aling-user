@@ -1,9 +1,14 @@
 package kr.aling.user.mail.service.impl;
 
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+import kr.aling.user.mail.dto.request.CheckAuthNumberMailRequestDto;
+import kr.aling.user.mail.exception.MailAuthNumberInvalidException;
 import kr.aling.user.mail.service.MailService;
 import kr.aling.user.user.exception.UserEmailAlreadyUsedException;
 import kr.aling.user.user.service.UserReadService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -23,25 +28,37 @@ public class MailServiceImpl implements MailService {
     private final UserReadService userReadService;
 
     private final JavaMailSender javaMailSender;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public int sendAuthNumber(String email) {
+    public void sendAuthNumber(String email) {
         if (userReadService.isExistsEmail(email)) {
             throw new UserEmailAlreadyUsedException(email);
         }
 
-        int authNumber = (int) (Math.random() * (999_999 - 100_000 + 1)) + 100_000;
+        String authNumber = Integer.toString((int) (Math.random() * (999_999 - 100_000 + 1)) + 100_000);
+
+        redisTemplate.opsForValue().set(email, authNumber, 3, TimeUnit.MINUTES);
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
         message.setSubject(SUBJECT);
-        message.setText(Integer.toString(authNumber));
+        message.setText(authNumber);
 
         javaMailSender.send(message);
+    }
 
-        return authNumber;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void checkAuthNumber(CheckAuthNumberMailRequestDto requestDto) {
+        String authNumber = Objects.requireNonNull(redisTemplate.opsForValue().get(requestDto.getEmail())).toString();
+        if (!authNumber.equals(requestDto.getAuthNumber())) {
+            throw new MailAuthNumberInvalidException(requestDto.getAuthNumber());
+        }
     }
 }
