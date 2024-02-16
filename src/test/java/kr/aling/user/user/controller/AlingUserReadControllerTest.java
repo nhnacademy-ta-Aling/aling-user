@@ -102,7 +102,7 @@ class AlingUserReadControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.userNo", equalTo(responseDto.getUserNo().intValue())))
-                .andExpect(jsonPath("$.role.[0]", equalTo(responseDto.getRole().get(0))));
+                .andExpect(jsonPath("$.roles.[0]", equalTo(responseDto.getRoles().get(0))));
 
         //docs
         perform.andDo(document("user-login",
@@ -115,6 +115,6 @@ class AlingUserReadControllerTest {
                                 .attributes(key("valid").value("최소 8자, 최대 20자"))),
                 responseFields(
                         fieldWithPath(".userNo").description("회원 번호").type(Long.TYPE),
-                        fieldWithPath(".role[]").description("권한 리스트").type(List.class))));
+                        fieldWithPath(".roles[]").description("권한 리스트").type(List.class))));
     }
 }

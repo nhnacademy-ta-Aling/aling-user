@@ -106,14 +106,14 @@ class AlingUserReadServiceImplTest {
 
         when(passwordEncoder.matches(any(), any())).thenReturn(Boolean.TRUE);
         when(userReadRepository.findByEmailForLogin(any())).thenReturn(Optional.of(infoResponse));
-        when(userReadRepository.findRolesByUserNo(any())).thenReturn(response.getRole());
+        when(userReadRepository.findRolesByUserNo(any())).thenReturn(response.getRoles());
 
         //when
         LoginResponseDto expect = userReadService.login(request);
 
         //then
         assertThat(expect.getUserNo()).isEqualTo(infoResponse.getUserNo());
-        assertThat(expect.getRole()).isEqualTo(response.getRole());
+        assertThat(expect.getRoles()).isEqualTo(response.getRoles());
     }
 
     @Test
