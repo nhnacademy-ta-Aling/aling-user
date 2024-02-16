@@ -56,6 +56,7 @@ public class UserReadServiceImpl implements UserReadService {
      * {@inheritDoc}
      */
     @Override
+    @Transactional(readOnly = true)
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
         LoginInfoResponseDto response = userReadRepository.findByEmailForLogin(loginRequestDto.getEmail())
                 .orElseThrow(UserNotFoundException::new);

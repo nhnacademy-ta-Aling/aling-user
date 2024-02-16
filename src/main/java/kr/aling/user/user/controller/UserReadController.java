@@ -60,6 +60,12 @@ public class UserReadController {
                 .body(userReadService.getJoinedBandInfoList(userNo));
     }
 
+    /**
+     * Id와 비밀번호를 검증하여 로그인합니다.
+     *
+     * @param loginRequestDto id, 비밀번호
+     * @return 로그인 정보
+     */
     @GetMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody @Valid LoginRequestDto loginRequestDto) {
         return ResponseEntity.status(HttpStatus.OK).body(userReadService.login(loginRequestDto));

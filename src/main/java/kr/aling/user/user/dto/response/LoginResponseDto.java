@@ -14,5 +14,5 @@ import lombok.Getter;
 @AllArgsConstructor
 public class LoginResponseDto {
     private final Long userNo;
-    private final List<String> role;
+    private final List<String> roles;
 }
