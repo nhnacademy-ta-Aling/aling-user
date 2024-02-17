@@ -1,4 +1,4 @@
-package kr.aling.user.user.dto.response;
+package kr.aling.user.banduser.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
