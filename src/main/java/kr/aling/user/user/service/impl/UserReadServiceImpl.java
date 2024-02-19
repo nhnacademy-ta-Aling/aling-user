@@ -1,7 +1,5 @@
 package kr.aling.user.user.service.impl;
 
-import java.util.List;
-import kr.aling.user.user.dto.response.GetBandInfoResponseDto;
 import kr.aling.user.user.dto.response.LoginInfoResponseDto;
 import kr.aling.user.user.dto.response.LoginResponseDto;
 import kr.aling.user.user.dto.resquest.LoginRequestDto;
@@ -45,11 +43,6 @@ public class UserReadServiceImpl implements UserReadService {
     @Override
     public boolean isExistsUserNo(Long userNo) {
         return userReadRepository.existsById(userNo);
-    }
-
-    @Override
-    public List<GetBandInfoResponseDto> getJoinedBandInfoList(Long userNo) {
-        return userReadRepository.getJoinedBandInfoListByUserNo(userNo);
     }
 
     /**

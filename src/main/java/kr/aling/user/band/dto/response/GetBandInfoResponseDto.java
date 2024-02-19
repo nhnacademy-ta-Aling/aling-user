@@ -1,10 +1,10 @@
-package kr.aling.user.user.dto.response;
+package kr.aling.user.band.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * Some description here.
+ * 그룹 정보 응답 dto.
  *
  * @author : 정유진
  * @since : 1.0
@@ -16,5 +16,8 @@ public class GetBandInfoResponseDto {
     private String name;
     private Long fileNo;
     private String info;
+    private Boolean isEnter;
+    private Boolean isViewContent;
+    private Boolean isUpload;
 }
 

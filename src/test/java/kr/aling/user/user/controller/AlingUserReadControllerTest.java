@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import kr.aling.user.user.dto.response.LoginResponseDto;
 import kr.aling.user.user.dto.resquest.LoginRequestDto;
+import kr.aling.user.band.service.BandReadService;
 import kr.aling.user.user.service.UserReadService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,6 +47,9 @@ class AlingUserReadControllerTest {
 
     @MockBean
     private UserReadService userReadService;
+
+    @MockBean
+    private BandReadService bandReadService;
 
     @Autowired
     ObjectMapper objectMapper;
