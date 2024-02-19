@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * Some description here.
+가 * 그룹 상세 정보 응답 dto.
  *
  * @author : 정유진
  * @since : 1.0
@@ -20,4 +20,5 @@ public class GetBandDetailInfoResponseDto {
     private Boolean isViewContent;
     private Boolean isUpload;
     private Long bandUserNo;
+    private Integer bandUserRoleNo;
 }

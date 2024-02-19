@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * Some description here.
+ * 그룹 회원 정보 응답 dto.
  *
  * @author : 정유진
  * @since : 1.0
@@ -12,7 +12,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class GetBandUserInfoResponseDto {
-    private Long userNo;
-    private Long fileNo;
-    private String name;
+    private Long bandUserNo;
+    private Integer bandUserRoleNo;
 }
