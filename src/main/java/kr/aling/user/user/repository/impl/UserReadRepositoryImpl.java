@@ -41,30 +41,6 @@ public class UserReadRepositoryImpl extends QuerydslRepositorySupport implements
      * {@inheritDoc}
      */
     @Override
-    public List<GetBandInfoResponseDto> getJoinedBandInfoListByUserNo(Long userNo) {
-        QAlingUser alingUser = QAlingUser.alingUser;
-        QBandUser bandUser = QBandUser.bandUser;
-        QBand band = QBand.band;
-
-        return from(alingUser)
-                .where(alingUser.userNo.eq(userNo))
-                .where(band.isDelete.isFalse())
-                .innerJoin(bandUser)
-                .on(alingUser.userNo.eq(bandUser.alingUser.userNo))
-                .innerJoin(bandUser.band, band)
-                .select(Projections.constructor(GetBandInfoResponseDto.class,
-                        band.bandNo,
-                        band.name,
-                        band.fileNo,
-                        band.info
-                ))
-                .fetch();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Optional<LoginInfoResponseDto> findByEmailForLogin(String email) {
         QAlingUser user = QAlingUser.alingUser;
 

@@ -1,7 +1,5 @@
 package kr.aling.user.user.service.impl;
 
-import java.util.List;
-import kr.aling.user.band.dto.response.GetBandInfoResponseDto;
 import kr.aling.user.user.dto.response.LoginInfoResponseDto;
 import kr.aling.user.user.dto.response.LoginResponseDto;
 import kr.aling.user.user.dto.resquest.LoginRequestDto;
