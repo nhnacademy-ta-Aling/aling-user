@@ -1,14 +1,13 @@
 package kr.aling.user.band.controller;
 
-import java.util.List;
 import kr.aling.user.band.dto.response.ExistsBandNameResponseDto;
-import kr.aling.user.band.dto.response.GetBandDetailInfoResponseDto;
 import kr.aling.user.band.dto.response.GetBandInfoResponseDto;
+import kr.aling.user.band.dto.response.GetBandInfoWithBandUserResponseDto;
 import kr.aling.user.band.service.BandReadService;
-import kr.aling.user.banduser.dto.response.GetBandUserInfoResponseDto;
 import kr.aling.user.banduser.service.BandUserReadService;
 import kr.aling.user.common.dto.PageResponseDto;
 import kr.aling.user.common.utils.ConstantUtil;
+import kr.aling.user.user.dto.response.GetUserSimpleInfoResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -55,9 +54,9 @@ public class BandReadController {
      * @return 200 OK. ResponseEntity 그룹 상세 정보를 담은 dto
      */
     @GetMapping("/{bandName}")
-    public ResponseEntity<GetBandDetailInfoResponseDto> bandDetailInfo(@PathVariable("bandName") String bandName,
-                                                                       @RequestHeader(ConstantUtil.X_TEMP_USER_NO)
-                                                                       Long userNo) {
+    public ResponseEntity<GetBandInfoWithBandUserResponseDto> bandDetailInfo(@PathVariable("bandName") String bandName,
+                                                                             @RequestHeader(ConstantUtil.X_TEMP_USER_NO)
+                                                                             Long userNo) {
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -72,17 +71,25 @@ public class BandReadController {
      */
     @GetMapping
     @RequestMapping(value = "/search", params = "bandName")
-    public ResponseEntity<List<GetBandInfoResponseDto>> searchBandBasicInfoList(
-            @RequestParam("bandName") String bandName) {
+    public ResponseEntity<PageResponseDto<GetBandInfoResponseDto>> searchBandBasicInfoList(
+            @RequestParam("bandName") String bandName,
+            Pageable pageable) {
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(bandReadService.getSearchBandInfoList(bandName));
+                .body(bandReadService.getSearchBandInfoList(bandName, pageable));
     }
 
+    /**
+     * 그룹에 가입된 유저 리스트 조회 메서드.
+     *
+     * @param bandNo 조회할 그룹 번호
+     * @param pageable 페이징
+     * @return 200 OK. 그룹에 가입된 유저 리스트 페이지 dto
+     */
     @GetMapping
     @RequestMapping("{bandNo}/users")
-    public ResponseEntity<PageResponseDto<GetBandUserInfoResponseDto>> joinBandUserList(
+    public ResponseEntity<PageResponseDto<GetUserSimpleInfoResponseDto>> joinBandUserList(
             @PathVariable("bandNo") Long bandNo,
             Pageable pageable) {
         return ResponseEntity
