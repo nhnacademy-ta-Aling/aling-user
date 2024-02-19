@@ -4,6 +4,9 @@ import java.util.List;
 import kr.aling.user.band.dto.response.ExistsBandNameResponseDto;
 import kr.aling.user.band.dto.response.GetBandDetailInfoResponseDto;
 import kr.aling.user.band.dto.response.GetBandInfoResponseDto;
+import kr.aling.user.band.dto.response.GetBandInfoWithBandUserResponseDto;
+import kr.aling.user.common.dto.PageResponseDto;
+import org.springframework.data.domain.Pageable;
 
 /**
  * 그룹(Band)을 조회 하기 위한 Service.
@@ -27,15 +30,16 @@ public interface BandReadService {
      * @param bandName 그룹명
      * @return 그룹 상세 정보 dto
      */
-    GetBandDetailInfoResponseDto getBandDetailInfo(String bandName, Long userNo);
+    GetBandInfoWithBandUserResponseDto getBandDetailInfo(String bandName, Long userNo);
 
     /**
      * 그룹 명을 통해 그룹 정보 목록 조회 메서드.
      *
      * @param bandName 그룹명
+     * @param pageable pageable
      * @return 그룹 정보 dto list
      */
-    List<GetBandInfoResponseDto> getSearchBandInfoList(String bandName);
+    PageResponseDto<GetBandInfoResponseDto> getSearchBandInfoList(String bandName, Pageable pageable);
 
     /**
      * 특정 회원이 가입한 그룹 정보 목록 조회 메서드.
@@ -43,5 +47,5 @@ public interface BandReadService {
      * @param userNo 회원 번호
      * @return 해당 회원이 가입한 그룹 정보 목록
      */
-    List<GetBandInfoResponseDto> getJoinedBandInfoList(Long userNo);
+    List<GetBandDetailInfoResponseDto> getJoinedBandInfoList(Long userNo);
 }
