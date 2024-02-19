@@ -1,8 +1,9 @@
 package kr.aling.user.user.controller;
 
 import java.util.List;
+import kr.aling.user.band.dto.response.GetBandDetailInfoResponseDto;
+import kr.aling.user.band.service.BandReadService;
 import kr.aling.user.common.utils.ConstantUtil;
-import kr.aling.user.user.dto.response.GetBandInfoResponseDto;
 import kr.aling.user.user.dto.response.IsExistsUserResponseDto;
 import kr.aling.user.user.service.UserReadService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserReadController {
 
     private final UserReadService userReadService;
+    private final BandReadService bandReadService;
 
     /**
      * 회원 존재여부 확인 요청을 처리합니다.
@@ -49,10 +51,10 @@ public class UserReadController {
      */
     @GetMapping
     @RequestMapping("/my-bands")
-    public ResponseEntity<List<GetBandInfoResponseDto>> getJoinedBandInfoList(
+    public ResponseEntity<List<GetBandDetailInfoResponseDto>> getJoinedBandInfoList(
             @RequestHeader(ConstantUtil.X_TEMP_USER_NO) Long userNo) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(userReadService.getJoinedBandInfoList(userNo));
+                .body(bandReadService.getJoinedBandInfoList(userNo));
     }
 }
