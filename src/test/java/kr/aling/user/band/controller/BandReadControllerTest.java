@@ -18,6 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import kr.aling.user.band.dto.response.ExistsBandNameResponseDto;
 import kr.aling.user.band.service.BandReadService;
+import kr.aling.user.banduser.service.BandUserReadService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,9 @@ class BandReadControllerTest {
 
     @MockBean
     private BandReadService bandReadService;
+
+    @MockBean
+    private BandUserReadService bandUserReadService;
 
     private String bandUrl = "/api/v1/bands";
 

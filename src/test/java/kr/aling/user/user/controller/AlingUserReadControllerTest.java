@@ -15,6 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import kr.aling.user.band.service.BandReadService;
 import kr.aling.user.user.service.UserReadService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,6 +41,9 @@ class AlingUserReadControllerTest {
 
     @MockBean
     private UserReadService userReadService;
+
+    @MockBean
+    private BandReadService bandReadService;
 
     @Test
     @DisplayName("회원 존재여부 확인 성공")
