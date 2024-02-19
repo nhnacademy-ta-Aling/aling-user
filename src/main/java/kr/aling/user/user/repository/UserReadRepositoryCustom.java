@@ -2,7 +2,7 @@ package kr.aling.user.user.repository;
 
 import java.util.List;
 import java.util.Optional;
-import kr.aling.user.user.dto.response.GetBandInfoResponseDto;
+import kr.aling.user.band.dto.response.GetBandInfoResponseDto;
 import kr.aling.user.user.dto.response.LoginInfoResponseDto;
 import org.springframework.data.repository.NoRepositoryBean;
 

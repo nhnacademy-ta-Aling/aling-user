@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
-가 * 그룹 상세 정보 응답 dto.
+ * 그룹 상세 정보 응답 dto.
  *
  * @author : 정유진
  * @since : 1.0

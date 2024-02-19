@@ -88,7 +88,7 @@ public class BandReadController {
      * @return 200 OK. 그룹에 가입된 유저 리스트 페이지 dto
      */
     @GetMapping
-    @RequestMapping("{bandNo}/users")
+    @RequestMapping("/{bandNo}/users")
     public ResponseEntity<PageResponseDto<GetUserSimpleInfoResponseDto>> joinBandUserList(
             @PathVariable("bandNo") Long bandNo,
             Pageable pageable) {
