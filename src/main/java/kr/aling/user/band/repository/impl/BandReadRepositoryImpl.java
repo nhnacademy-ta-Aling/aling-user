@@ -1,7 +1,7 @@
 package kr.aling.user.band.repository.impl;
 
 import com.querydsl.core.types.Projections;
-import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.JPQLQuery;
 import java.util.List;
 import java.util.Optional;
 import kr.aling.user.band.dto.response.GetBandDetailInfoResponseDto;
@@ -11,7 +11,10 @@ import kr.aling.user.band.repository.BandReadRepositoryCustom;
 import kr.aling.user.banduser.entity.QBandUser;
 import kr.aling.user.band.dto.response.GetBandInfoResponseDto;
 import kr.aling.user.user.entity.QAlingUser;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
+import org.springframework.data.support.PageableExecutionUtils;
 
 /**
  * 그룹(Band)을 조회 하는 Repository 구현.
@@ -27,46 +30,46 @@ public class BandReadRepositoryImpl extends QuerydslRepositorySupport implements
 
     /**
      * {@inheritDoc}
+     *
+     * @param bandName 그룹 명
+     * @return 그룹 정보 응답 dto
      */
     @Override
-    public Optional<GetBandDetailInfoResponseDto> getBandDetailInfoByBandName(String bandName, Long userNo) {
+    public Optional<GetBandInfoResponseDto> getBandDetailInfoByBandName(String bandName) {
         QBand band = QBand.band;
-        QBandUser bandUser = QBandUser.bandUser;
 
         return Optional.ofNullable(from(band)
                 .where(band.isDelete.isFalse()
                         .and(band.name.eq(bandName)))
-                .select(Projections.constructor(GetBandDetailInfoResponseDto.class,
+                .select(Projections.constructor(GetBandInfoResponseDto.class,
                         band.bandNo,
                         band.name,
                         band.fileNo,
                         band.info,
                         band.isEnter,
                         band.isViewContent,
-                        band.isUpload,
-                        JPAExpressions.select(bandUser.bandUserNo)
-                                .from(bandUser)
-                                .innerJoin(bandUser.band, band)
-                                .where(band.name.eq(bandName)
-                                        .and(bandUser.alingUser.userNo.eq(userNo))
-                                        .and(bandUser.isDelete.isFalse())
-                                        .and(bandUser.isBlock.isFalse()))))
+                        band.isUpload))
                 .fetchOne());
+
+
     }
 
     /**
-     * 그룹 명을 통해 그룹 목록을 조회 하는 메서드.
+     * {@inheritDoc}
      *
      * @param bandName 그룹 명
-     * @return 그룹 정보 리스트
+     * @param pageable pageable
+     * @return 그룹 정보 dto 페이지
      */
     @Override
-    public List<GetBandInfoResponseDto> getSearchBandInfoListByBandName(String bandName) {
+    public Page<GetBandInfoResponseDto> getSearchBandInfoListByBandName(String bandName, Pageable pageable) {
         QBand band = QBand.band;
 
-        return from(band)
+        List<GetBandInfoResponseDto> bandList = from(band)
                 .where(band.name.contains(bandName)
                         .and(band.isDelete.isFalse()))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .select(Projections.constructor(GetBandInfoResponseDto.class,
                         band.bandNo,
                         band.name,
@@ -76,13 +79,23 @@ public class BandReadRepositoryImpl extends QuerydslRepositorySupport implements
                         band.isViewContent,
                         band.isUpload))
                 .fetch();
+
+        JPQLQuery<Long> countQuery = from(band)
+                .where(band.name.contains(bandName)
+                        .and(band.isDelete.isFalse()))
+                .select(band.count());
+
+        return PageableExecutionUtils.getPage(bandList, pageable, countQuery::fetchFirst);
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @param userNo 회원 번호
+     * @return 그룹 상세 정보 dto 리스트
      */
     @Override
-    public List<GetBandInfoResponseDto> getJoinedBandInfoListByUserNo(Long userNo) {
+    public List<GetBandDetailInfoResponseDto> getJoinedBandInfoListByUserNo(Long userNo) {
         QBandUser bandUser = QBandUser.bandUser;
         QAlingUser alingUser = QAlingUser.alingUser;
         QBand band = QBand.band;
@@ -94,15 +107,16 @@ public class BandReadRepositoryImpl extends QuerydslRepositorySupport implements
                         .and(bandUser.isDelete.isFalse())
                         .and(bandUser.isBlock.isFalse())
                         .and(band.isDelete.isFalse()))
-                .select(Projections.constructor(GetBandInfoResponseDto.class,
+                .select(Projections.constructor(GetBandDetailInfoResponseDto.class,
                         band.bandNo,
                         band.name,
                         band.fileNo,
                         band.info,
                         band.isEnter,
                         band.isViewContent,
-                        band.isUpload
-                ))
+                        band.isUpload,
+                        bandUser.bandUserNo,
+                        bandUser.bandUserRole.bandUserRoleNo))
                 .fetch();
     }
 }
