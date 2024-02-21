@@ -2,6 +2,7 @@ package kr.aling.user.companyuser.dto.request;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import kr.aling.user.common.valid.anno.EnumValue;
 import kr.aling.user.companyuser.type.CompanySize;
 import lombok.Getter;
@@ -19,6 +20,7 @@ import org.hibernate.validator.constraints.Length;
 public class CreateCompanyUserRequestDto {
 
     @Email
+    @NotNull
     private String email;
 
     @NotBlank
