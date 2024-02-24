@@ -38,7 +38,7 @@ public class UserManageServiceImpl implements UserManageService {
         }
 
         AlingUser alingUser = AlingUser.builder()
-                .id(requestDto.getId())
+                .email(requestDto.getId())
                 .password(passwordEncoder.encode(requestDto.getPassword()))
                 .name(requestDto.getName())
                 .build();

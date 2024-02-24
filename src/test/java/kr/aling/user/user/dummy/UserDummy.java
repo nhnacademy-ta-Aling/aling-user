@@ -13,7 +13,7 @@ public class UserDummy {
 
     public static AlingUser dummyEncoder(PasswordEncoder passwordEncoder) {
         return AlingUser.builder()
-                .id("test@test.com")
+                .email("test@test.com")
                 .password(passwordEncoder.encode("nhn123!@#"))
                 .name("NHN-Test")
                 .address("경기도 성남시 분당구 대왕판교로 645번길 16")
@@ -22,7 +22,7 @@ public class UserDummy {
 
     public static AlingUser dummy() {
         return AlingUser.builder()
-                .id("testId@test.com")
+                .email("testId@test.com")
                 .password("testPwd")
                 .name("testName")
                 .address("testAddress")
