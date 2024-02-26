@@ -4,6 +4,7 @@ import kr.aling.user.common.dto.PageResponseDto;
 import kr.aling.user.postscrap.dto.response.IsExistsPostScrapResponseDto;
 import kr.aling.user.postscrap.dto.response.NumberOfPostScrapResponseDto;
 import kr.aling.user.postscrap.dto.response.ReadPostScrapsResponseDto;
+import kr.aling.user.postscrap.service.PostScrapReadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -60,7 +61,7 @@ public class PostScrapReadController {
      *
      * @param userNo   마이페이지 주인 회원 번호
      * @param pageable 페이징 정보를 담는 Pageable 객체
-     * @return 페이징 조회된 게시물 스크랩
+     * @return 페이징 조회된 게시물 스크랩의 게시물 목록
      * @author 이수정
      * @since 1.0
      */

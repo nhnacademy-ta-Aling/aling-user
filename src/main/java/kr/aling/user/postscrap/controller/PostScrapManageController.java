@@ -1,5 +1,6 @@
 package kr.aling.user.postscrap.controller;
 
+import kr.aling.user.postscrap.service.PostScrapManageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

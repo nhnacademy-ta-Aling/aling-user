@@ -5,6 +5,7 @@ import kr.aling.user.recruitpostscrap.dto.response.IsExistsRecruitPostScrapRespo
 import kr.aling.user.recruitpostscrap.dto.response.NumberOfRecruitPostScrapResponseDto;
 import kr.aling.user.recruitpostscrap.dto.response.ReadDDayRecruitPostScrapsResponseDto;
 import kr.aling.user.recruitpostscrap.dto.response.ReadRecruitPostScrapsResponseDto;
+import kr.aling.user.recruitpostscrap.service.RecruitPostScrapReadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -75,7 +76,7 @@ public class RecruitPostScrapReadController {
      *
      * @param userNo   마이페이지 주인 회원 번호
      * @param pageable 페이징 정보를 담는 Pageable 객체
-     * @return 페이징 조회된 채용공고 스크랩
+     * @return 페이징 조회된 채용공고 스크랩의 게시물 목록
      * @author 이수정
      * @since 1.0
      */
