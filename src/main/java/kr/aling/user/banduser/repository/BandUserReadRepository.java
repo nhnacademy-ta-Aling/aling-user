@@ -11,12 +11,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
  **/
 public interface BandUserReadRepository extends JpaRepository<BandUser, Long>, BandUserReadRepositoryCustom {
 
-    /**
-     * 특정 회원의 특정 그룹 회원 권한 보유 개수 count 쿼리.
-     *
-     * @param userNo 회원 번호
-     * @param roleName 그룹 회원 권한 이름
-     * @return 특정 회원의 특정 그룹 회원 권한 보유 개수
-     */
-    long countByAlingUser_UserNoAndBandUserRole_RoleName(Long userNo, String roleName);
 }
