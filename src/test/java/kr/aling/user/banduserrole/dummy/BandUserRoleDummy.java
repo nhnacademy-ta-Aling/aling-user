@@ -22,4 +22,10 @@ public class BandUserRoleDummy {
                 .roleName("BAND_ROLE_USER")
                 .build();
     }
+
+    public static BandUserRole dummyDefaultBandUserRole() {
+        return BandUserRole.builder()
+                .roleName("role name")
+                .build();
+    }
 }
