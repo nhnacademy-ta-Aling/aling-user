@@ -1,7 +1,12 @@
 package kr.aling.user.common.advice;
 
 import javax.validation.ConstraintViolationException;
+import kr.aling.user.band.exception.BandAccessDeniedException;
+import kr.aling.user.band.exception.BandAlreadyExistsException;
 import kr.aling.user.band.exception.BandLimitExceededException;
+import kr.aling.user.band.exception.BandNotFoundException;
+import kr.aling.user.banduser.exception.BandUserNotFoundException;
+import kr.aling.user.banduserrole.exception.BandUserRoleNotFoundException;
 import kr.aling.user.common.exception.CustomException;
 import kr.aling.user.mail.exception.MailAuthNumberInvalidException;
 import kr.aling.user.user.exception.UserEmailAlreadyUsedException;
@@ -29,10 +34,36 @@ public class ControllerAdvice {
      * @author : 이수정
      * @since : 1.0
      */
-    @ExceptionHandler({ConstraintViolationException.class, MailAuthNumberInvalidException.class, BandLimitExceededException.class})
+    @ExceptionHandler({ConstraintViolationException.class, MailAuthNumberInvalidException.class,
+            BandLimitExceededException.class})
     public ResponseEntity<String> handleBadRequestException(Exception e) {
         log.error("[{}] {}", HttpStatus.BAD_REQUEST, e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    /**
+     * Http Status 403에 해당하는 예외를 공통 처리 합니다.
+     *
+     * @param e 403에 해당하는 예외
+     * @return 403 status response
+     */
+    @ExceptionHandler(BandAccessDeniedException.class)
+    public ResponseEntity<String> handleForbiddenException(Exception e) {
+        log.error("[{}] {}", HttpStatus.FORBIDDEN, e.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+    }
+
+    /**
+     * Http Status 404에 해당하는 예외를 공통 처리 합니다.
+     *
+     * @param e 404에 해당하는 예외
+     * @return 404 status response
+     */
+    @ExceptionHandler({BandUserNotFoundException.class, BandUserRoleNotFoundException.class,
+            BandNotFoundException.class})
+    public ResponseEntity<String> handleNotFoundException(Exception e) {
+        log.error("[{}] {}", HttpStatus.NOT_FOUND, e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
     /**
@@ -43,7 +74,7 @@ public class ControllerAdvice {
      * @author : 이수정
      * @since : 1.0
      */
-    @ExceptionHandler(UserEmailAlreadyUsedException.class)
+    @ExceptionHandler({UserEmailAlreadyUsedException.class, BandAlreadyExistsException.class})
     public ResponseEntity<String> handleConflictException(Exception e) {
         log.error("[{}] {}", HttpStatus.CONFLICT, e.getMessage());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
