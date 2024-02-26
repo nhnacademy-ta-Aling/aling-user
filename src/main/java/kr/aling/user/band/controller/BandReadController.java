@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/bands")
 public class BandReadController {
+
     private final BandReadService bandReadService;
     private final BandUserReadService bandUserReadService;
 
@@ -58,8 +59,8 @@ public class BandReadController {
      */
     @GetMapping("/{bandName}")
     public ResponseEntity<GetBandInfoWithBandUserResponseDto> bandDetailInfo(@PathVariable("bandName") String bandName,
-                                                                             @RequestHeader(ConstantUtil.X_TEMP_USER_NO)
-                                                                             Long userNo) {
+            @RequestHeader(ConstantUtil.X_TEMP_USER_NO)
+            Long userNo) {
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -116,8 +117,7 @@ public class BandReadController {
     }
 
     /**
-     * 그룹 번호와 회원 번호를 이용해 그룹 회원 권한 이름을 조회 하는 메서드. <br />
-     * gateway 에서 공통적인 그룹 회원 권한 처리를 하기 위해 사용합니다.
+     * 그룹 번호와 회원 번호를 이용해 그룹 회원 권한 이름을 조회 하는 메서드. <br /> gateway 에서 공통적인 그룹 회원 권한 처리를 하기 위해 사용합니다.
      *
      * @param bandNo 그룹 번호
      * @param userNo 회원 번호

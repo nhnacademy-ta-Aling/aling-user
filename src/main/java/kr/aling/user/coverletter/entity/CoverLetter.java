@@ -27,6 +27,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CoverLetter {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column

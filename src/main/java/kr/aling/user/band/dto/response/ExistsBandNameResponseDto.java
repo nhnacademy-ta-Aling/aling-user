@@ -12,5 +12,6 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class ExistsBandNameResponseDto {
+
     private Boolean isExist;
 }

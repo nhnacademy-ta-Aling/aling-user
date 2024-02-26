@@ -13,6 +13,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class LoginResponseDto {
+
     private final Long userNo;
     private final List<String> roles;
 }

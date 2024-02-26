@@ -12,6 +12,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class GetUserSimpleInfoResponseDto {
+
     private Long userNo;
     private Long fileNo;
     private String name;

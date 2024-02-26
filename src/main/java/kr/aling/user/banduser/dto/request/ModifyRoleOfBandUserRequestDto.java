@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class ModifyRoleOfBandUserRequestDto {
+
     private Integer bandUserRoleNo;
 }

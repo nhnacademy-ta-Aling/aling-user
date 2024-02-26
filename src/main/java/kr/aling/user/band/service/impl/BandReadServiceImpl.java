@@ -30,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class BandReadServiceImpl implements BandReadService {
+
     private final BandReadRepository bandReadRepository;
     private final BandUserReadRepository bandUserReadRepository;
     private final AlingPostAdaptor alingPostAdaptor;

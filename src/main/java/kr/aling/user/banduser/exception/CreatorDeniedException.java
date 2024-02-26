@@ -7,6 +7,7 @@ package kr.aling.user.banduser.exception;
  * @since : 1.0
  **/
 public class CreatorDeniedException extends RuntimeException {
+
     public static final String MESSAGE = "Creator can't leave band.";
 
     public CreatorDeniedException() {

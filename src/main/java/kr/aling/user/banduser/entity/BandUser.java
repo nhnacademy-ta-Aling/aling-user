@@ -33,6 +33,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BandUser {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -67,7 +68,7 @@ public class BandUser {
      *
      * @param bandUserRole 그룹회원권한
      * @param band         그룹
-     * @param alingUser         회원
+     * @param alingUser    회원
      */
     @Builder
     public BandUser(BandUserRole bandUserRole, Band band, AlingUser alingUser) {
@@ -89,8 +90,7 @@ public class BandUser {
     }
 
     /**
-     * 그룹 회원 삭제를 위한 메서드.
-     * 그룹 회원은 삭제 후 복구 되지 않습니다.
+     * 그룹 회원 삭제를 위한 메서드. 그룹 회원은 삭제 후 복구 되지 않습니다.
      */
     public void deleteBandUser() {
         this.isDelete = true;
