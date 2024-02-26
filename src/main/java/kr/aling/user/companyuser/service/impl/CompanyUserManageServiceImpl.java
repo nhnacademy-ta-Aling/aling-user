@@ -40,7 +40,7 @@ public class CompanyUserManageServiceImpl implements CompanyUserManageService {
         }
 
         AlingUser alingUser = AlingUser.builder()
-                .id(requestDto.getEmail())
+                .email(requestDto.getEmail())
                 .password(passwordEncoder.encode(requestDto.getPassword()))
                 .name(requestDto.getName())
                 .address(requestDto.getAddress()).build();
