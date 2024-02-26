@@ -1,0 +1,18 @@
+= Aling REST-API Docs
+:doctype: book
+:icons: font
+:source-highlighter: coderay
+:toc: left
+:toc-title: 목차
+:toclevels: 3
+:sectlinks:
+:sectnums:
+
+== 개요
+
+Aling User API 명세서
+
+== API
+
+// 그룹 회원
+include::banduser/band-user.adoc[]

@@ -1,0 +1,3 @@
+=== 그룹 회원(BandUser)
+
+include::../banduser/band-user-get.adoc[]

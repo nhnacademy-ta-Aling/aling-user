@@ -1,6 +1,7 @@
 package kr.aling.user.banduser.repository;
 
 import java.util.Optional;
+import kr.aling.user.banduser.dto.response.BandPostUerQueryDto;
 import kr.aling.user.banduser.dto.response.GetBandUserInfoResponseDto;
 import kr.aling.user.user.dto.response.GetUserSimpleInfoResponseDto;
 import org.springframework.data.domain.Page;
@@ -33,4 +34,12 @@ public interface BandUserReadRepositoryCustom {
      * @return 그룹 회원 정보 dto
      */
     Optional<GetBandUserInfoResponseDto> getBandUserInfoByUserNoAndBandName(String bandName, Long userNo);
+
+    /**
+     * 그룹 게시글 작성자 정보 조회 하는 메서드.
+     *
+     * @param bandUserNo 그룹 회원 번호(작성자)
+     * @return 회원(작성자) 정보 Dto
+     */
+    BandPostUerQueryDto getBandUserForPost(Long bandUserNo);
 }
