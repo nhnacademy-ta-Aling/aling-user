@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * Aling Gateway 서버 정보 저장 하는 Custom Properties.
  *
- * @author 정유진
+ * @author 박경서
  * @since 1.0
  **/
 @Getter
@@ -16,4 +16,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class AlingUrlProperties {
 
     private String gatewayUrl;
+    private String fileGatewayUrl;
 }

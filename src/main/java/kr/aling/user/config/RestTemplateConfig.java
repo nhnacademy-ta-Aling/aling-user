@@ -2,43 +2,31 @@ package kr.aling.user.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * RestTemplate Config.
+ * RestTemplate 설정.
  *
- * @author : 정유진
- * @since : 1.0
+ * @author 박경서
+ * @since 1.0
  **/
 @Configuration
 public class RestTemplateConfig {
 
     /**
-     * clientHttpRequestFactory 빈.
+     * RestTemplate Bean 설정.
      *
-     * @return ClientHttpRequestFactory 객체 반환
+     * @return restTemplate
      */
     @Bean
-    public ClientHttpRequestFactory clientHttpRequestFactory() {
+    public RestTemplate restTemplate() {
         SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
         requestFactory.setConnectTimeout(5000);
         requestFactory.setReadTimeout(5000);
 
-        return requestFactory;
-    }
-
-    /**
-     * restTemplate 빈.
-     *
-     * @param clientHttpRequestFactory clientHttpRequestFactory
-     * @return RestTemplate 객체 반환
-     */
-    @Bean
-    public RestTemplate restTemplate(ClientHttpRequestFactory clientHttpRequestFactory) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.setRequestFactory(clientHttpRequestFactory);
+        restTemplate.setRequestFactory(requestFactory);
 
         return restTemplate;
     }

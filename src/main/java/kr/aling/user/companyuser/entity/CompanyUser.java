@@ -10,6 +10,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import kr.aling.user.user.entity.AlingUser;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,8 @@ import org.hibernate.annotations.CascadeType;
  * @author : 여운석
  * @since : 1.0
  **/
+@Builder
+@AllArgsConstructor
 @Entity
 @Getter
 @Table(name = "company_user")
@@ -29,6 +32,7 @@ import org.hibernate.annotations.CascadeType;
 public class CompanyUser {
 
     @Id
+    @Column(name = "aling_user_no")
     private Long userNo;
 
     @MapsId("userNo")
@@ -51,23 +55,4 @@ public class CompanyUser {
 
     @Column(name = "company_user_sector")
     private String sector;
-
-    /**
-     * 법인회원가입시 필요한 생성자.
-     *
-     * @param alingUser user entity
-     * @param registrationNo 사업자등록번호
-     * @param companySize 법인규모
-     * @param sector 업종
-     */
-    @Builder
-    public CompanyUser(AlingUser alingUser, String registrationNo, String companySize, String sector) {
-        this.alingUser = alingUser;
-        this.registrationNo = registrationNo;
-        this.companySize = companySize;
-        this.sector = sector;
-        this.userNo = alingUser.getUserNo();
-        this.employee = 0;
-        this.salary = 0;
-    }
 }

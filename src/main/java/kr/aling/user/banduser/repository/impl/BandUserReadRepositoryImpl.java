@@ -7,6 +7,7 @@ import java.util.Optional;
 import kr.aling.user.band.entity.QBand;
 import kr.aling.user.banduser.dto.response.GetBandUserAndUserInfoResponseDto;
 import kr.aling.user.banduser.dto.response.GetBandUserAuthResponseDto;
+import kr.aling.user.banduser.dto.response.BandPostUerQueryDto;
 import kr.aling.user.banduser.dto.response.GetBandUserInfoResponseDto;
 import kr.aling.user.banduser.entity.BandUser;
 import kr.aling.user.banduser.entity.QBandUser;
@@ -190,6 +191,25 @@ public class BandUserReadRepositoryImpl extends QuerydslRepositorySupport implem
                         .and(bandUser.isBlock.isFalse())
                         .and(bandUser.isDelete.isFalse()))
                 .select(bandUser.count())
+                .fetchOne();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param bandUserNo 그룹 회원 번호(작성자)
+     * @return 회원(작성자) 정보 Dto
+     */
+    @Override
+    public BandPostUerQueryDto getBandUserForPost(Long bandUserNo) {
+        QBandUser bandUser = QBandUser.bandUser;
+        QAlingUser alingUser = QAlingUser.alingUser;
+
+        return from(bandUser)
+                .innerJoin(bandUser.alingUser, alingUser)
+                .select(Projections.constructor(BandPostUerQueryDto.class,
+                        alingUser.userNo, alingUser.name, alingUser.fileNo))
+                .where(bandUser.bandUserNo.eq(bandUserNo))
                 .fetchOne();
     }
 }

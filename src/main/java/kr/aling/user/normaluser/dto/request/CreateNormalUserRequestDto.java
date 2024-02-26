@@ -25,7 +25,7 @@ public class CreateNormalUserRequestDto {
     @NotBlank
     @Size(min = 3, max = 100)
     @Email
-    private String id;
+    private String email;
 
     @NotBlank
     @Size(min = 8, max = 20)

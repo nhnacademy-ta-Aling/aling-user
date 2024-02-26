@@ -3,6 +3,7 @@ package kr.aling.user.banduser.repository;
 import java.util.Optional;
 import kr.aling.user.banduser.dto.response.GetBandUserAndUserInfoResponseDto;
 import kr.aling.user.banduser.dto.response.GetBandUserAuthResponseDto;
+import kr.aling.user.banduser.dto.response.BandPostUerQueryDto;
 import kr.aling.user.banduser.dto.response.GetBandUserInfoResponseDto;
 import kr.aling.user.banduser.entity.BandUser;
 import org.springframework.data.domain.Page;
@@ -64,4 +65,12 @@ public interface BandUserReadRepositoryCustom {
      * @return 특정 회원의 특정 그룹 회원 권한 보유 개수
      */
     long countByUserNoAndBandUserRoleName(Long userNo, String roleName);
+
+    /**
+     * 그룹 게시글 작성자 정보 조회 하는 메서드.
+     *
+     * @param bandUserNo 그룹 회원 번호(작성자)
+     * @return 회원(작성자) 정보 Dto
+     */
+    BandPostUerQueryDto getBandUserForPost(Long bandUserNo);
 }

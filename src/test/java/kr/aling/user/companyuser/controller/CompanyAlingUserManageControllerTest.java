@@ -83,7 +83,7 @@ class CompanyAlingUserManageControllerTest {
         when(companyUserManageService.registerCompanyUser(any()))
                 .thenReturn(new CreateCompanyUserResponseDto(alingUser.getName()));
 
-        String url = "/companies";
+        String url = "/api/v1/companies";
 
         mockMvc.perform(post(url)
                 .content(objectMapper.writeValueAsString(requestDto))

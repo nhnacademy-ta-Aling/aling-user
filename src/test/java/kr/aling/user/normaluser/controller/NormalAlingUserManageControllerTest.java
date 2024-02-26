@@ -90,7 +90,7 @@ class NormalUserManageControllerTest {
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 requestFields(
-                        fieldWithPath("id").type(JsonFieldType.STRING).description("아이디")
+                        fieldWithPath("email").type(JsonFieldType.STRING).description("아이디")
                                 .attributes(key("valid").value("Not Blank, 최소 3자, 최대 100자, 이메일형식")),
                         fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호")
                                 .attributes(key("valid").value("Not Blank, 최소 8자, 최대 20자")),

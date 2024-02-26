@@ -65,7 +65,7 @@ public class AlingUser extends BaseCreateTimeEntity {
     /**
      * 회원 생성을 위한 빌더.
      *
-     * @param email       이메일
+     * @param email    이메일(아이디)
      * @param password 비밀번호
      * @param name     이름
      * @param address  주소

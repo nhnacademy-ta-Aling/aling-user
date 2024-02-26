@@ -48,6 +48,7 @@ public class CompanyUserManageServiceImpl implements CompanyUserManageService {
         alingUser = userManageRepository.save(alingUser);
 
         CompanyUser companyUser = CompanyUser.builder()
+                .userNo(alingUser.getUserNo())
                 .alingUser(alingUser)
                 .registrationNo(requestDto.getCompanyRegistrationNo())
                 .companySize(requestDto.getCompanySize())

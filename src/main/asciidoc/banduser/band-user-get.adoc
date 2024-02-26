@@ -1,0 +1,23 @@
+:toc:
+
+==== 그룹 회원 조회
+
+그룹 회원 번호를 가지고 회원 정보 조회 API
+
+===== 요청
+
+operation::band-user-get-by-bandUserNo[snippets='http-request']
+
+===== 응답
+
+operation::band-user-get-by-bandUserNo[snippets='http-response']
+
+===== 파라미터 설명
+
+====== 요청 Path Variable
+
+operation::band-user-get-by-bandUserNo[snippets='path-parameters']
+
+====== 응답 Body
+
+operation::band-user-get-by-bandUserNo[snippets='response-fields']

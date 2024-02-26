@@ -2,6 +2,7 @@ package kr.aling.user.banduser.service;
 
 import kr.aling.user.banduser.dto.response.GetBandUserAndUserInfoResponseDto;
 import kr.aling.user.banduser.dto.response.GetBandUserAuthResponseDto;
+import kr.aling.user.banduser.dto.response.GetPostWriterResponseDto;
 import kr.aling.user.common.dto.PageResponseDto;
 import org.springframework.data.domain.Pageable;
 
@@ -31,4 +32,11 @@ public interface BandUserReadService {
      * @return 그룹 회원 권한 정보를 담은 dto
      */
     GetBandUserAuthResponseDto getBandUserInfo(Long bandNo, Long userNo);
+    /**
+     * 그룹 회원 번호를 가지고 회원 정보를 조회 하는 메서드.
+     *
+     * @param bandUserNo 그룹 회원 번호
+     * @return 회원 정보 Dto.
+     */
+    GetPostWriterResponseDto getPostWriterInfo(Long bandUserNo);
 }
