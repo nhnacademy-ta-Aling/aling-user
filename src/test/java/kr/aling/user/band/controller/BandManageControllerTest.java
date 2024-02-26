@@ -20,6 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.aling.user.band.dto.request.CreateBandRequestDto;
 import kr.aling.user.band.service.BandManageService;
+import kr.aling.user.banduser.service.BandUserManageService;
 import kr.aling.user.common.utils.ConstantUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -52,6 +53,9 @@ class BandManageControllerTest {
 
     @MockBean
     private BandManageService bandManageService;
+
+    @MockBean
+    private BandUserManageService bandUserManageService;
 
     private String bandUrl = "/api/v1/bands";
 
