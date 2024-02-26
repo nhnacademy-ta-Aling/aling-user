@@ -1,5 +1,8 @@
 package kr.aling.user.band.controller;
 
+import static kr.aling.user.util.RestDocsUtil.REQUIRED;
+import static kr.aling.user.util.RestDocsUtil.REQUIRED_NO;
+import static kr.aling.user.util.RestDocsUtil.REQUIRED_YES;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
@@ -87,17 +90,23 @@ class BandManageControllerTest {
                         requestHeaders(
                                 headerWithName(ConstantUtil.X_TEMP_USER_NO).description(
                                         "회원 번호")
+                                        .attributes(key(REQUIRED).value(REQUIRED_YES))
                         ),
                         requestFields(
                                 fieldWithPath("bandName").type(JsonFieldType.STRING).description("그룹명")
+                                        .attributes(key(REQUIRED).value(REQUIRED_YES))
                                         .attributes(key("valid").value("Not Blank, 최대 30글자")),
                                 fieldWithPath("isEnter").type(JsonFieldType.BOOLEAN).description("즉시 가입 여부")
+                                        .attributes(key(REQUIRED).value(REQUIRED_YES))
                                         .attributes(key("valid").value("Not Null")),
                                 fieldWithPath("isViewContent").type(JsonFieldType.BOOLEAN).description("게시글 공개 여부")
+                                        .attributes(key(REQUIRED).value(REQUIRED_YES))
                                         .attributes(key("valid").value("Not Null")),
                                 fieldWithPath("bandInfo").type(JsonFieldType.STRING).description("그룹 소개글")
+                                        .attributes(key(REQUIRED).value(REQUIRED_NO))
                                         .attributes(key("valid").value("최대 1000글자")),
                                 fieldWithPath("fileNo").type(JsonFieldType.NUMBER).description("그룹 프로필 파일 번호")
+                                        .attributes(key(REQUIRED).value(REQUIRED_NO))
                                         .attributes(key("valid").value(""))
                         )));
 

@@ -1,5 +1,7 @@
 package kr.aling.user.mail.controller;
 
+import static kr.aling.user.util.RestDocsUtil.REQUIRED;
+import static kr.aling.user.util.RestDocsUtil.REQUIRED_YES;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
@@ -76,6 +78,7 @@ class MailControllerTest {
                 requestParameters(
                         parameterWithName("email").description("인증번호를 받을 이메일")
                                 .attributes(key("valid").value("Email 형식, 3~100 글자"))
+                                .attributes(key(REQUIRED).value(REQUIRED_YES))
                 )));
     }
 

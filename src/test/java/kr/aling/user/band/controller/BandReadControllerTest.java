@@ -1,5 +1,7 @@
 package kr.aling.user.band.controller;
 
+import static kr.aling.user.util.RestDocsUtil.REQUIRED;
+import static kr.aling.user.util.RestDocsUtil.REQUIRED_YES;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -12,6 +14,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -69,9 +72,13 @@ class BandReadControllerTest {
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestParameters(
-                                parameterWithName("bandName").description("중복 확인할 그룹명")),
+                                parameterWithName("bandName")
+                                        .attributes(key(REQUIRED).value(REQUIRED_YES))
+                                        .description("중복 확인할 그룹명")),
                         responseFields(
-                                fieldWithPath("isExist").type(JsonFieldType.BOOLEAN).description("그룹명 존재 여부"))
+                                fieldWithPath("isExist").type(JsonFieldType.BOOLEAN)
+                                        .description("그룹명 존재 여부"))
+
                 ));
 
         verify(bandReadService, times(1)).existBandName(anyString());
