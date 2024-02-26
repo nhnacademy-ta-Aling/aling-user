@@ -63,7 +63,7 @@ class NormalUserManageServiceImplTest {
         NormalUser normalUser = NormalUserDummy.dummy(alingUser, wantJobType);
 
         CreateNormalUserRequestDto requestDto = new CreateNormalUserRequestDto(
-                alingUser.getId(), TMP_PASSWORD, alingUser.getName(), normalUser.getWantJobType().getWantJobTypeNo(),
+                alingUser.getEmail(), TMP_PASSWORD, alingUser.getName(), normalUser.getWantJobType().getWantJobTypeNo(),
                 normalUser.getPhoneNo(), normalUser.getBirth().format(DateTimeFormatter.ofPattern(BIRTH_PATTERN))
         );
 
@@ -89,11 +89,11 @@ class NormalUserManageServiceImplTest {
         NormalUser normalUser = NormalUserDummy.dummy(alingUser, wantJobType);
 
         CreateNormalUserRequestDto requestDto = new CreateNormalUserRequestDto(
-                alingUser.getId(), TMP_PASSWORD, alingUser.getName(), normalUser.getWantJobType().getWantJobTypeNo(),
+                alingUser.getEmail(), TMP_PASSWORD, alingUser.getName(), normalUser.getWantJobType().getWantJobTypeNo(),
                 normalUser.getPhoneNo(), normalUser.getBirth().format(DateTimeFormatter.ofPattern(BIRTH_PATTERN))
         );
 
-        when(userManageService.registerUser(any())).thenThrow(new UserEmailAlreadyUsedException(alingUser.getId()));
+        when(userManageService.registerUser(any())).thenThrow(new UserEmailAlreadyUsedException(alingUser.getEmail()));
 
         // when
         // then

@@ -72,7 +72,7 @@ class NormalUserManageControllerTest {
     void signUpNormalUser() throws Exception {
         // given
         CreateNormalUserRequestDto requestDto = new CreateNormalUserRequestDto(
-                alingUser.getId(), TMP_PASSWORD, alingUser.getName(), normalUser.getWantJobType().getWantJobTypeNo(),
+                alingUser.getEmail(), TMP_PASSWORD, alingUser.getName(), normalUser.getWantJobType().getWantJobTypeNo(),
                 normalUser.getPhoneNo(), normalUser.getBirth().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
         );
 
@@ -126,7 +126,7 @@ class NormalUserManageControllerTest {
     void signUpNormalUser_alreadyExistsEmail() throws Exception {
         // given
         CreateNormalUserRequestDto requestDto = new CreateNormalUserRequestDto(
-                alingUser.getId(), TMP_PASSWORD, alingUser.getName(), normalUser.getWantJobType().getWantJobTypeNo(),
+                alingUser.getEmail(), TMP_PASSWORD, alingUser.getName(), normalUser.getWantJobType().getWantJobTypeNo(),
                 normalUser.getPhoneNo(), normalUser.getBirth().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
         );
         doThrow(UserEmailAlreadyUsedException.class).when(normalUserManageService).registerNormalUser(any());

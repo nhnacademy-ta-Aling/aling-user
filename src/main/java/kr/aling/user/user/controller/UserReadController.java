@@ -1,9 +1,9 @@
 package kr.aling.user.user.controller;
 
 import java.util.List;
+import javax.validation.Valid;
 import kr.aling.user.band.dto.response.GetBandDetailInfoResponseDto;
 import kr.aling.user.band.service.BandReadService;
-import javax.validation.Valid;
 import kr.aling.user.common.utils.ConstantUtil;
 import kr.aling.user.user.dto.response.IsExistsUserResponseDto;
 import kr.aling.user.user.dto.response.LoginResponseDto;

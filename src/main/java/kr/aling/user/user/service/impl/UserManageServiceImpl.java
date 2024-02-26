@@ -33,12 +33,12 @@ public class UserManageServiceImpl implements UserManageService {
      */
     @Override
     public CreateUserResponseDto registerUser(CreateUserRequestDto requestDto) {
-        if (Boolean.TRUE.equals(userReadRepository.existsByEmail(requestDto.getId()))) {
-            throw new UserEmailAlreadyUsedException(requestDto.getId());
+        if (Boolean.TRUE.equals(userReadRepository.existsByEmail(requestDto.getEmail()))) {
+            throw new UserEmailAlreadyUsedException(requestDto.getEmail());
         }
 
         AlingUser alingUser = AlingUser.builder()
-                .id(requestDto.getId())
+                .email(requestDto.getEmail())
                 .password(passwordEncoder.encode(requestDto.getPassword()))
                 .name(requestDto.getName())
                 .build();

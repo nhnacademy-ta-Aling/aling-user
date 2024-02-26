@@ -31,7 +31,7 @@ public class UserReadRepositoryImpl extends QuerydslRepositorySupport implements
     public Boolean existsByEmail(String email) {
         QAlingUser alingUser = QAlingUser.alingUser;
 
-        return from(alingUser).select(alingUser.id).where(alingUser.id.eq(email)).fetchCount() >= 1;
+        return from(alingUser).select(alingUser.email).where(alingUser.email.eq(email)).fetchCount() >= 1;
     }
 
     /**
@@ -46,7 +46,7 @@ public class UserReadRepositoryImpl extends QuerydslRepositorySupport implements
                         LoginInfoResponseDto.class,
                         user.userNo,
                         user.password
-                )).where(user.id.eq(email))
+                )).where(user.email.eq(email))
                 .fetchOne());
     }
 

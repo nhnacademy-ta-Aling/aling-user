@@ -72,7 +72,7 @@ class CompanyAlingUserManageControllerTest {
         CompanyUser companyUser = CompanyUserDummy.dummy(alingUser);
 
         CreateCompanyUserRequestDto requestDto = new CreateCompanyUserRequestDto();
-        ReflectionTestUtils.setField(requestDto, "email", alingUser.getId());
+        ReflectionTestUtils.setField(requestDto, "email", alingUser.getEmail());
         ReflectionTestUtils.setField(requestDto, "password", "nhn123456");
         ReflectionTestUtils.setField(requestDto, "name", alingUser.getName());
         ReflectionTestUtils.setField(requestDto, "address", alingUser.getAddress());

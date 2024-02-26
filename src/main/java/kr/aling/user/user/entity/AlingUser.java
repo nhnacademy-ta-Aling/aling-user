@@ -32,8 +32,8 @@ public class AlingUser extends BaseCreateTimeEntity {
     @Column(name = "aling_user_no")
     private Long userNo;
 
-    @Column(name = "aling_user_id")
-    private String id;
+    @Column(name = "aling_user_email")
+    private String email;
 
     @Column(name = "aling_user_password")
     private String password;
@@ -65,14 +65,14 @@ public class AlingUser extends BaseCreateTimeEntity {
     /**
      * 회원 생성을 위한 빌더.
      *
-     * @param id       아이디
+     * @param email       이메일
      * @param password 비밀번호
      * @param name     이름
      * @param address  주소
      */
     @Builder
-    public AlingUser(String id, String password, String name, String address) {
-        this.id = id;
+    public AlingUser(String email, String password, String name, String address) {
+        this.email = email;
         this.password = password;
         this.name = name;
         this.address = address;
