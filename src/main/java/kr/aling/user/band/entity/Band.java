@@ -73,6 +73,31 @@ public class Band extends BaseCreateTimeEntity {
     }
 
     /**
+     * 그룹 수정을 위한 메서드.
+     *
+     * @param name          그룹명
+     * @param info          그룹 소개글
+     * @param isEnter       그룹 즉시 가입 여부
+     * @param isViewContent 그룹 게시글 공개 여부
+     * @param fileNo        그룹 프로필 사진 파일 번호
+     */
+    public void updateBand(String name, String info, Boolean isEnter, Boolean isViewContent, Long fileNo) {
+        this.name = name;
+        this.info = info;
+        this.isEnter = isEnter;
+        this.isViewContent = isViewContent;
+        this.fileNo = fileNo;
+    }
+
+    /**
+     * 그룹을 삭제 처리 하는 메서드.
+     * soft delete 이며, 이미 삭제된 그룹은 되살릴 수 없습니다.
+     */
+    public void deleteBand() {
+        this.isDelete = true;
+    }
+
+    /**
      * PrePersist.
      */
     @PrePersist
