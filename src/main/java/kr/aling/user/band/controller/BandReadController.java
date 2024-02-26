@@ -1,13 +1,16 @@
 package kr.aling.user.band.controller;
 
+import java.util.List;
 import kr.aling.user.band.dto.response.ExistsBandNameResponseDto;
 import kr.aling.user.band.dto.response.GetBandInfoResponseDto;
 import kr.aling.user.band.dto.response.GetBandInfoWithBandUserResponseDto;
+import kr.aling.user.band.dto.response.external.GetBandPostTypeResponseDto;
 import kr.aling.user.band.service.BandReadService;
+import kr.aling.user.banduser.dto.response.GetBandUserAndUserInfoResponseDto;
+import kr.aling.user.banduser.dto.response.GetBandUserAuthResponseDto;
 import kr.aling.user.banduser.service.BandUserReadService;
 import kr.aling.user.common.dto.PageResponseDto;
 import kr.aling.user.common.utils.ConstantUtil;
-import kr.aling.user.user.dto.response.GetUserSimpleInfoResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -83,17 +86,50 @@ public class BandReadController {
     /**
      * 그룹에 가입된 유저 리스트 조회 메서드.
      *
-     * @param bandNo 조회할 그룹 번호
+     * @param bandName 조회할 그룹 이름
      * @param pageable 페이징
      * @return 200 OK. 그룹에 가입된 유저 리스트 페이지 dto
      */
     @GetMapping
-    @RequestMapping("/{bandNo}/users")
-    public ResponseEntity<PageResponseDto<GetUserSimpleInfoResponseDto>> joinBandUserList(
-            @PathVariable("bandNo") Long bandNo,
+    @RequestMapping("/{bandName}/users")
+    public ResponseEntity<PageResponseDto<GetBandUserAndUserInfoResponseDto>> joinBandUserList(
+            @PathVariable("bandName") String bandName,
             Pageable pageable) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(bandUserReadService.getBandUserList(bandNo, pageable));
+                .body(bandUserReadService.getBandUserList(bandName, pageable));
+    }
+
+    /**
+     * 특정 그룹의 그룹 게시글 분류 리스트 조회 메서드.
+     *
+     * @param bandName 그룹 명
+     * @return 200 ok. 그룹 게시글 분류 dto 리스트
+     */
+    @GetMapping
+    @RequestMapping("/{bandName}/band-post-types")
+    public ResponseEntity<List<GetBandPostTypeResponseDto>> bandPostTypeList(
+            @PathVariable("bandName") String bandName) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(bandReadService.getBandPostTypeList(bandName));
+    }
+
+    /**
+     * 그룹 번호와 회원 번호를 이용해 그룹 회원 권한 이름을 조회 하는 메서드. <br />
+     * gateway 에서 공통적인 그룹 회원 권한 처리를 하기 위해 사용합니다.
+     *
+     * @param bandNo 그룹 번호
+     * @param userNo 회원 번호
+     * @return 그룹 회원 권한 정보 dto
+     */
+    @GetMapping
+    @RequestMapping("/{bandNo}/users/{userNo}/role")
+    public ResponseEntity<GetBandUserAuthResponseDto> bandUserRoleInfoForAuth(
+            @PathVariable("bandNo") Long bandNo,
+            @PathVariable("userNo") Long userNo) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(bandUserReadService.getBandUserInfo(bandNo, userNo));
     }
 }
