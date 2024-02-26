@@ -1,10 +1,9 @@
 package kr.aling.user.banduser.service.impl;
 
-import kr.aling.user.banduser.dto.response.GetBandUserAndUserInfoResponseDto;
-import kr.aling.user.banduser.dto.response.GetBandUserAuthResponseDto;
-import kr.aling.user.banduser.exception.BandUserNotFoundException;
 import java.util.Objects;
 import kr.aling.user.banduser.dto.response.BandPostUerQueryDto;
+import kr.aling.user.banduser.dto.response.GetBandUserAndUserInfoResponseDto;
+import kr.aling.user.banduser.dto.response.GetBandUserAuthResponseDto;
 import kr.aling.user.banduser.dto.response.GetPostWriterResponseDto;
 import kr.aling.user.banduser.dto.response.external.GetFileInfoResponseDto;
 import kr.aling.user.banduser.exception.BandUserNotFoundException;
@@ -35,7 +34,7 @@ public class BandUserReadServiceImpl implements BandUserReadService {
     /**
      * {@inheritDoc}
      *
-     * @param bandName   그룹 명
+     * @param bandName 그룹 명
      * @param pageable pageable
      * @return 그룹 회원 정보 dto 페이지
      */
@@ -44,6 +43,13 @@ public class BandUserReadServiceImpl implements BandUserReadService {
         return PageUtils.convert(bandUserReadRepository.getBandUserListByBandName(bandName, pageable));
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param bandNo 그룹 번호
+     * @param userNo 회원 번호
+     * @return 그룹 회원 권한 정보 dto
+     */
     @Override
     public GetBandUserAuthResponseDto getBandUserInfo(Long bandNo, Long userNo) {
         return bandUserReadRepository.getBandUserInfoByBandNoAndUserNo(bandNo, userNo)
