@@ -5,6 +5,7 @@ import kr.aling.user.band.dto.response.ExistsBandNameResponseDto;
 import kr.aling.user.band.dto.response.GetBandDetailInfoResponseDto;
 import kr.aling.user.band.dto.response.GetBandInfoResponseDto;
 import kr.aling.user.band.dto.response.GetBandInfoWithBandUserResponseDto;
+import kr.aling.user.band.dto.response.external.GetBandPostTypeResponseDto;
 import kr.aling.user.common.dto.PageResponseDto;
 import org.springframework.data.domain.Pageable;
 
@@ -48,4 +49,12 @@ public interface BandReadService {
      * @return 해당 회원이 가입한 그룹 정보 목록
      */
     List<GetBandDetailInfoResponseDto> getJoinedBandInfoList(Long userNo);
+
+    /**
+     * 특정 그룹의 그룹 게시글 분류 리스트를 조회하는 메서드 입니다.
+     *
+     * @param bandName 그룹 명
+     * @return 그룹 게시글 분류 정보 dto 리스트
+     */
+    List<GetBandPostTypeResponseDto> getBandPostTypeList(String bandName);
 }

@@ -19,7 +19,6 @@ public class BandUserDummy {
                 .bandUserRole(bandUserRole)
                 .band(band)
                 .alingUser(alingUser)
-                .enterAt(now())
                 .build();
 
     }

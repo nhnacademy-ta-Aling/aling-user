@@ -1,14 +1,13 @@
 package kr.aling.user.banduser.exception;
 
 /**
- * BandUser 없는 경우 Exception.
+ * 그룹 회원을 찾을 수 없을 때 발생 exception.
  *
- * @author 박경서
- * @since 1.0
+ * @author : 정유진
+ * @since : 1.0
  **/
 public class BandUserNotFoundException extends RuntimeException {
-
-    public static final String MESSAGE = "Band User Not Found";
+    public static final String MESSAGE = "Band User not found!";
 
     public BandUserNotFoundException() {
         super(MESSAGE);

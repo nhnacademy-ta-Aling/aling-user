@@ -68,14 +68,32 @@ public class BandUser {
      * @param bandUserRole 그룹회원권한
      * @param band         그룹
      * @param alingUser         회원
-     * @param enterAt      가입일
      */
     @Builder
-    public BandUser(BandUserRole bandUserRole, Band band, AlingUser alingUser, LocalDateTime enterAt) {
+    public BandUser(BandUserRole bandUserRole, Band band, AlingUser alingUser) {
         this.bandUserRole = bandUserRole;
         this.band = band;
         this.alingUser = alingUser;
-        this.enterAt = enterAt;
+    }
+
+    public void updateBandUserRole(BandUserRole bandUserRole) {
+        this.bandUserRole = bandUserRole;
+    }
+
+    public void updateBandUserBlock() {
+        this.isBlock = !this.isBlock;
+    }
+
+    public void updateBandUserDelete() {
+        this.isDelete = !this.isDelete;
+    }
+
+    /**
+     * 그룹 회원 삭제를 위한 메서드.
+     * 그룹 회원은 삭제 후 복구 되지 않습니다.
+     */
+    public void deleteBandUser() {
+        this.isDelete = true;
     }
 
     /**
@@ -87,5 +105,7 @@ public class BandUser {
                 ? Boolean.FALSE : this.isBlock;
         this.isDelete = Objects.isNull(this.isDelete)
                 ? Boolean.FALSE : this.isDelete;
+        this.enterAt = Objects.isNull(this.enterAt)
+                ? LocalDateTime.now() : this.enterAt;
     }
 }

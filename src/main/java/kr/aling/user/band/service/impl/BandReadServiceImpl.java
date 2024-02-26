@@ -5,11 +5,14 @@ import kr.aling.user.band.dto.response.ExistsBandNameResponseDto;
 import kr.aling.user.band.dto.response.GetBandDetailInfoResponseDto;
 import kr.aling.user.band.dto.response.GetBandInfoResponseDto;
 import kr.aling.user.band.dto.response.GetBandInfoWithBandUserResponseDto;
+import kr.aling.user.band.dto.response.external.GetBandPostTypeResponseDto;
+import kr.aling.user.band.entity.Band;
 import kr.aling.user.band.exception.BandNotFoundException;
 import kr.aling.user.band.repository.BandReadRepository;
 import kr.aling.user.band.service.BandReadService;
 import kr.aling.user.banduser.dto.response.GetBandUserInfoResponseDto;
 import kr.aling.user.banduser.repository.BandUserReadRepository;
+import kr.aling.user.common.adaptor.AlingPostAdaptor;
 import kr.aling.user.common.dto.PageResponseDto;
 import kr.aling.user.common.utils.PageUtils;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BandReadServiceImpl implements BandReadService {
     private final BandReadRepository bandReadRepository;
     private final BandUserReadRepository bandUserReadRepository;
+    private final AlingPostAdaptor alingPostAdaptor;
 
     /**
      * {@inheritDoc}
@@ -82,5 +86,20 @@ public class BandReadServiceImpl implements BandReadService {
     @Override
     public List<GetBandDetailInfoResponseDto> getJoinedBandInfoList(Long userNo) {
         return bandReadRepository.getJoinedBandInfoListByUserNo(userNo);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param bandName 그룹 명
+     * @return 그룹 게시글 분류 정보 dto 리스트
+     */
+    @Override
+    public List<GetBandPostTypeResponseDto> getBandPostTypeList(String bandName) {
+        Band band = bandReadRepository.findByName(bandName)
+                .orElseThrow(BandNotFoundException::new);
+
+        return alingPostAdaptor
+                .getBandPostTypeList(band.getBandNo());
     }
 }
