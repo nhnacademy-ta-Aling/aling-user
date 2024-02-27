@@ -9,7 +9,9 @@ import kr.aling.user.banduser.exception.BandUserNotFoundException;
 import kr.aling.user.banduserrole.exception.BandUserRoleNotFoundException;
 import kr.aling.user.common.exception.CustomException;
 import kr.aling.user.mail.exception.MailAuthNumberInvalidException;
+import kr.aling.user.post.exception.PostNotFoundException;
 import kr.aling.user.user.exception.UserEmailAlreadyUsedException;
+import kr.aling.user.user.exception.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,7 +62,7 @@ public class ControllerAdvice {
      * @return 404 status response
      */
     @ExceptionHandler({BandUserNotFoundException.class, BandUserRoleNotFoundException.class,
-            BandNotFoundException.class})
+            BandNotFoundException.class, PostNotFoundException.class, UserNotFoundException.class})
     public ResponseEntity<String> handleNotFoundException(Exception e) {
         log.error("[{}] {}", HttpStatus.NOT_FOUND, e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

@@ -1,4 +1,4 @@
-package kr.aling.user.common.feignclient;
+package kr.aling.user.common.feign;
 
 /**
  * Feign Client 위치 지정 marker interface.

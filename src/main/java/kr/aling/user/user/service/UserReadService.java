@@ -2,13 +2,14 @@ package kr.aling.user.user.service;
 
 import kr.aling.user.user.dto.response.LoginResponseDto;
 import kr.aling.user.user.dto.resquest.LoginRequestDto;
+import kr.aling.user.user.entity.AlingUser;
 
 /**
  * 회원 읽기 전용 서비스.
  *
- * @author : 여운석
- * @author : 이수정
- * @since : 1.0
+ * @author 여운석
+ * @author 이수정
+ * @since 1.0
  **/
 public interface UserReadService {
 
@@ -17,8 +18,8 @@ public interface UserReadService {
      *
      * @param email 확인할 이메일
      * @return 이메일 존재 여부
-     * @author : 이수정
-     * @since : 1.0
+     * @author 이수정
+     * @since 1.0
      */
     boolean isExistsEmail(String email);
 
@@ -27,19 +28,28 @@ public interface UserReadService {
      *
      * @param userNo 확인할 회원의 번호
      * @return 회원 존재 여부
-     * @author : 이수정
-     * @since : 1.0
+     * @author 이수정
+     * @since 1.0
      */
     boolean isExistsUserNo(Long userNo);
+
+    /**
+     * 회원 번호로 AlingUser를 조회합니다.
+     *
+     * @param userNo 조회할 회원의 번호
+     * @return 조회된 회원 Entity
+     * @author 이수정
+     * @since 1.0
+     */
+    AlingUser getAlingUserByUserNo(Long userNo);
 
     /**
      * 로그인합니다.
      *
      * @param loginRequestDto 이메일과 비밀번호
      * @return 로그인한 회원의 정보
-     * @author : 여운석
-     * @since : 1.0
+     * @author 여운석
+     * @since 1.0
      */
     LoginResponseDto login(LoginRequestDto loginRequestDto);
-
 }

@@ -51,6 +51,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureRestDocs(outputDir = "target/snippets")
 @MockBean(JpaMetamodelMappingContext.class)
 class CompanyAlingUserManageControllerTest {
+
     @Autowired
     MockMvc mockMvc;
     @MockBean
@@ -86,8 +87,8 @@ class CompanyAlingUserManageControllerTest {
         String url = "/api/v1/companies";
 
         mockMvc.perform(post(url)
-                .content(objectMapper.writeValueAsString(requestDto))
-                .contentType(MediaType.APPLICATION_JSON))
+                        .content(objectMapper.writeValueAsString(requestDto))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value(alingUser.getName()))
                 .andDo(print())
@@ -95,16 +96,22 @@ class CompanyAlingUserManageControllerTest {
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestFields(
-                                PayloadDocumentation.subsectionWithPath("email").description("가입 이메일").attributes(key("valid").value("Email 형식")),
-                                PayloadDocumentation.subsectionWithPath("password").description("비밀번호").attributes(key("valid").value("Not Blank, 최대 20글자")),
-                                PayloadDocumentation.subsectionWithPath("name").description("법인 이름").attributes(key("valid").value("Not Blank, 최대 50글자")),
-                                PayloadDocumentation.subsectionWithPath("address").description("소재지").attributes(key("valid").value("Not Blank, 최대 200글자")),
+                                PayloadDocumentation.subsectionWithPath("email").description("가입 이메일")
+                                        .attributes(key("valid").value("Email 형식")),
+                                PayloadDocumentation.subsectionWithPath("password").description("비밀번호")
+                                        .attributes(key("valid").value("Not Blank, 최대 20글자")),
+                                PayloadDocumentation.subsectionWithPath("name").description("법인 이름")
+                                        .attributes(key("valid").value("Not Blank, 최대 50글자")),
+                                PayloadDocumentation.subsectionWithPath("address").description("소재지")
+                                        .attributes(key("valid").value("Not Blank, 최대 200글자")),
                                 PayloadDocumentation.subsectionWithPath("companyRegistrationNo")
                                         .description("사업자등록번호").attributes(key("valid").value("Not Blank, 10글자")),
-                                PayloadDocumentation.subsectionWithPath("companySize").description("법인 규모").attributes(key("valid").value("기업 규모 값")),
-                                PayloadDocumentation.subsectionWithPath("companySector").description("법인 업종").attributes(key("valid").value("Not Blank, 최대 50글자"))),
+                                PayloadDocumentation.subsectionWithPath("companySize").description("법인 규모")
+                                        .attributes(key("valid").value("기업 규모 값")),
+                                PayloadDocumentation.subsectionWithPath("companySector").description("법인 업종")
+                                        .attributes(key("valid").value("Not Blank, 최대 50글자"))),
                         responseFields(fieldWithPath("name").description("법인 이름"))
-                        ));
+                ));
 
         verify(companyUserManageService, times(1)).registerCompanyUser(any());
     }

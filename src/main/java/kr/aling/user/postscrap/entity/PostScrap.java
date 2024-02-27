@@ -48,7 +48,6 @@ public class PostScrap {
     @Embeddable
     public static class Pk implements Serializable {
 
-        @Column(name = "aling_user_no")
         private Long userNo;
 
         @Column(name = "post_no")

@@ -11,10 +11,11 @@ public interface PostScrapManageService {
     /**
      * 게시물을 스크랩합니다. 이미 스크랩한 게시물이라면 게시물 스크랩을 취소합니다.
      *
-     * @param postNo 스크랩할 게시물 번호
-     * @param userNo 스크랩하는 회원의 번호
+     * @param authorization Access 토큰
+     * @param postNo        스크랩할 게시물 번호
+     * @param userNo        스크랩하는 회원의 번호
      * @author 이수정
      * @since 1.0
      */
-    void postScrap(Long postNo, Long userNo);
+    void postScrap(String authorization, Long postNo, Long userNo);
 }
