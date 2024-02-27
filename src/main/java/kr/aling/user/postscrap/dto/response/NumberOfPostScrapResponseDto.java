@@ -1,6 +1,7 @@
 package kr.aling.user.postscrap.dto.response;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * 게시물 스크랩 횟수를 반환하는 Dto.
@@ -8,6 +9,7 @@ import lombok.AllArgsConstructor;
  * @author 이수정
  * @since 1.0
  */
+@Getter
 @AllArgsConstructor
 public class NumberOfPostScrapResponseDto {
 

@@ -35,16 +35,15 @@ public class PostScrapManageServiceImpl implements PostScrapManageService {
     /**
      * {@inheritDoc}
      *
-     * @param authorization Access 토큰
-     * @param postNo        스크랩할 게시물 번호
-     * @param userNo        스크랩하는 회원의 번호
+     * @param postNo 스크랩할 게시물 번호
+     * @param userNo 스크랩하는 회원의 번호
      */
     @Override
-    public void postScrap(String authorization, Long postNo, Long userNo) {
+    public void postScrap(Long postNo, Long userNo) {
         AlingUser alingUser = userReadService.getAlingUserByUserNo(userNo);
 
         if (Boolean.FALSE.equals(
-                Objects.requireNonNull(postFeignClient.isExistsPost(authorization, postNo).getBody()).getIsExists())) {
+                Objects.requireNonNull(postFeignClient.isExistsPost(postNo).getBody()).getIsExists())) {
             throw new PostNotFoundException(postNo);
         }
 

@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import kr.aling.user.user.entity.AlingUser;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,6 +42,7 @@ public class PostScrap {
     /**
      * 게시물 스크랩의 pk 클래스입니다.
      */
+    @Builder
     @Getter
     @EqualsAndHashCode
     @NoArgsConstructor
