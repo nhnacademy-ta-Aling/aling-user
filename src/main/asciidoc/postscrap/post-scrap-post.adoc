@@ -1,0 +1,23 @@
+:toc:
+
+==== 게시물 스크랩
+
+게시물 번호와 회원의 번호로 게시물 스크랩 생성 혹은 취소 API
+
+===== 요청
+
+operation::post-scrap-post-scrap[snippets='http-request']
+
+===== 응답
+
+operation::post-scrap-post-scrap[snippets='http-response']
+
+===== 파라미터 설명
+
+====== 요청 Path Variable
+
+operation::post-scrap-post-scrap[snippets='path-parameters']
+
+====== 요청 Request Parameter
+
+operation::post-scrap-post-scrap[snippets='request-parameters']

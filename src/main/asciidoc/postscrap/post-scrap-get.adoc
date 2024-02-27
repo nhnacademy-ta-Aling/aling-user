@@ -1,0 +1,75 @@
+:toc:
+
+==== 게시물 스크랩 여부 조회
+
+게시물 번호와 회원의 번호로 스크랩 여부 확인 API
+
+===== 요청
+
+operation::post-scrap-is-exists-post-scrap[snippets='http-request']
+
+===== 응답
+
+operation::post-scrap-is-exists-post-scrap[snippets='http-response']
+
+===== 파라미터 설명
+
+====== 요청 Path Variable
+
+operation::post-scrap-is-exists-post-scrap[snippets='path-parameters']
+
+====== 요청 Request Parameter
+
+operation::post-scrap-is-exists-post-scrap[snippets='request-parameters']
+
+====== 응답 Body
+
+operation::post-scrap-is-exists-post-scrap[snippets='response-fields']
+
+
+
+==== 게시물 스크랩 횟수 조회
+
+게시물 번호로 스크랩 횟수 확인 API
+
+===== 요청
+
+operation::post-scrap-get-number-of-post-scrap[snippets='http-request']
+
+===== 응답
+
+operation::post-scrap-get-number-of-post-scrap[snippets='http-response']
+
+===== 파라미터 설명
+
+====== 요청 Path Variable
+
+operation::post-scrap-get-number-of-post-scrap[snippets='path-parameters']
+
+====== 응답 Body
+
+operation::post-scrap-get-number-of-post-scrap[snippets='response-fields']
+
+
+
+==== 게시물 스크랩용 게시물 페이징 조회
+
+회원의 번호로 스크랩용 게시물 페이징 조회 API
+
+===== 요청
+
+operation::post-scrap-get-post-scraps[snippets='http-request']
+
+===== 응답
+
+operation::post-scrap-get-post-scraps[snippets='http-response']
+
+===== 파라미터 설명
+
+====== 요청 Request Parameter
+
+operation::post-scrap-get-post-scraps[snippets='request-parameters']
+
+====== 응답 Body
+
+operation::post-scrap-get-post-scraps[snippets='response-fields']

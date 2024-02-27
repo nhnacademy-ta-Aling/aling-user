@@ -1,0 +1,4 @@
+=== 게시물 스크랩 (PostScrap)
+
+include::../postscrap/post-scrap-get.adoc[]
+include::../postscrap/post-scrap-post.adoc[]

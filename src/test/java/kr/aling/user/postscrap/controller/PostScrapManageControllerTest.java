@@ -58,7 +58,7 @@ class PostScrapManageControllerTest {
                 .andExpect(status().isOk());
 
         // docs
-        perform.andDo(document("post-scrap",
+        perform.andDo(document("post-scrap-post-scrap",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 pathParameters(

@@ -73,7 +73,7 @@ class PostScrapReadControllerTest {
                 .andExpect(jsonPath("$.isScrap", equalTo(Boolean.FALSE)));
 
         // docs
-        perform.andDo(document("is-exists-post-scrap",
+        perform.andDo(document("post-scrap-is-exists-post-scrap",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 pathParameters(
@@ -108,7 +108,7 @@ class PostScrapReadControllerTest {
                 .andExpect(jsonPath("$.number", equalTo(100)));
 
         // docs
-        perform.andDo(document("get-number-of-post-scrap",
+        perform.andDo(document("post-scrap-get-number-of-post-scrap",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 pathParameters(
@@ -161,7 +161,7 @@ class PostScrapReadControllerTest {
         verify(postScrapReadService, times(1)).getPostScraps(anyLong(), any());
 
         // docs
-        perform.andDo(document("get-post-scraps",
+        perform.andDo(document("post-scrap-get-post-scraps",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 requestParameters(
