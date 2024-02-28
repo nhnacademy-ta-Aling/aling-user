@@ -3,6 +3,7 @@ package kr.aling.user.user.service.impl;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -11,6 +12,8 @@ import java.util.Optional;
 import kr.aling.user.user.dto.response.LoginInfoResponseDto;
 import kr.aling.user.user.dto.response.LoginResponseDto;
 import kr.aling.user.user.dto.resquest.LoginRequestDto;
+import kr.aling.user.user.dummy.UserDummy;
+import kr.aling.user.user.entity.AlingUser;
 import kr.aling.user.user.exception.UserNotFoundException;
 import kr.aling.user.user.repository.UserReadRepository;
 import kr.aling.user.user.service.UserReadService;
@@ -19,6 +22,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.util.ReflectionTestUtils;
 
 class AlingUserReadServiceImplTest {
 
@@ -94,6 +98,41 @@ class AlingUserReadServiceImplTest {
 
         // then
         assertThat(isExists).isFalse();
+    }
+
+    @Test
+    @DisplayName("회원 조회 성공")
+    void getAlingUserByUserNo() {
+        // given
+        Long userNo = 1L;
+        AlingUser dummy = UserDummy.dummy();
+
+        ReflectionTestUtils.setField(dummy, "userNo", userNo);
+
+        when(userReadRepository.findById(anyLong())).thenReturn(Optional.of(dummy));
+
+        // when
+        AlingUser alingUser = userReadService.getAlingUserByUserNo(userNo);
+
+        // then
+        assertThat(alingUser).isNotNull();
+        assertThat(alingUser.getUserNo()).isEqualTo(userNo);
+        assertThat(alingUser.getEmail()).isEqualTo(dummy.getEmail());
+        assertThat(alingUser.getPassword()).isEqualTo(dummy.getPassword());
+        assertThat(alingUser.getName()).isEqualTo(dummy.getName());
+    }
+
+    @Test
+    @DisplayName("회원 조회 실패 - 존재하지 않음")
+    void getAlingUserByUserNo_notFound() {
+        // given
+        Long userNo = 99L;
+
+        when(userReadRepository.findById(userNo)).thenReturn(Optional.empty());
+
+        // when
+        assertThatThrownBy(() -> userReadService.getAlingUserByUserNo(userNo))
+                .isInstanceOf(UserNotFoundException.class);
     }
 
     @Test

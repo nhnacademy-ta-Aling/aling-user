@@ -22,7 +22,7 @@ import kr.aling.user.common.valid.validator.EnumValidator;
  * @author : 여운석
  * @since : 1.0
  **/
-@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
+@Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
 @Documented
 @Constraint(validatedBy = EnumValidator.class)
@@ -32,7 +32,6 @@ public @interface EnumValue {
      * 검증할 Enum class.
      *
      * @return 지정한 enum class
-     *
      */
     Class<? extends Enum<?>> enumClass();
 

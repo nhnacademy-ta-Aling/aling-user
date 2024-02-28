@@ -64,8 +64,7 @@ class AlingUserReadControllerTest {
 
         // when
         ResultActions perform = mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/api/v1/users/check/{userNo}", userNo)
-                .contentType(MediaType.APPLICATION_JSON));
+                RestDocumentationRequestBuilders.get("/api/v1/users/check/{userNo}", userNo));
 
         // then
         perform.andDo(print())

@@ -9,6 +9,7 @@ import kr.aling.user.band.entity.Band;
  * @since : 1.0
  **/
 public class BandDummy {
+
     public static Band dummyPrivateBand() {
         return Band.builder()
                 .name("dummyBandName")

@@ -22,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 @Component
 @RequiredArgsConstructor
 public class AlingPostAdaptor {
+
     private final AlingUrlProperties alingUrlProperties;
     private final RestTemplate restTemplate;
 

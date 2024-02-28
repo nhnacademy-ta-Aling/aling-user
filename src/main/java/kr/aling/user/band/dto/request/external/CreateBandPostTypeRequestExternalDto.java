@@ -12,6 +12,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class CreateBandPostTypeRequestExternalDto {
+
     private Long bandNo;
     private String bandPostTypeName;
 }

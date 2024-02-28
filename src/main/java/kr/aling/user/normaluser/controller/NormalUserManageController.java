@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 일반회원 CUD RestController.
  *
- * @author : 이수정
- * @since : 1.0
+ * @author 이수정
+ * @since 1.0
  */
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/normals")

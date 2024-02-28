@@ -15,6 +15,7 @@ import org.apache.logging.log4j.util.Strings;
  * @since : 1.0
  **/
 public class EnumValidator implements ConstraintValidator<EnumValue, String> {
+
     private List<String> enumValues;
 
     @Override

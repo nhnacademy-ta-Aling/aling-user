@@ -54,7 +54,8 @@ class AlingUserManageServiceImplTest {
         // given
         AlingUser alingUser = UserDummy.dummyEncoder(new BCryptPasswordEncoder());
 
-        CreateUserRequestDto requestDto = new CreateUserRequestDto(alingUser.getEmail(), TMP_PASSWORD, alingUser.getName());
+        CreateUserRequestDto requestDto =
+                new CreateUserRequestDto(alingUser.getEmail(), TMP_PASSWORD, alingUser.getName());
 
         when(userReadRepository.existsByEmail(any())).thenReturn(Boolean.FALSE);
         when(userManageRepository.save(any())).thenReturn(alingUser);
@@ -75,7 +76,8 @@ class AlingUserManageServiceImplTest {
         // given
         AlingUser alingUser = UserDummy.dummyEncoder(new BCryptPasswordEncoder());
 
-        CreateUserRequestDto requestDto = new CreateUserRequestDto(alingUser.getEmail(), TMP_PASSWORD, alingUser.getName());
+        CreateUserRequestDto requestDto =
+                new CreateUserRequestDto(alingUser.getEmail(), TMP_PASSWORD, alingUser.getName());
 
         when(userReadRepository.existsByEmail(any())).thenReturn(Boolean.TRUE);
 

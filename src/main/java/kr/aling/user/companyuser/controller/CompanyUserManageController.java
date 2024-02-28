@@ -35,7 +35,7 @@ public class CompanyUserManageController {
      */
     @PostMapping
     public ResponseEntity<CreateCompanyUserResponseDto>
-            registerCompanyUser(@RequestBody @Valid CreateCompanyUserRequestDto requestDto) {
+    registerCompanyUser(@RequestBody @Valid CreateCompanyUserRequestDto requestDto) {
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(companyUserManageService.registerCompanyUser(requestDto));

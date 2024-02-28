@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class ModifyBandRequestDto {
+
     @NotBlank
     @Size(max = 30)
     private String newBandName;

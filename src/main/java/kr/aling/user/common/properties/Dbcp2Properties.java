@@ -5,15 +5,16 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * Mysql 설정 프로퍼티.
+ * Dbcp2 설정 프로퍼티.
  *
  * @author : 정유진
  * @since : 1.0
  **/
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "aling.mysql")
-public class MysqlProperties {
+@ConfigurationProperties(prefix = "aling.datasource.dbcp2")
+public class Dbcp2Properties {
+
     private String driver;
     private String url;
     private String username;
@@ -22,7 +23,8 @@ public class MysqlProperties {
     private Integer maxTotal;
     private Integer minIdle;
     private Integer maxIdle;
-    private Integer maxWait;
-    private String query;
-
+    private Integer maxWaitMillis;
+    private Boolean testOnBorrow;
+    private Boolean testOnReturn;
+    private String validationQuery;
 }

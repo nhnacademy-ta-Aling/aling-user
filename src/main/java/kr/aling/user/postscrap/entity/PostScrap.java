@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import kr.aling.user.user.entity.AlingUser;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PostScrap {
+
     @EmbeddedId
     private Pk pk;
 
@@ -40,13 +42,14 @@ public class PostScrap {
     /**
      * 게시물 스크랩의 pk 클래스입니다.
      */
+    @Builder
     @Getter
     @EqualsAndHashCode
     @NoArgsConstructor
     @AllArgsConstructor
     @Embeddable
     public static class Pk implements Serializable {
-        @Column(name = "aling_user_no")
+
         private Long userNo;
 
         @Column(name = "post_no")

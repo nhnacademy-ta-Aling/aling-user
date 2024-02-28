@@ -12,5 +12,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class CreateBandPostTypeDefaultRequestDto {
+
     private Long bandNo;
 }

@@ -22,6 +22,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "band_user_role")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BandUserRole {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column

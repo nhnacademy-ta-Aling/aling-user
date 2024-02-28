@@ -9,6 +9,7 @@ import kr.aling.user.banduserrole.entity.BandUserRole;
  * @since : 1.0
  **/
 public class BandUserRoleDummy {
+
     public static BandUserRole dummyCreator() {
         return BandUserRole.builder()
                 .bandUserRoleNo(1)

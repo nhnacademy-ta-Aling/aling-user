@@ -29,6 +29,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Follow {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column

@@ -28,6 +28,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Career {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column

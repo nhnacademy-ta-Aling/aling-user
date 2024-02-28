@@ -34,6 +34,7 @@ import org.springframework.test.util.ReflectionTestUtils;
  * @since : 1.0
  **/
 class CompanyAlingUserManageServiceTest {
+
     CompanyUserManageService companyUserManageService;
     CompanyUserManageRepository companyUserManageRepository;
     UserManageRepository userManageRepository;
@@ -47,7 +48,9 @@ class CompanyAlingUserManageServiceTest {
         userReadRepository = Mockito.mock(UserReadRepository.class);
 
         passwordEncoder = new BCryptPasswordEncoder();
-        companyUserManageService = new CompanyUserManageServiceImpl(userManageRepository, userReadRepository, companyUserManageRepository, passwordEncoder);
+        companyUserManageService =
+                new CompanyUserManageServiceImpl(userManageRepository, userReadRepository, companyUserManageRepository,
+                        passwordEncoder);
     }
 
     @Test

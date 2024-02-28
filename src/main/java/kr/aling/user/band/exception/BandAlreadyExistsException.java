@@ -7,6 +7,7 @@ package kr.aling.user.band.exception;
  * @since : 1.0
  **/
 public class BandAlreadyExistsException extends RuntimeException {
+
     public static final String MESSAGE = "Band already exists.";
 
     public BandAlreadyExistsException() {

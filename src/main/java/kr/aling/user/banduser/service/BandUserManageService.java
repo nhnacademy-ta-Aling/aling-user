@@ -9,9 +9,9 @@ import kr.aling.user.banduser.dto.request.ModifyRoleOfBandUserRequestDto;
  * @since : 1.0
  **/
 public interface BandUserManageService {
+
     /**
-     * 그룹 회원을 삭제 하기 위한 메서드 입니다.
-     * soft delete 로 동작 합니다.
+     * 그룹 회원을 삭제 하기 위한 메서드 입니다. soft delete 로 동작 합니다.
      *
      * @param bandName 그룹 명
      * @param userNo   회원 번호
@@ -26,7 +26,7 @@ public interface BandUserManageService {
      * @param modifyRoleOfBandUserRequestDto 그룹 회원 권한 수정 정보를 담은 dto
      */
     void modifyRoleOfBandUser(String bandName, Long userNo,
-                              ModifyRoleOfBandUserRequestDto modifyRoleOfBandUserRequestDto);
+            ModifyRoleOfBandUserRequestDto modifyRoleOfBandUserRequestDto);
 
     /**
      * creator 권한을 위임 하기 위한 메서드 입니다.

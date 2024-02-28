@@ -89,7 +89,7 @@ class BandManageControllerTest {
                         preprocessResponse(prettyPrint()),
                         requestHeaders(
                                 headerWithName(ConstantUtil.X_TEMP_USER_NO).description(
-                                        "회원 번호")
+                                                "회원 번호")
                                         .attributes(key(REQUIRED).value(REQUIRED_YES))
                         ),
                         requestFields(

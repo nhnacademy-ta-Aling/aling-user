@@ -37,6 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class BandManageServiceImpl implements BandManageService {
+
     private static final int USER_OWN_BAND_LIMIT = 3;
 
     private final BandReadRepository bandReadRepository;
@@ -51,8 +52,8 @@ public class BandManageServiceImpl implements BandManageService {
      * {@inheritDoc}
      *
      * @throws BandUserRoleNotFoundException 그룹 회원 권한을 찾을 수 없을 때 발생 excpetion
-     * @throws BandLimitExceededException 생성할 수 있는 그룹 개수를 초과 했을 때 발생 excpetion
-     * @throws BandAlreadyExistsException 그룹이 이미 존재할 경우 발생 exception
+     * @throws BandLimitExceededException    생성할 수 있는 그룹 개수를 초과 했을 때 발생 excpetion
+     * @throws BandAlreadyExistsException    그룹이 이미 존재할 경우 발생 exception
      */
     @Override
     public void makeBand(Long userNo, CreateBandRequestDto createBandRequestDto) {
@@ -91,10 +92,10 @@ public class BandManageServiceImpl implements BandManageService {
     /**
      * {@inheritDoc}
      *
-     * @param bandName 수정할 그룹 이름
+     * @param bandName  수정할 그룹 이름
      * @param modifyDto 수정할 정보를 담은 dto
      * @throws BandAlreadyExistsException 그룹 명이 이미 존재할 경우 발생 exception
-     * @throws BandNotFoundException 그룹을 찾을 수 없을 경우 발생 exception
+     * @throws BandNotFoundException      그룹을 찾을 수 없을 경우 발생 exception
      */
     @Override
     public void updateBandInfo(String bandName, ModifyBandRequestDto modifyDto) {
@@ -130,7 +131,7 @@ public class BandManageServiceImpl implements BandManageService {
     /**
      * {@inheritDoc}
      *
-     * @param bandName 그룹 게시글 분류를 생성할 그룹 명
+     * @param bandName   그룹 게시글 분류를 생성할 그룹 명
      * @param requestDto 그룹 게시글 분류 생성을 위한 정보를 담은 dto
      * @throws BandNotFoundException 그룹을 찾을 수 없을 경우 발생 exception
      */

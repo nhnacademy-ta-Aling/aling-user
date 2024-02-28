@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "role")
 @Entity
 public class Role {
+
     @Id
     @Column(name = "role_no")
     private Integer roleNo;

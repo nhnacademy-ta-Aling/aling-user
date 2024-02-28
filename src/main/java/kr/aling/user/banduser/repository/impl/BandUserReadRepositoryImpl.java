@@ -5,9 +5,9 @@ import com.querydsl.jpa.JPQLQuery;
 import java.util.List;
 import java.util.Optional;
 import kr.aling.user.band.entity.QBand;
+import kr.aling.user.banduser.dto.response.BandPostUerQueryDto;
 import kr.aling.user.banduser.dto.response.GetBandUserAndUserInfoResponseDto;
 import kr.aling.user.banduser.dto.response.GetBandUserAuthResponseDto;
-import kr.aling.user.banduser.dto.response.BandPostUerQueryDto;
 import kr.aling.user.banduser.dto.response.GetBandUserInfoResponseDto;
 import kr.aling.user.banduser.entity.BandUser;
 import kr.aling.user.banduser.entity.QBandUser;
@@ -27,6 +27,7 @@ import org.springframework.data.support.PageableExecutionUtils;
  * @since : 1.0
  **/
 public class BandUserReadRepositoryImpl extends QuerydslRepositorySupport implements BandUserReadRepositoryCustom {
+
     public BandUserReadRepositoryImpl() {
         super(BandUser.class);
     }
@@ -143,7 +144,7 @@ public class BandUserReadRepositoryImpl extends QuerydslRepositorySupport implem
      * {@inheritDoc}
      *
      * @param bandName 그룹 명
-     * @param userNo 회원 번호
+     * @param userNo   회원 번호
      * @return 그룹 회원 entity
      */
     @Override
@@ -169,7 +170,7 @@ public class BandUserReadRepositoryImpl extends QuerydslRepositorySupport implem
     /**
      * 특정 회원이 특정 그룹 회원 권한을 몇 개 가지고 있는지 조회 하기 위한 메서드.
      *
-     * @param userNo 회원 번호
+     * @param userNo   회원 번호
      * @param roleName 그룹 회원 권한 이름
      * @return 회원의 권한 개수
      */

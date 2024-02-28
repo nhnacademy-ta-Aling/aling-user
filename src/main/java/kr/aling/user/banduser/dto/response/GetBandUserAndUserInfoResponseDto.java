@@ -13,6 +13,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class GetBandUserAndUserInfoResponseDto {
+
     private GetBandUserInfoResponseDto bandUserInfo;
     private GetUserSimpleInfoResponseDto userInfo;
 }

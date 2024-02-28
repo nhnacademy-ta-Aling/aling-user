@@ -9,7 +9,9 @@ import kr.aling.user.banduser.exception.BandUserNotFoundException;
 import kr.aling.user.banduserrole.exception.BandUserRoleNotFoundException;
 import kr.aling.user.common.exception.CustomException;
 import kr.aling.user.mail.exception.MailAuthNumberInvalidException;
+import kr.aling.user.post.exception.PostNotFoundException;
 import kr.aling.user.user.exception.UserEmailAlreadyUsedException;
+import kr.aling.user.user.exception.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ControllerAdvice {
 
+    private static final String DEFAULT_HANDLE_MESSAGE = "[{}] {}";
+
     /**
      * Http Status 400에 해당하는 예외를 공통 처리합니다.
      *
@@ -37,7 +41,7 @@ public class ControllerAdvice {
     @ExceptionHandler({ConstraintViolationException.class, MailAuthNumberInvalidException.class,
             BandLimitExceededException.class})
     public ResponseEntity<String> handleBadRequestException(Exception e) {
-        log.error("[{}] {}", HttpStatus.BAD_REQUEST, e.getMessage());
+        log.error(DEFAULT_HANDLE_MESSAGE, HttpStatus.BAD_REQUEST, e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
@@ -49,7 +53,7 @@ public class ControllerAdvice {
      */
     @ExceptionHandler(BandAccessDeniedException.class)
     public ResponseEntity<String> handleForbiddenException(Exception e) {
-        log.error("[{}] {}", HttpStatus.FORBIDDEN, e.getMessage());
+        log.error(DEFAULT_HANDLE_MESSAGE, HttpStatus.FORBIDDEN, e.getMessage());
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
     }
 
@@ -60,9 +64,9 @@ public class ControllerAdvice {
      * @return 404 status response
      */
     @ExceptionHandler({BandUserNotFoundException.class, BandUserRoleNotFoundException.class,
-            BandNotFoundException.class})
+            BandNotFoundException.class, PostNotFoundException.class, UserNotFoundException.class})
     public ResponseEntity<String> handleNotFoundException(Exception e) {
-        log.error("[{}] {}", HttpStatus.NOT_FOUND, e.getMessage());
+        log.error(DEFAULT_HANDLE_MESSAGE, HttpStatus.NOT_FOUND, e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
@@ -76,7 +80,7 @@ public class ControllerAdvice {
      */
     @ExceptionHandler({UserEmailAlreadyUsedException.class, BandAlreadyExistsException.class})
     public ResponseEntity<String> handleConflictException(Exception e) {
-        log.error("[{}] {}", HttpStatus.CONFLICT, e.getMessage());
+        log.error(DEFAULT_HANDLE_MESSAGE, HttpStatus.CONFLICT, e.getMessage());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
 
@@ -90,7 +94,7 @@ public class ControllerAdvice {
      */
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<String> handleCustomException(CustomException e) {
-        log.error("[{}] {}", e.getHttpStatus(), e.getMessage());
+        log.error(DEFAULT_HANDLE_MESSAGE, e.getHttpStatus(), e.getMessage());
         return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
     }
 }
