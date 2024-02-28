@@ -27,9 +27,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 import kr.aling.user.common.dto.PageResponseDto;
+import kr.aling.user.post.exception.PostNotFoundException;
 import kr.aling.user.postscrap.dto.response.IsExistsPostScrapResponseDto;
 import kr.aling.user.postscrap.dto.response.NumberOfPostScrapResponseDto;
 import kr.aling.user.postscrap.dto.response.ReadPostScrapsPostResponseDto;
+import kr.aling.user.postscrap.dto.response.ReadPostScrapsUserResponseDto;
 import kr.aling.user.postscrap.service.PostScrapReadService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -129,6 +131,8 @@ class PostScrapReadControllerTest {
         int page = 0;
         int size = 3;
 
+        Long userNo = 1L;
+
         Long postNo = 1L;
         String content = "1";
         Boolean isDelete = false;
@@ -146,11 +150,11 @@ class PostScrapReadControllerTest {
                 1L,
                 List.of(responseDto)
         );
-        when(postScrapReadService.getPostScraps(anyLong(), any())).thenReturn(pageResponseDto);
+        when(postScrapReadService.getPostScrapsPost(anyLong(), any())).thenReturn(pageResponseDto);
 
         // when
         ResultActions perform = mockMvc.perform(get("/api/v1/post-scraps/posts")
-                .param("userNo", String.valueOf(1L))
+                .param("userNo", String.valueOf(userNo))
                 .param("page", String.valueOf(page))
                 .param("size", String.valueOf(size)));
 
@@ -165,10 +169,10 @@ class PostScrapReadControllerTest {
                 .andExpect(jsonPath("$.content[0].isDelete", equalTo(isDelete)))
                 .andExpect(jsonPath("$.content[0].isOpen", equalTo(isOpen)));
 
-        verify(postScrapReadService, times(1)).getPostScraps(anyLong(), any());
+        verify(postScrapReadService, times(1)).getPostScrapsPost(anyLong(), any());
 
         // docs
-        perform.andDo(document("post-scrap-get-post-scraps",
+        perform.andDo(document("post-scrap-get-post-scraps-post",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 requestParameters(
@@ -191,5 +195,74 @@ class PostScrapReadControllerTest {
                         fieldWithPath("content[].isDelete").type(JsonFieldType.BOOLEAN).description("게시물 삭제여부"),
                         fieldWithPath("content[].isOpen").type(JsonFieldType.BOOLEAN).description("게시물 공개여부")
                 )));
+    }
+
+    @Test
+    @DisplayName("게시물 기준 스크랩한 회원 조회 성공")
+    void getPostScrapsUser() throws Exception {
+        // given
+        Long postNo = 1L;
+
+        Long userNo = 1L;
+        String name = "Aling";
+        Boolean isDelete = false;
+        Long fileNo = 1L;
+
+        ReadPostScrapsUserResponseDto responseDto = new ReadPostScrapsUserResponseDto();
+        ReflectionTestUtils.setField(responseDto, "userNo", userNo);
+        ReflectionTestUtils.setField(responseDto, "name", name);
+        ReflectionTestUtils.setField(responseDto, "isDelete", isDelete);
+        ReflectionTestUtils.setField(responseDto, "fileNo", fileNo);
+
+        when(postScrapReadService.getPostScrapsUser(anyLong())).thenReturn(List.of(responseDto));
+
+        // when
+        ResultActions perform = mockMvc.perform(get("/api/v1/post-scraps/users")
+                .param("postNo", String.valueOf(postNo)));
+
+        // then
+        perform.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.[0].userNo", equalTo(userNo.intValue())))
+                .andExpect(jsonPath("$.[0].name", equalTo(name)))
+                .andExpect(jsonPath("$.[0].isDelete", equalTo(isDelete)))
+                .andExpect(jsonPath("$.[0].fileNo", equalTo(fileNo.intValue())));
+
+        verify(postScrapReadService, times(1)).getPostScrapsUser(anyLong());
+
+        // docs
+        perform.andDo(document("post-scrap-get-post-scraps-user",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                requestParameters(
+                        parameterWithName("postNo").description("스크랩 회원목록 조회할 게시물의 번호")
+                                .attributes(key(REQUIRED).value(REQUIRED_YES))
+                                .attributes(key(VALID).value(""))
+                ),
+                responseFields(
+                        fieldWithPath("[].userNo").type(JsonFieldType.NUMBER).description("회원 번호"),
+                        fieldWithPath("[].name").type(JsonFieldType.STRING).description("회원 이름"),
+                        fieldWithPath("[].isDelete").type(JsonFieldType.BOOLEAN).description("회원 삭제여부"),
+                        fieldWithPath("[].fileNo").type(JsonFieldType.NUMBER).description("회원 프로필 파일 번호")
+                )));
+    }
+
+    @Test
+    @DisplayName("게시물 기준 스크랩한 회원 조회 실패 - 존재하지 않는 게시물인 경우")
+    void getPostScrapsUser_postNotFound() throws Exception {
+        // given
+        Long postNo = 1L;
+
+        when(postScrapReadService.getPostScrapsUser(anyLong())).thenThrow(PostNotFoundException.class);
+
+        // when
+        ResultActions perform = mockMvc.perform(get("/api/v1/post-scraps/users")
+                .param("postNo", String.valueOf(postNo)));
+
+        // then
+        perform.andDo(print())
+                .andExpect(status().isNotFound());
+
+        verify(postScrapReadService, times(1)).getPostScrapsUser(anyLong());
     }
 }

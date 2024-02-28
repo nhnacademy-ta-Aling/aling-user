@@ -1,9 +1,11 @@
 package kr.aling.user.postscrap.service;
 
+import java.util.List;
 import kr.aling.user.common.dto.PageResponseDto;
 import kr.aling.user.postscrap.dto.response.IsExistsPostScrapResponseDto;
 import kr.aling.user.postscrap.dto.response.NumberOfPostScrapResponseDto;
 import kr.aling.user.postscrap.dto.response.ReadPostScrapsPostResponseDto;
+import kr.aling.user.postscrap.dto.response.ReadPostScrapsUserResponseDto;
 import org.springframework.data.domain.Pageable;
 
 /**
@@ -44,5 +46,15 @@ public interface PostScrapReadService {
      * @author 이수정
      * @since 1.0
      */
-    PageResponseDto<ReadPostScrapsPostResponseDto> getPostScraps(Long userNo, Pageable pageable);
+    PageResponseDto<ReadPostScrapsPostResponseDto> getPostScrapsPost(Long userNo, Pageable pageable);
+
+    /**
+     * 게시물 번호 기준으로 스크랩한 회원을 조회합니다.
+     *
+     * @param postNo 게시물 번호
+     * @return 게시물 번호로 조회된 스크랩한 회원 리스트
+     * @author 이수정
+     * @since 1.0
+     */
+    List<ReadPostScrapsUserResponseDto> getPostScrapsUser(Long postNo);
 }

@@ -1,9 +1,11 @@
 package kr.aling.user.postscrap.controller;
 
+import java.util.List;
 import kr.aling.user.common.dto.PageResponseDto;
 import kr.aling.user.postscrap.dto.response.IsExistsPostScrapResponseDto;
 import kr.aling.user.postscrap.dto.response.NumberOfPostScrapResponseDto;
 import kr.aling.user.postscrap.dto.response.ReadPostScrapsPostResponseDto;
+import kr.aling.user.postscrap.dto.response.ReadPostScrapsUserResponseDto;
 import kr.aling.user.postscrap.service.PostScrapReadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -57,7 +59,7 @@ public class PostScrapReadController {
     }
 
     /**
-     * 마이페이지의 게시물 스크랩 탭에 사용될 페이징 조회입니다.
+     * 마이페이지의 게시물 스크랩 탭에 사용될 게시물을 페이징 조회입니다.
      *
      * @param userNo   마이페이지 주인 회원 번호
      * @param pageable 페이징 정보를 담는 Pageable 객체
@@ -66,12 +68,22 @@ public class PostScrapReadController {
      * @since 1.0
      */
     @GetMapping("/posts")
-    public ResponseEntity<PageResponseDto<ReadPostScrapsPostResponseDto>> getPostScraps(@RequestParam Long userNo,
+    public ResponseEntity<PageResponseDto<ReadPostScrapsPostResponseDto>> getPostScrapsPost(@RequestParam Long userNo,
             @PageableDefault(size = 20) Pageable pageable) {
-        return ResponseEntity.ok(postScrapReadService.getPostScraps(userNo, pageable));
+        return ResponseEntity.ok(postScrapReadService.getPostScrapsPost(userNo, pageable));
     }
 
-//    @GetMapping("/users")
-//    public ResponseEntity<ReadPostScrapsResponseDto>
+    /**
+     * 게시물 기준으로 스크랩한 회원을 조회합니다.
+     *
+     * @param postNo 게시물 번호
+     * @return 조회된 스크랩한 회원 목록
+     * @author 이수정
+     * @since 1.0
+     */
+    @GetMapping("/users")
+    public ResponseEntity<List<ReadPostScrapsUserResponseDto>> getPostScrapsUser(@RequestParam Long postNo) {
+        return ResponseEntity.ok(postScrapReadService.getPostScrapsUser(postNo));
+    }
 
 }

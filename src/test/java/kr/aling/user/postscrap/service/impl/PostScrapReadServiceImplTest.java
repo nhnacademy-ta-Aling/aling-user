@@ -109,7 +109,8 @@ class PostScrapReadServiceImplTest {
         when(responseEntity.getBody()).thenReturn(readPostsForScrapResponseDto);
 
         // when
-        PageResponseDto<ReadPostScrapsPostResponseDto> response = postScrapReadService.getPostScraps(userNo, pageable);
+        PageResponseDto<ReadPostScrapsPostResponseDto> response =
+                postScrapReadService.getPostScrapsPost(userNo, pageable);
 
         // then
         assertThat(response).isNotNull();
