@@ -3,7 +3,7 @@ package kr.aling.user.postscrap.controller;
 import kr.aling.user.common.dto.PageResponseDto;
 import kr.aling.user.postscrap.dto.response.IsExistsPostScrapResponseDto;
 import kr.aling.user.postscrap.dto.response.NumberOfPostScrapResponseDto;
-import kr.aling.user.postscrap.dto.response.ReadPostScrapsResponseDto;
+import kr.aling.user.postscrap.dto.response.ReadPostScrapsPostResponseDto;
 import kr.aling.user.postscrap.service.PostScrapReadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -65,10 +65,13 @@ public class PostScrapReadController {
      * @author 이수정
      * @since 1.0
      */
-    @GetMapping
-    public ResponseEntity<PageResponseDto<ReadPostScrapsResponseDto>> getPostScraps(@RequestParam Long userNo,
+    @GetMapping("/posts")
+    public ResponseEntity<PageResponseDto<ReadPostScrapsPostResponseDto>> getPostScraps(@RequestParam Long userNo,
             @PageableDefault(size = 20) Pageable pageable) {
         return ResponseEntity.ok(postScrapReadService.getPostScraps(userNo, pageable));
     }
+
+//    @GetMapping("/users")
+//    public ResponseEntity<ReadPostScrapsResponseDto>
 
 }

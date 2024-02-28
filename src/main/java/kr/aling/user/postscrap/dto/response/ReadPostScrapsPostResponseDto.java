@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
  */
 @Getter
 @NoArgsConstructor
-public class ReadPostScrapsResponseDto {
+public class ReadPostScrapsPostResponseDto {
 
     private Long postNo;
     private String content;

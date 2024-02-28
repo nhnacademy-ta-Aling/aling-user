@@ -14,7 +14,7 @@ import kr.aling.user.common.feign.PostFeignClient;
 import kr.aling.user.post.dto.response.ReadPostsForScrapResponseDto;
 import kr.aling.user.postscrap.dto.response.IsExistsPostScrapResponseDto;
 import kr.aling.user.postscrap.dto.response.NumberOfPostScrapResponseDto;
-import kr.aling.user.postscrap.dto.response.ReadPostScrapsResponseDto;
+import kr.aling.user.postscrap.dto.response.ReadPostScrapsPostResponseDto;
 import kr.aling.user.postscrap.repository.PostScrapReadRepository;
 import kr.aling.user.postscrap.service.PostScrapReadService;
 import org.junit.jupiter.api.BeforeEach;
@@ -97,7 +97,7 @@ class PostScrapReadServiceImplTest {
         ResponseEntity<ReadPostsForScrapResponseDto> responseEntity = mock(ResponseEntity.class);
         when(postFeignClient.getPostsForScrap(any())).thenReturn(responseEntity);
 
-        ReadPostScrapsResponseDto readPostScrapsResponseDto = new ReadPostScrapsResponseDto();
+        ReadPostScrapsPostResponseDto readPostScrapsResponseDto = new ReadPostScrapsPostResponseDto();
         ReflectionTestUtils.setField(readPostScrapsResponseDto, "postNo", 1L);
         ReflectionTestUtils.setField(readPostScrapsResponseDto, "content", "1");
         ReflectionTestUtils.setField(readPostScrapsResponseDto, "isDelete", false);
@@ -109,7 +109,7 @@ class PostScrapReadServiceImplTest {
         when(responseEntity.getBody()).thenReturn(readPostsForScrapResponseDto);
 
         // when
-        PageResponseDto<ReadPostScrapsResponseDto> response = postScrapReadService.getPostScraps(userNo, pageable);
+        PageResponseDto<ReadPostScrapsPostResponseDto> response = postScrapReadService.getPostScraps(userNo, pageable);
 
         // then
         assertThat(response).isNotNull();

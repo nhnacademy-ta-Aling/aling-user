@@ -1,7 +1,7 @@
 package kr.aling.user.post.dto.response;
 
 import java.util.List;
-import kr.aling.user.postscrap.dto.response.ReadPostScrapsResponseDto;
+import kr.aling.user.postscrap.dto.response.ReadPostScrapsPostResponseDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ReadPostsForScrapResponseDto {
 
-    private List<ReadPostScrapsResponseDto> infos;
+    private List<ReadPostScrapsPostResponseDto> infos;
 }
 

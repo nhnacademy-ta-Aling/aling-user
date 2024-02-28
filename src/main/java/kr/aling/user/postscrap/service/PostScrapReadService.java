@@ -3,7 +3,7 @@ package kr.aling.user.postscrap.service;
 import kr.aling.user.common.dto.PageResponseDto;
 import kr.aling.user.postscrap.dto.response.IsExistsPostScrapResponseDto;
 import kr.aling.user.postscrap.dto.response.NumberOfPostScrapResponseDto;
-import kr.aling.user.postscrap.dto.response.ReadPostScrapsResponseDto;
+import kr.aling.user.postscrap.dto.response.ReadPostScrapsPostResponseDto;
 import org.springframework.data.domain.Pageable;
 
 /**
@@ -44,5 +44,5 @@ public interface PostScrapReadService {
      * @author 이수정
      * @since 1.0
      */
-    PageResponseDto<ReadPostScrapsResponseDto> getPostScraps(Long userNo, Pageable pageable);
+    PageResponseDto<ReadPostScrapsPostResponseDto> getPostScraps(Long userNo, Pageable pageable);
 }

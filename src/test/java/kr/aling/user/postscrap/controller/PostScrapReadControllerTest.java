@@ -29,7 +29,7 @@ import java.util.List;
 import kr.aling.user.common.dto.PageResponseDto;
 import kr.aling.user.postscrap.dto.response.IsExistsPostScrapResponseDto;
 import kr.aling.user.postscrap.dto.response.NumberOfPostScrapResponseDto;
-import kr.aling.user.postscrap.dto.response.ReadPostScrapsResponseDto;
+import kr.aling.user.postscrap.dto.response.ReadPostScrapsPostResponseDto;
 import kr.aling.user.postscrap.service.PostScrapReadService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -134,13 +134,13 @@ class PostScrapReadControllerTest {
         Boolean isDelete = false;
         Boolean isOpen = true;
 
-        ReadPostScrapsResponseDto responseDto = new ReadPostScrapsResponseDto();
+        ReadPostScrapsPostResponseDto responseDto = new ReadPostScrapsPostResponseDto();
         ReflectionTestUtils.setField(responseDto, "postNo", postNo);
         ReflectionTestUtils.setField(responseDto, "content", content);
         ReflectionTestUtils.setField(responseDto, "isDelete", isDelete);
         ReflectionTestUtils.setField(responseDto, "isOpen", isOpen);
 
-        PageResponseDto<ReadPostScrapsResponseDto> pageResponseDto = new PageResponseDto<>(
+        PageResponseDto<ReadPostScrapsPostResponseDto> pageResponseDto = new PageResponseDto<>(
                 0,
                 1,
                 1L,
@@ -149,7 +149,7 @@ class PostScrapReadControllerTest {
         when(postScrapReadService.getPostScraps(anyLong(), any())).thenReturn(pageResponseDto);
 
         // when
-        ResultActions perform = mockMvc.perform(get("/api/v1/post-scraps")
+        ResultActions perform = mockMvc.perform(get("/api/v1/post-scraps/posts")
                 .param("userNo", String.valueOf(1L))
                 .param("page", String.valueOf(page))
                 .param("size", String.valueOf(size)));

@@ -8,7 +8,7 @@ import kr.aling.user.common.utils.PageUtils;
 import kr.aling.user.post.dto.request.ReadPostsForScrapRequestDto;
 import kr.aling.user.postscrap.dto.response.IsExistsPostScrapResponseDto;
 import kr.aling.user.postscrap.dto.response.NumberOfPostScrapResponseDto;
-import kr.aling.user.postscrap.dto.response.ReadPostScrapsResponseDto;
+import kr.aling.user.postscrap.dto.response.ReadPostScrapsPostResponseDto;
 import kr.aling.user.postscrap.entity.PostScrap;
 import kr.aling.user.postscrap.repository.PostScrapReadRepository;
 import kr.aling.user.postscrap.service.PostScrapReadService;
@@ -68,10 +68,10 @@ public class PostScrapReadServiceImpl implements PostScrapReadService {
      */
     @Transactional(readOnly = true)
     @Override
-    public PageResponseDto<ReadPostScrapsResponseDto> getPostScraps(Long userNo, Pageable pageable) {
+    public PageResponseDto<ReadPostScrapsPostResponseDto> getPostScraps(Long userNo, Pageable pageable) {
         Page<Long> postNos = postScrapReadRepository.findPostNoByUserNo(userNo, pageable);
 
-        List<ReadPostScrapsResponseDto> postScraps = Objects.requireNonNull(postFeignClient.getPostsForScrap(
+        List<ReadPostScrapsPostResponseDto> postScraps = Objects.requireNonNull(postFeignClient.getPostsForScrap(
                 new ReadPostsForScrapRequestDto(postNos.getContent())).getBody()).getInfos();
 
         return PageUtils.convert(PageableExecutionUtils.getPage(postScraps, postNos.getPageable(), postScraps::size));
