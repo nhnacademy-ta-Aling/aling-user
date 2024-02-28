@@ -103,7 +103,8 @@ class PostScrapReadControllerTest {
         when(postScrapReadService.getNumberOfPostScrap(anyLong())).thenReturn(new NumberOfPostScrapResponseDto(100L));
 
         // when
-        ResultActions perform = mockMvc.perform(get("/api/v1/post-scraps/{postNo}/number", postNo));
+        ResultActions perform = mockMvc.perform(get("/api/v1/post-scraps/number")
+                .param("postNo", String.valueOf(postNo)));
 
         // then
         perform.andDo(print())
@@ -114,7 +115,7 @@ class PostScrapReadControllerTest {
         perform.andDo(document("post-scrap-get-number-of-post-scrap",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
-                pathParameters(
+                requestParameters(
                         parameterWithName("postNo").description("스크랩 횟수를 조회할 게시물의 번호")
                                 .attributes(key(REQUIRED).value(REQUIRED_YES))
                                 .attributes(key(VALID).value(""))
@@ -205,14 +206,9 @@ class PostScrapReadControllerTest {
 
         Long userNo = 1L;
         String name = "Aling";
-        Boolean isDelete = false;
         Long fileNo = 1L;
 
-        ReadPostScrapsUserResponseDto responseDto = new ReadPostScrapsUserResponseDto();
-        ReflectionTestUtils.setField(responseDto, "userNo", userNo);
-        ReflectionTestUtils.setField(responseDto, "name", name);
-        ReflectionTestUtils.setField(responseDto, "isDelete", isDelete);
-        ReflectionTestUtils.setField(responseDto, "fileNo", fileNo);
+        ReadPostScrapsUserResponseDto responseDto = new ReadPostScrapsUserResponseDto(userNo, name, fileNo);
 
         when(postScrapReadService.getPostScrapsUser(anyLong())).thenReturn(List.of(responseDto));
 
@@ -225,7 +221,6 @@ class PostScrapReadControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].userNo", equalTo(userNo.intValue())))
                 .andExpect(jsonPath("$.[0].name", equalTo(name)))
-                .andExpect(jsonPath("$.[0].isDelete", equalTo(isDelete)))
                 .andExpect(jsonPath("$.[0].fileNo", equalTo(fileNo.intValue())));
 
         verify(postScrapReadService, times(1)).getPostScrapsUser(anyLong());
@@ -242,7 +237,6 @@ class PostScrapReadControllerTest {
                 responseFields(
                         fieldWithPath("[].userNo").type(JsonFieldType.NUMBER).description("회원 번호"),
                         fieldWithPath("[].name").type(JsonFieldType.STRING).description("회원 이름"),
-                        fieldWithPath("[].isDelete").type(JsonFieldType.BOOLEAN).description("회원 삭제여부"),
                         fieldWithPath("[].fileNo").type(JsonFieldType.NUMBER).description("회원 프로필 파일 번호")
                 )));
     }

@@ -1,5 +1,7 @@
 package kr.aling.user.postscrap.repository;
 
+import java.util.List;
+import kr.aling.user.postscrap.dto.response.ReadPostScrapsUserResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.NoRepositoryBean;
@@ -23,4 +25,14 @@ public interface PostScrapReadRepositoryCustom {
      * @since 1.0
      */
     Page<Long> findPostNoByUserNo(Long userNo, Pageable pageable);
+
+    /**
+     * 게시물을 스크랩한 회원의 간단정보 목록을 조회합니다.
+     *
+     * @param postNo 게시물 번호
+     * @return 게시물을 스크랩한 회원 간단정보 Dto 리스트
+     * @author 이수정
+     * @since 1.0
+     */
+    List<ReadPostScrapsUserResponseDto> getUsersByPostNo(Long postNo);
 }

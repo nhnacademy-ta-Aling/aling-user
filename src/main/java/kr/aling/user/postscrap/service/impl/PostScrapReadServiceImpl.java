@@ -7,6 +7,7 @@ import kr.aling.user.common.dto.PageResponseDto;
 import kr.aling.user.common.feign.PostFeignClient;
 import kr.aling.user.common.utils.PageUtils;
 import kr.aling.user.post.dto.request.ReadPostsForScrapRequestDto;
+import kr.aling.user.post.exception.PostNotFoundException;
 import kr.aling.user.postscrap.dto.response.IsExistsPostScrapResponseDto;
 import kr.aling.user.postscrap.dto.response.NumberOfPostScrapResponseDto;
 import kr.aling.user.postscrap.dto.response.ReadPostScrapsPostResponseDto;
@@ -82,6 +83,10 @@ public class PostScrapReadServiceImpl implements PostScrapReadService {
      */
     @Override
     public List<ReadPostScrapsUserResponseDto> getPostScrapsUser(Long postNo) {
-        return null;
+        if (Boolean.FALSE.equals(
+                Objects.requireNonNull(postFeignClient.isExistsPost(postNo).getBody()).getIsExists())) {
+            throw new PostNotFoundException(postNo);
+        }
+        return postScrapReadRepository.getUsersByPostNo(postNo);
     }
 }

@@ -53,8 +53,8 @@ public class PostScrapReadController {
      * @author 이수정
      * @since 1.0
      */
-    @GetMapping("/{postNo}/number")
-    public ResponseEntity<NumberOfPostScrapResponseDto> getNumberOfPostScrap(@PathVariable Long postNo) {
+    @GetMapping("/number")
+    public ResponseEntity<NumberOfPostScrapResponseDto> getNumberOfPostScrap(@RequestParam Long postNo) {
         return ResponseEntity.ok(postScrapReadService.getNumberOfPostScrap(postNo));
     }
 

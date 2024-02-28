@@ -1,10 +1,13 @@
 package kr.aling.user.postscrap.repository.impl;
 
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
 import java.util.List;
+import kr.aling.user.postscrap.dto.response.ReadPostScrapsUserResponseDto;
 import kr.aling.user.postscrap.entity.PostScrap;
 import kr.aling.user.postscrap.entity.QPostScrap;
 import kr.aling.user.postscrap.repository.PostScrapReadRepositoryCustom;
+import kr.aling.user.user.entity.QAlingUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
@@ -47,5 +50,25 @@ public class PostScrapReadRepositoryImpl extends QuerydslRepositorySupport imple
                 .select(postScrap.count());
 
         return PageableExecutionUtils.getPage(postNos, pageable, countQuery::fetchFirst);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param postNo 게시물 번호
+     * @return 게시물을 스크랩한 회원 간단정보 Dto 리스트
+     */
+    @Override
+    public List<ReadPostScrapsUserResponseDto> getUsersByPostNo(Long postNo) {
+        QPostScrap postScrap = QPostScrap.postScrap;
+        QAlingUser alingUser = QAlingUser.alingUser;
+
+        return from(postScrap)
+                .where(postScrap.pk.postNo.eq(postNo).and(alingUser.isDelete.isFalse()))
+                .select(Projections.constructor(ReadPostScrapsUserResponseDto.class,
+                        alingUser.userNo,
+                        alingUser.name,
+                        alingUser.fileNo))
+                .fetch();
     }
 }
