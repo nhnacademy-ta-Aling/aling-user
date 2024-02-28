@@ -1,7 +1,7 @@
 package kr.aling.user.postscrap.dto.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * 마이페이지용 게시물 스크랩 조회를 반환하는 Dto.
@@ -10,7 +10,7 @@ import lombok.Getter;
  * @since 1.0
  */
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor
 public class ReadPostScrapsResponseDto {
 
     private Long postNo;

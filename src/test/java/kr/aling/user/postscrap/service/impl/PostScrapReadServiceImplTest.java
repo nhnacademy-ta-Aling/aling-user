@@ -24,6 +24,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.util.ReflectionTestUtils;
 
 class PostScrapReadServiceImplTest {
 
@@ -95,9 +96,17 @@ class PostScrapReadServiceImplTest {
 
         ResponseEntity<ReadPostsForScrapResponseDto> responseEntity = mock(ResponseEntity.class);
         when(postFeignClient.getPostsForScrap(any())).thenReturn(responseEntity);
-        when(responseEntity.getBody()).thenReturn(new ReadPostsForScrapResponseDto(List.of(
-                new ReadPostScrapsResponseDto(1L, "1", false, true)
-        )));
+
+        ReadPostScrapsResponseDto readPostScrapsResponseDto = new ReadPostScrapsResponseDto();
+        ReflectionTestUtils.setField(readPostScrapsResponseDto, "postNo", 1L);
+        ReflectionTestUtils.setField(readPostScrapsResponseDto, "content", "1");
+        ReflectionTestUtils.setField(readPostScrapsResponseDto, "isDelete", false);
+        ReflectionTestUtils.setField(readPostScrapsResponseDto, "isOpen", true);
+
+        ReadPostsForScrapResponseDto readPostsForScrapResponseDto = new ReadPostsForScrapResponseDto();
+        ReflectionTestUtils.setField(readPostsForScrapResponseDto, "infos", List.of(readPostScrapsResponseDto));
+
+        when(responseEntity.getBody()).thenReturn(readPostsForScrapResponseDto);
 
         // when
         PageResponseDto<ReadPostScrapsResponseDto> response = postScrapReadService.getPostScraps(userNo, pageable);

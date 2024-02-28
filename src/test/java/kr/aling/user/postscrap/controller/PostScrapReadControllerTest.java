@@ -39,6 +39,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -133,13 +134,19 @@ class PostScrapReadControllerTest {
         Boolean isDelete = false;
         Boolean isOpen = true;
 
-        PageResponseDto<ReadPostScrapsResponseDto> responseDto = new PageResponseDto<>(
+        ReadPostScrapsResponseDto responseDto = new ReadPostScrapsResponseDto();
+        ReflectionTestUtils.setField(responseDto, "postNo", postNo);
+        ReflectionTestUtils.setField(responseDto, "content", content);
+        ReflectionTestUtils.setField(responseDto, "isDelete", isDelete);
+        ReflectionTestUtils.setField(responseDto, "isOpen", isOpen);
+
+        PageResponseDto<ReadPostScrapsResponseDto> pageResponseDto = new PageResponseDto<>(
                 0,
                 1,
                 1L,
-                List.of(new ReadPostScrapsResponseDto(postNo, content, isDelete, isOpen))
+                List.of(responseDto)
         );
-        when(postScrapReadService.getPostScraps(anyLong(), any())).thenReturn(responseDto);
+        when(postScrapReadService.getPostScraps(anyLong(), any())).thenReturn(pageResponseDto);
 
         // when
         ResultActions perform = mockMvc.perform(get("/api/v1/post-scraps")

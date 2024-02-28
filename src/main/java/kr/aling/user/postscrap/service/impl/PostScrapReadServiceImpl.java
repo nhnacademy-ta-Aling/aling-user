@@ -73,6 +73,7 @@ public class PostScrapReadServiceImpl implements PostScrapReadService {
 
         List<ReadPostScrapsResponseDto> postScraps = Objects.requireNonNull(postFeignClient.getPostsForScrap(
                 new ReadPostsForScrapRequestDto(postNos.getContent())).getBody()).getInfos();
+
         return PageUtils.convert(PageableExecutionUtils.getPage(postScraps, postNos.getPageable(), postScraps::size));
     }
 }
