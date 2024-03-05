@@ -1,0 +1,159 @@
+:toc:
+
+==== 그룹명 중복 체크
+
+그룹명 중복 체크 API
+
+===== 요청
+
+operation::band-get-checkName[snippets='http-request']
+
+===== 응답
+
+operation::band-get-checkName[snippets='http-response']
+
+===== 파라미터 설명
+
+====== 요청 Query Param
+
+operation::band-get-checkName[snippets='request-parameters']
+
+====== 응답 Body
+
+operation::band-get-checkName[snippets='response-fields']
+
+
+:toc:
+
+==== 그룹 상세 정보 조회
+
+그룹 상세 정보 조회 API
+
+===== 요청
+
+operation::band-get-detail-by-bandName[snippets='http-request']
+
+===== 응답
+
+operation::band-get-detail-by-bandName[snippets='http-response']
+
+===== 파라미터 설명
+
+====== 요청 헤더
+
+operation::band-get-detail-by-bandName[snippets='request-headers']
+
+====== 요청 Path Variable
+
+operation::band-get-detail-by-bandName[snippets='path-parameters']
+
+====== 응답 Body
+
+operation::band-get-detail-by-bandName[snippets='response-fields']
+
+
+:toc:
+
+==== 그룹 페이지 목록 조회
+
+그룹 페이지 목록 조회 API
+
+===== 요청
+
+operation::band-get-page-by-bandName[snippets='http-request']
+
+===== 응답
+
+operation::band-get-page-by-bandName[snippets='http-response']
+
+===== 파라미터 설명
+
+====== 요청 Query Param
+
+operation::band-get-page-by-bandName[snippets='request-parameters']
+
+====== 응답 Body
+
+operation::band-get-page-by-bandName[snippets='response-fields']
+
+
+:toc:
+
+==== 그룹 게시글 분류 리스트 조회
+
+그룹 게시글 분류 리스트 조회 API
+
+===== 요청
+
+operation::band-get-post-type-list[snippets='http-request']
+
+===== 응답
+
+operation::band-get-post-type-list[snippets='http-response']
+
+===== 파라미터 설명
+
+
+====== 요청 Path Variable
+
+operation::band-get-post-type-list[snippets='path-parameters']
+
+:toc:
+
+==== 그룹 회원 권한 조회
+
+그룹 회원 권한 조회 API
+
+===== 요청
+
+operation::band-get-role-name-of-user[snippets='http-request']
+
+===== 응답
+
+operation::band-get-role-name-of-user[snippets='http-response']
+
+===== 파라미터 설명
+
+
+====== 요청 Path Variable
+
+operation::band-get-role-name-of-user[snippets='path-parameters']
+
+
+====== 응답 Body
+
+operation::band-get-role-name-of-user[snippets='response-fields']
+
+
+:toc:
+
+==== 그룹 회원 페이지 조회
+
+그룹 회원 페이지 조회 API
+
+===== 요청
+
+operation::band-get-user-list[snippets='http-request']
+
+===== 응답
+
+operation::band-get-user-list[snippets='http-response']
+
+===== 파라미터 설명
+
+====== 요청 Path Variable
+
+operation::band-get-user-list[snippets='path-parameters']
+
+====== 요청 Query Param
+
+operation::band-get-user-list[snippets='request-parameters']
+
+====== 응답 Body
+
+operation::band-get-user-list[snippets='response-fields']
+
+
+
+
+
