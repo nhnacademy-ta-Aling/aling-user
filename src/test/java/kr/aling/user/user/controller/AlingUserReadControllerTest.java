@@ -58,6 +58,8 @@ class AlingUserReadControllerTest {
     @MockBean
     private BandReadService bandReadService;
 
+    private final String url = "/api/v1/users";
+
     @Test
     @DisplayName("회원 존재여부 확인 성공")
     void isExistsUser() throws Exception {
@@ -101,7 +103,7 @@ class AlingUserReadControllerTest {
                 .thenReturn(List.of(getBandDetailInfoResponseDto));
 
         // then
-        mockMvc.perform(RestDocumentationRequestBuilders.get(URL + "/my-bands")
+        mockMvc.perform(RestDocumentationRequestBuilders.get(url + "/my-bands")
                         .accept(MediaType.APPLICATION_JSON)
                         .header(ConstantUtil.X_TEMP_USER_NO, userNo))
                 .andExpect(status().isOk())

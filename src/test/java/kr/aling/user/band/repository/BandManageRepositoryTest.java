@@ -1,5 +1,6 @@
 package kr.aling.user.band.repository;
 
+import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import kr.aling.user.band.dummy.BandDummy;
@@ -51,6 +52,7 @@ class BandManageRepositoryTest {
         assertThat(save.getIsUpload()).isEqualTo(band.getIsUpload());
         assertThat(save.getIsDelete()).isEqualTo(band.getIsDelete());
         assertThat(save.getFileNo()).isEqualTo(band.getFileNo());
+        assertThat(save.getCreateAt()).isBefore(now());
         assertThat(save.getFixPostNo()).isNull();
     }
 
