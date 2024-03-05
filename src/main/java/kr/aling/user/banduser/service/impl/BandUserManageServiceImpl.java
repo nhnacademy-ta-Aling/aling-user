@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class BandUserManageServiceImpl implements BandUserManageService {
+
     private final BandUserReadRepository bandUserReadRepository;
     private final BandUserRoleReadRepository bandUserRoleReadRepository;
 
@@ -57,7 +58,7 @@ public class BandUserManageServiceImpl implements BandUserManageService {
      */
     @Override
     public void modifyRoleOfBandUser(String bandName, Long userNo,
-                                     ModifyRoleOfBandUserRequestDto modifyRoleOfBandUserRequestDto) {
+            ModifyRoleOfBandUserRequestDto modifyRoleOfBandUserRequestDto) {
         BandUser bandUser = bandUserReadRepository.findBandUserByBandNameAndUserNo(bandName, userNo)
                 .orElseThrow(BandUserNotFoundException::new);
 

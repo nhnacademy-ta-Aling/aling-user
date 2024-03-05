@@ -12,6 +12,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class LoginInfoResponseDto {
+
     private final Long userNo;
     private final String password;
 }

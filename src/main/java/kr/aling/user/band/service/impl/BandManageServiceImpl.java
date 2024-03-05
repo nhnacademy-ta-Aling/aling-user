@@ -37,6 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class BandManageServiceImpl implements BandManageService {
+
     private static final int USER_OWN_BAND_LIMIT = 3;
 
     private final BandReadRepository bandReadRepository;

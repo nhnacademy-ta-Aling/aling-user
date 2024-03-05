@@ -25,6 +25,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "band")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Band extends BaseCreateTimeEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -90,8 +91,7 @@ public class Band extends BaseCreateTimeEntity {
     }
 
     /**
-     * 그룹을 삭제 처리 하는 메서드.
-     * soft delete 이며, 이미 삭제된 그룹은 되살릴 수 없습니다.
+     * 그룹을 삭제 처리 하는 메서드. soft delete 이며, 이미 삭제된 그룹은 되살릴 수 없습니다.
      */
     public void deleteBand() {
         this.isDelete = true;

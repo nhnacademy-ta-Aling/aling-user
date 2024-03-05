@@ -3,6 +3,7 @@ package kr.aling.user.user.service.impl;
 import kr.aling.user.user.dto.response.LoginInfoResponseDto;
 import kr.aling.user.user.dto.response.LoginResponseDto;
 import kr.aling.user.user.dto.resquest.LoginRequestDto;
+import kr.aling.user.user.entity.AlingUser;
 import kr.aling.user.user.exception.UserNotFoundException;
 import kr.aling.user.user.repository.UserReadRepository;
 import kr.aling.user.user.service.UserReadService;
@@ -43,6 +44,18 @@ public class UserReadServiceImpl implements UserReadService {
     @Override
     public boolean isExistsUserNo(Long userNo) {
         return userReadRepository.existsById(userNo);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param userNo 조회할 회원의 번호
+     * @return 조회된 회원 Entity
+     */
+    @Override
+    public AlingUser getAlingUserByUserNo(Long userNo) {
+        return userReadRepository.findById(userNo)
+                .orElseThrow(UserNotFoundException::new);
     }
 
     /**

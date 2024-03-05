@@ -22,6 +22,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Aspect
 @Component
 public class BandAuthAspect {
+
     /**
      * 그룹 회원 권한이 Creator 이상 인지 확인 하는 메서드.<br>
      *
@@ -40,8 +41,7 @@ public class BandAuthAspect {
     }
 
     /**
-     * 그룹 회원 권한이 Admin 이상 인지 확인 하는 메서드.<br>
-     * 그룹 회원 권한이 Creator, Admin 인 경우 권한이 확인 됩니다.
+     * 그룹 회원 권한이 Admin 이상 인지 확인 하는 메서드.<br> 그룹 회원 권한이 Creator, Admin 인 경우 권한이 확인 됩니다.
      *
      * @param pjp pjp
      * @return Object
@@ -58,8 +58,7 @@ public class BandAuthAspect {
     }
 
     /**
-     * 그룹 회원 권한이 User 이상 인지 확인 하는 메서드.<br>
-     * 그룹 회원 권한이 Creator, Admin, User 인 경우 권한이 확인 됩니다.
+     * 그룹 회원 권한이 User 이상 인지 확인 하는 메서드.<br> 그룹 회원 권한이 Creator, Admin, User 인 경우 권한이 확인 됩니다.
      *
      * @param pjp pjp
      * @return Object

@@ -10,6 +10,7 @@ import kr.aling.user.user.entity.AlingUser;
  * @since : 1.0
  **/
 public class CompanyUserDummy {
+
     public static CompanyUser dummy(AlingUser alingUser) {
         return CompanyUser.builder()
                 .alingUser(alingUser)

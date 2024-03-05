@@ -22,8 +22,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class LoggingAspect {
 
     /**
-     * controller package 에 있는 모든 메서드 실행 전 동작 하는 AOP. <br>
-     * 요청 Method, uri 로깅.
+     * controller package 에 있는 모든 메서드 실행 전 동작 하는 AOP. <br> 요청 Method, uri 로깅.
      */
     @Before("execution(* kr.aling.user.*.controller..*(..))")
     public void doRequestLogging() {
@@ -34,8 +33,7 @@ public class LoggingAspect {
     }
 
     /**
-     * controller package 에 있는 모든 메서드 실행 후 정상 응답시 동작 하는 AOP. <br>
-     * uri, status code 로깅.
+     * controller package 에 있는 모든 메서드 실행 후 정상 응답시 동작 하는 AOP. <br> uri, status code 로깅.
      *
      * @param result ResponseEntity<?> 값
      */
@@ -49,8 +47,7 @@ public class LoggingAspect {
 
 
     /**
-     * API 응답 중 Exception 발생 후 ControllerAdvice 에서 처리 시 동작 하는 AOP. <br>
-     * uri, status code 로깅.
+     * API 응답 중 Exception 발생 후 ControllerAdvice 에서 처리 시 동작 하는 AOP. <br> uri, status code 로깅.
      *
      * @param result ResponseEntity<?> 값
      */

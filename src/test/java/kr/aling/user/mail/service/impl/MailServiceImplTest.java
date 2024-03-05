@@ -115,7 +115,8 @@ class MailServiceImplTest {
 
         // when
         // then
-        assertThatThrownBy(() -> mailService.checkAuthNumber(requestDto)).isInstanceOf(MailAuthNumberInvalidException.class);
+        assertThatThrownBy(() -> mailService.checkAuthNumber(requestDto)).isInstanceOf(
+                MailAuthNumberInvalidException.class);
 
         verify(redisTemplate, times(1)).opsForValue();
         verify(valueOps, times(1)).get(requestDto.getEmail());

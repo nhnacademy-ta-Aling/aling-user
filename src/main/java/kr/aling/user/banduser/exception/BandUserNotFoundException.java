@@ -7,6 +7,7 @@ package kr.aling.user.banduser.exception;
  * @since : 1.0
  **/
 public class BandUserNotFoundException extends RuntimeException {
+
     public static final String MESSAGE = "Band User not found!";
 
     public BandUserNotFoundException() {

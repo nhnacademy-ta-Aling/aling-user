@@ -7,4 +7,5 @@ package kr.aling.user.banduserrole.repository;
  * @since : 1.0
  **/
 public interface BandUserRoleReadRepositoryCustom {
+
 }

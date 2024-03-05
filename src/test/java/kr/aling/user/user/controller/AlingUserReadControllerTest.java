@@ -49,7 +49,6 @@ import org.springframework.test.web.servlet.ResultActions;
 @WebMvcTest(UserReadController.class)
 class AlingUserReadControllerTest {
 
-    private static final String URL = "/api/v1/users";
     @Autowired
     ObjectMapper objectMapper;
     @Autowired

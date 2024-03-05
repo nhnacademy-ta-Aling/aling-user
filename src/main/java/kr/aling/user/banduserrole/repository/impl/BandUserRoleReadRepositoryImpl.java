@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
  **/
 public class BandUserRoleReadRepositoryImpl extends QuerydslRepositorySupport implements
         BandUserRoleReadRepositoryCustom {
+
     public BandUserRoleReadRepositoryImpl() {
         super(BandUserRole.class);
     }

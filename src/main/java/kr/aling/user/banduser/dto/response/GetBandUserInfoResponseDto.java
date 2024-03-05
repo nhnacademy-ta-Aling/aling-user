@@ -12,6 +12,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class GetBandUserInfoResponseDto {
+
     private Long bandUserNo;
     private Integer bandUserRoleNo;
 }

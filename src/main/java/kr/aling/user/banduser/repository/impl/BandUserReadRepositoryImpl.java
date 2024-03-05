@@ -27,6 +27,7 @@ import org.springframework.data.support.PageableExecutionUtils;
  * @since : 1.0
  **/
 public class BandUserReadRepositoryImpl extends QuerydslRepositorySupport implements BandUserReadRepositoryCustom {
+
     public BandUserReadRepositoryImpl() {
         super(BandUser.class);
     }

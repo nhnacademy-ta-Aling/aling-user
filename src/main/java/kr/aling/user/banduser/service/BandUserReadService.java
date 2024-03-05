@@ -24,8 +24,7 @@ public interface BandUserReadService {
     PageResponseDto<GetBandUserAndUserInfoResponseDto> getBandUserList(String bandName, Pageable pageable);
 
     /**
-     * 그룹 회원 권한 정보를 조회 하기 위한 메서드입니다.
-     * gateway 그룹 회원 권한 필터를 위한 메서드입니다.
+     * 그룹 회원 권한 정보를 조회 하기 위한 메서드입니다. gateway 그룹 회원 권한 필터를 위한 메서드입니다.
      *
      * @param bandNo 그룹 번호
      * @param userNo 회원 번호

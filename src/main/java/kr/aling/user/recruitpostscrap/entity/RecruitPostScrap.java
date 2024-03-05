@@ -29,6 +29,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RecruitPostScrap {
+
     @EmbeddedId
     private Pk pk;
 
@@ -46,6 +47,7 @@ public class RecruitPostScrap {
     @AllArgsConstructor
     @Embeddable
     public static class Pk implements Serializable {
+
         @Column(name = "aling_user_no")
         private Long userNo;
 

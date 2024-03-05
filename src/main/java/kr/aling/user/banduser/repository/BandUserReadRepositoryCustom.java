@@ -38,8 +38,7 @@ public interface BandUserReadRepositoryCustom {
     Optional<GetBandUserInfoResponseDto> getBandUserInfoByUserNoAndBandName(String bandName, Long userNo);
 
     /**
-     * 그룹 번호와 회원 번호로 그룹 회원 권한을 조회하는 메서드입니다.
-     * gateway 그룹 회원 권한 필터 로직을 위한 메서드입니다.
+     * 그룹 번호와 회원 번호로 그룹 회원 권한을 조회하는 메서드입니다. gateway 그룹 회원 권한 필터 로직을 위한 메서드입니다.
      *
      * @param bandNo 그룹 번호
      * @param userNo 회원 번호
@@ -48,8 +47,7 @@ public interface BandUserReadRepositoryCustom {
     Optional<GetBandUserAuthResponseDto> getBandUserInfoByBandNoAndUserNo(Long bandNo, Long userNo);
 
     /**
-     * 그룹 명과 회원 번호로 그룹 회원을 조회 하기 위한 메서드입니다.<br>
-     * 그룹 회원 수정 시 사용 됩니다.
+     * 그룹 명과 회원 번호로 그룹 회원을 조회 하기 위한 메서드입니다.<br> 그룹 회원 수정 시 사용 됩니다.
      *
      * @param bandName 그룹 명
      * @param userNo   회원 번호

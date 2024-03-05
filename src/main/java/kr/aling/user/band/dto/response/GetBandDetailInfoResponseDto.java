@@ -12,6 +12,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class GetBandDetailInfoResponseDto {
+
     private Long bandNo;
     private String name;
     private Long fileNo;

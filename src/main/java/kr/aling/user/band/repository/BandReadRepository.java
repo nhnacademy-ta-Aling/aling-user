@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @since : 1.0
  **/
 public interface BandReadRepository extends JpaRepository<Band, Long>, BandReadRepositoryCustom {
+
     /**
      * 그룹 명을 통해 그룹 존재 여부를 확인 하는 메서드입니다.
      *
