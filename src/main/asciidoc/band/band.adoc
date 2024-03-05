@@ -1,0 +1,7 @@
+=== 그룹 (band)
+그룹, 그룹 회원, 그룹 게시글 타입 등 그룹 관련 API
+
+include::../band/band-get.adoc[]
+include::../band/band-create.adoc[]
+include::../band/band-modify.adoc[]
+include::../band/band-delete.adoc[]

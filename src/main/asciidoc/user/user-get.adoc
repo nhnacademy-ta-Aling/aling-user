@@ -1,0 +1,23 @@
+:toc:
+
+==== 회원이 가입한 그룹 리스트 조회
+
+회원이 가입한 그룹 리스트 조회 API
+
+===== 요청
+
+operation::user-get-my-bands[snippets='http-request']
+
+===== 응답
+
+operation::user-get-my-bands[snippets='http-response']
+
+===== 파라미터 설명
+
+====== 요청 헤더
+
+operation::user-get-my-bands[snippets='request-headers']
+
+====== 응답 Body
+
+operation::user-get-my-bands[snippets='response-fields']

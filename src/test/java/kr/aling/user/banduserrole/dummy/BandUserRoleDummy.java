@@ -12,14 +12,18 @@ public class BandUserRoleDummy {
 
     public static BandUserRole dummyCreator() {
         return BandUserRole.builder()
-                .bandUserRoleNo(1)
                 .roleName("BAND_ROLE_CREATOR")
+                .build();
+    }
+
+    public static BandUserRole dummyAdmin() {
+        return BandUserRole.builder()
+                .roleName("BAND_ROLE_ADMIN")
                 .build();
     }
 
     public static BandUserRole dummyUser() {
         return BandUserRole.builder()
-                .bandUserRoleNo(3)
                 .roleName("BAND_ROLE_USER")
                 .build();
     }

@@ -9,7 +9,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import kr.aling.user.common.feign.PostFeignClient;
+import kr.aling.user.common.feignclient.PostFeignClient;
 import kr.aling.user.post.dto.response.IsExistsPostResponseDto;
 import kr.aling.user.post.exception.PostNotFoundException;
 import kr.aling.user.postscrap.repository.PostScrapManageRepository;

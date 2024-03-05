@@ -1,0 +1,47 @@
+:toc:
+
+==== 그룹 생성
+
+그룹 생성 API
+
+===== 요청
+
+operation::band-create[snippets='http-request']
+
+===== 응답
+
+operation::band-create[snippets='http-response']
+
+===== 파라미터 설명
+
+====== 요청 헤더
+
+operation::band-create[snippets='request-headers']
+
+====== 요청 Body
+
+operation::band-create[snippets='request-fields']
+
+
+==== 그룹 게시글 분류 생성
+
+그룹 게시글 분류 생성 API
+
+===== 요청
+
+operation::band-create-post-type[snippets='http-request']
+
+===== 응답
+
+operation::band-create-post-type[snippets='http-response']
+
+===== 파라미터 설명
+
+====== 요청 Path Variable
+
+operation::band-create-post-type[snippets='path-parameters']
+
+====== 요청 Body
+
+operation::band-create-post-type[snippets='request-fields']
+
