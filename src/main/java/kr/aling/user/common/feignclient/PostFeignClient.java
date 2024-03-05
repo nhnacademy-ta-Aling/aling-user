@@ -1,11 +1,11 @@
 package kr.aling.user.common.feignclient;
 
 import java.util.List;
+import kr.aling.user.band.dto.request.external.CreateBandPostTypeRequestExternalDto;
+import kr.aling.user.band.dto.response.external.GetBandPostTypeResponseDto;
 import kr.aling.user.post.dto.request.ReadPostsForScrapRequestDto;
 import kr.aling.user.post.dto.response.IsExistsPostResponseDto;
 import kr.aling.user.post.dto.response.ReadPostsForScrapResponseDto;
-import kr.aling.user.band.dto.request.external.CreateBandPostTypeRequestExternalDto;
-import kr.aling.user.band.dto.response.external.GetBandPostTypeResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.http.ResponseEntity;
