@@ -17,7 +17,7 @@ public interface BandUserReadService {
     /**
      * 그룹 번호를 통해 해당 그룹의 그룹 회원 리스트를 조회 하는 메서드.
      *
-     * @param bandName   그룹 명
+     * @param bandName 그룹 명
      * @param pageable pageable
      * @return 그룹 회원 정보 dto 페이
      */
@@ -32,6 +32,7 @@ public interface BandUserReadService {
      * @return 그룹 회원 권한 정보를 담은 dto
      */
     GetBandUserAuthResponseDto getBandUserInfo(Long bandNo, Long userNo);
+
     /**
      * 그룹 회원 번호를 가지고 회원 정보를 조회 하는 메서드.
      *

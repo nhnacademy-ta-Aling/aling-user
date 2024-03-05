@@ -74,7 +74,7 @@ class BandReadControllerTest {
     @MockBean
     private BandUserReadService bandUserReadService;
 
-    private String bandUrl = "/api/v1/bands";
+    private final String bandUrl = "/api/v1/bands";
 
     GetBandInfoResponseDto getBandInfoResponseDto;
     GetBandUserInfoResponseDto getBandUserInfoResponseDto;

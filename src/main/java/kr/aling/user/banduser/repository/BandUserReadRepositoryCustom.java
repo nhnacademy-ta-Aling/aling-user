@@ -1,9 +1,9 @@
 package kr.aling.user.banduser.repository;
 
 import java.util.Optional;
+import kr.aling.user.banduser.dto.response.BandPostUerQueryDto;
 import kr.aling.user.banduser.dto.response.GetBandUserAndUserInfoResponseDto;
 import kr.aling.user.banduser.dto.response.GetBandUserAuthResponseDto;
-import kr.aling.user.banduser.dto.response.BandPostUerQueryDto;
 import kr.aling.user.banduser.dto.response.GetBandUserInfoResponseDto;
 import kr.aling.user.banduser.entity.BandUser;
 import org.springframework.data.domain.Page;
@@ -32,7 +32,7 @@ public interface BandUserReadRepositoryCustom {
      * 회원 번호와 그룹 명을 통해 그룹 회원 정보를 조회 하는 메서드.
      *
      * @param bandName 그룹 명
-     * @param userNo 회원 번호
+     * @param userNo   회원 번호
      * @return 그룹 회원 정보 dto
      */
     Optional<GetBandUserInfoResponseDto> getBandUserInfoByUserNoAndBandName(String bandName, Long userNo);
@@ -52,7 +52,7 @@ public interface BandUserReadRepositoryCustom {
      * 그룹 회원 수정 시 사용 됩니다.
      *
      * @param bandName 그룹 명
-     * @param userNo 회원 번호
+     * @param userNo   회원 번호
      * @return 그룹 회원 entity
      */
     Optional<BandUser> findBandUserByBandNameAndUserNo(String bandName, Long userNo);
@@ -60,7 +60,7 @@ public interface BandUserReadRepositoryCustom {
     /**
      * 특정 회원의 특정 그룹 회원 권한 보유 개수 count 쿼리.
      *
-     * @param userNo 회원 번호
+     * @param userNo   회원 번호
      * @param roleName 그룹 회원 권한 이름
      * @return 특정 회원의 특정 그룹 회원 권한 보유 개수
      */

@@ -3,6 +3,7 @@ package kr.aling.user.banduser.service.impl;
 import kr.aling.user.banduser.dto.request.ModifyRoleOfBandUserRequestDto;
 import kr.aling.user.banduser.entity.BandUser;
 import kr.aling.user.banduser.exception.BandUserNotFoundException;
+import kr.aling.user.banduser.exception.BandUserRoleDeniedException;
 import kr.aling.user.banduser.repository.BandUserReadRepository;
 import kr.aling.user.banduser.service.BandUserManageService;
 import kr.aling.user.banduserrole.entity.BandUserRole;
@@ -37,6 +38,10 @@ public class BandUserManageServiceImpl implements BandUserManageService {
     public void removeBandUser(String bandName, Long userNo) {
         BandUser bandUser = bandUserReadRepository.findBandUserByBandNameAndUserNo(bandName, userNo)
                 .orElseThrow(BandUserNotFoundException::new);
+
+        if (bandUser.getBandUserRole().getRoleName().equals(BandUserRoleEnum.CREATOR.getRoleName())) {
+            throw new BandUserRoleDeniedException();
+        }
 
         bandUser.deleteBandUser();
     }

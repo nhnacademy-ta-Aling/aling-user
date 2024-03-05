@@ -116,7 +116,7 @@ class BandManageServiceImplTest {
     void makeBand_failTest_BandUserRoleNotFoundException() {
         // when
         when(bandUserRoleReadRepository.findByRoleName(anyString())).thenReturn(
-                Optional.ofNullable(null));
+                Optional.empty());
         when(bandUserReadRepository.countByUserNoAndBandUserRoleName(anyLong(), any())).thenReturn(
                 Long.MIN_VALUE);
         when(bandReadRepository.existsBandByName(anyString())).thenReturn(false);
@@ -198,7 +198,7 @@ class BandManageServiceImplTest {
         when(bandUserReadRepository.countByUserNoAndBandUserRoleName(anyLong(), any())).thenReturn(
                 Long.MIN_VALUE);
         when(bandReadRepository.existsBandByName(anyString())).thenReturn(false);
-        when(userReadRepository.findById(anyLong())).thenReturn(Optional.ofNullable(null));
+        when(userReadRepository.findById(anyLong())).thenReturn(Optional.empty());
         when(bandManageRepository.save(any(Band.class))).thenReturn(mock(Band.class));
         when(bandUserManageRepository.save(any(BandUser.class))).thenReturn(mock(BandUser.class));
 
