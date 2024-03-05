@@ -23,8 +23,6 @@ operation::band-get-checkName[snippets='request-parameters']
 operation::band-get-checkName[snippets='response-fields']
 
 
-:toc:
-
 ==== 그룹 상세 정보 조회
 
 그룹 상세 정보 조회 API
@@ -52,8 +50,6 @@ operation::band-get-detail-by-bandName[snippets='path-parameters']
 operation::band-get-detail-by-bandName[snippets='response-fields']
 
 
-:toc:
-
 ==== 그룹 페이지 목록 조회
 
 그룹 페이지 목록 조회 API
@@ -77,8 +73,6 @@ operation::band-get-page-by-bandName[snippets='request-parameters']
 operation::band-get-page-by-bandName[snippets='response-fields']
 
 
-:toc:
-
 ==== 그룹 게시글 분류 리스트 조회
 
 그룹 게시글 분류 리스트 조회 API
@@ -98,7 +92,7 @@ operation::band-get-post-type-list[snippets='http-response']
 
 operation::band-get-post-type-list[snippets='path-parameters']
 
-:toc:
+
 
 ==== 그룹 회원 권한 조회
 
@@ -124,8 +118,6 @@ operation::band-get-role-name-of-user[snippets='path-parameters']
 
 operation::band-get-role-name-of-user[snippets='response-fields']
 
-
-:toc:
 
 ==== 그룹 회원 페이지 조회
 

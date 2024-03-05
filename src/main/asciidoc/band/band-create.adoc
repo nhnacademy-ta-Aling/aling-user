@@ -23,8 +23,6 @@ operation::band-create[snippets='request-headers']
 operation::band-create[snippets='request-fields']
 
 
-:toc:
-
 ==== 그룹 게시글 분류 생성
 
 그룹 게시글 분류 생성 API

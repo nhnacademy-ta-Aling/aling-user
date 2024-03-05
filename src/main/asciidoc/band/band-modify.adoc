@@ -23,8 +23,6 @@ operation::band-modify[snippets='path-parameters']
 operation::band-modify[snippets='request-fields']
 
 
-:toc:
-
 ==== 그룹 creator 권한 위임
 
 그룹 creator 권한 위임 API
@@ -48,8 +46,6 @@ operation::band-modify-creator[snippets='request-headers']
 operation::band-modify-creator[snippets='path-parameters']
 
 
-:toc:
-
 ==== 그룹 회원 추방 여부 변경
 
 그룹 회원 추방 여부 변경 API
@@ -68,8 +64,6 @@ operation::band-modify-user-block[snippets='http-response']
 
 operation::band-modify-user-block[snippets='path-parameters']
 
-
-:toc:
 
 ==== 그룹 회원 권한 변경
 

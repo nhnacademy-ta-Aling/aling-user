@@ -19,8 +19,6 @@ operation::band-delete[snippets='http-response']
 operation::band-delete[snippets='path-parameters']
 
 
-:toc:
-
 ==== 그룹 회원 삭제
 
 그룹 회원 삭제 API
