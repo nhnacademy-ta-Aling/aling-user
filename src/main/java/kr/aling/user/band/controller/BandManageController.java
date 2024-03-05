@@ -139,9 +139,9 @@ public class BandManageController {
      * @return ResponseEntity void
      */
     @BandCreatorAuth
-    @PutMapping("/{bandName}/users/{userNo}/role-delegation")
+    @PutMapping("/{bandName}/users/{targetUserNo}/role-delegation")
     public ResponseEntity<Void> updateCreatorRoleOfBandUser(@PathVariable("bandName") String bandName,
-                                                            @PathVariable("userNo") Long targetUserNo,
+                                                            @PathVariable("targetUserNo") Long targetUserNo,
                                                             @RequestHeader(ConstantUtil.X_TEMP_USER_NO) Long userNo) {
         bandUserManageService.modifyCreatorRoleOfBandUser(bandName, targetUserNo, userNo);
 
@@ -180,7 +180,7 @@ public class BandManageController {
     @BandAdminAuth
     @PostMapping("/{bandName}/post-types")
     public ResponseEntity<Void> makeBandCategory(@PathVariable("bandName") String bandName,
-                                                 @RequestBody CreateBandPostTypeRequestDto requestDto) {
+                                                 @Valid @RequestBody CreateBandPostTypeRequestDto requestDto) {
         bandManageService.makeBandCategory(bandName, requestDto);
 
         return ResponseEntity
