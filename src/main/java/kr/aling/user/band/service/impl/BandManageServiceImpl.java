@@ -3,7 +3,6 @@ package kr.aling.user.band.service.impl;
 import kr.aling.user.band.dto.request.CreateBandPostTypeRequestDto;
 import kr.aling.user.band.dto.request.CreateBandRequestDto;
 import kr.aling.user.band.dto.request.ModifyBandRequestDto;
-import kr.aling.user.band.dto.request.external.CreateBandPostTypeDefaultRequestDto;
 import kr.aling.user.band.dto.request.external.CreateBandPostTypeRequestExternalDto;
 import kr.aling.user.band.entity.Band;
 import kr.aling.user.band.exception.BandAlreadyExistsException;
@@ -18,8 +17,9 @@ import kr.aling.user.banduser.repository.BandUserReadRepository;
 import kr.aling.user.banduserrole.entity.BandUserRole;
 import kr.aling.user.banduserrole.exception.BandUserRoleNotFoundException;
 import kr.aling.user.banduserrole.repository.BandUserRoleReadRepository;
-import kr.aling.user.common.adaptor.AlingPostAdaptor;
+import kr.aling.user.common.enums.BandPostTypeEnum;
 import kr.aling.user.common.enums.BandUserRoleEnum;
+import kr.aling.user.common.feignclient.PostFeignClient;
 import kr.aling.user.user.entity.AlingUser;
 import kr.aling.user.user.exception.UserNotFoundException;
 import kr.aling.user.user.repository.UserReadRepository;
@@ -45,14 +45,14 @@ public class BandManageServiceImpl implements BandManageService {
     private final BandUserRoleReadRepository bandUserRoleReadRepository;
     private final BandUserReadRepository bandUserReadRepository;
     private final BandUserManageRepository bandUserManageRepository;
-    private final AlingPostAdaptor alingPostAdaptor;
+    private final PostFeignClient postFeignClient;
 
     /**
      * {@inheritDoc}
      *
      * @throws BandUserRoleNotFoundException 그룹 회원 권한을 찾을 수 없을 때 발생 excpetion
-     * @throws BandLimitExceededException 생성할 수 있는 그룹 개수를 초과 했을 때 발생 excpetion
-     * @throws BandAlreadyExistsException 그룹이 이미 존재할 경우 발생 exception
+     * @throws BandLimitExceededException    생성할 수 있는 그룹 개수를 초과 했을 때 발생 excpetion
+     * @throws BandAlreadyExistsException    그룹이 이미 존재할 경우 발생 exception
      */
     @Override
     public void makeBand(Long userNo, CreateBandRequestDto createBandRequestDto) {
@@ -79,7 +79,8 @@ public class BandManageServiceImpl implements BandManageService {
                 .fileNo(createBandRequestDto.getFileNo())
                 .build());
 
-        alingPostAdaptor.makeDefaultBandPostType(new CreateBandPostTypeDefaultRequestDto(band.getBandNo()));
+        postFeignClient.requestMakeBandPostType(
+                new CreateBandPostTypeRequestExternalDto(band.getBandNo(), BandPostTypeEnum.DEFAULT.getTypeName()));
 
         bandUserManageRepository.save(BandUser.builder()
                 .bandUserRole(bandUserRole)
@@ -91,15 +92,14 @@ public class BandManageServiceImpl implements BandManageService {
     /**
      * {@inheritDoc}
      *
-     * @param bandName 수정할 그룹 이름
+     * @param bandName  수정할 그룹 이름
      * @param modifyDto 수정할 정보를 담은 dto
      * @throws BandAlreadyExistsException 그룹 명이 이미 존재할 경우 발생 exception
-     * @throws BandNotFoundException 그룹을 찾을 수 없을 경우 발생 exception
+     * @throws BandNotFoundException      그룹을 찾을 수 없을 경우 발생 exception
      */
     @Override
     public void updateBandInfo(String bandName, ModifyBandRequestDto modifyDto) {
-        if (!bandName.equals(modifyDto.getNewBandName())
-                && bandReadRepository.existsBandByName(modifyDto.getNewBandName())) {
+        if (bandReadRepository.existsBandByName(modifyDto.getNewBandName())) {
             throw new BandAlreadyExistsException();
         }
 
@@ -130,7 +130,7 @@ public class BandManageServiceImpl implements BandManageService {
     /**
      * {@inheritDoc}
      *
-     * @param bandName 그룹 게시글 분류를 생성할 그룹 명
+     * @param bandName   그룹 게시글 분류를 생성할 그룹 명
      * @param requestDto 그룹 게시글 분류 생성을 위한 정보를 담은 dto
      * @throws BandNotFoundException 그룹을 찾을 수 없을 경우 발생 exception
      */
@@ -139,7 +139,7 @@ public class BandManageServiceImpl implements BandManageService {
         Band band = bandReadRepository.findByName(bandName)
                 .orElseThrow(BandNotFoundException::new);
 
-        alingPostAdaptor.makeBandPostType(
+        postFeignClient.requestMakeBandPostType(
                 new CreateBandPostTypeRequestExternalDto(band.getBandNo(), requestDto.getName()));
     }
 }

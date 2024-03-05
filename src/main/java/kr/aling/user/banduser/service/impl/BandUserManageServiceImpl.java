@@ -3,7 +3,6 @@ package kr.aling.user.banduser.service.impl;
 import kr.aling.user.banduser.dto.request.ModifyRoleOfBandUserRequestDto;
 import kr.aling.user.banduser.entity.BandUser;
 import kr.aling.user.banduser.exception.BandUserNotFoundException;
-import kr.aling.user.banduser.exception.CreatorDeniedException;
 import kr.aling.user.banduser.repository.BandUserReadRepository;
 import kr.aling.user.banduser.service.BandUserManageService;
 import kr.aling.user.banduserrole.entity.BandUserRole;
@@ -33,19 +32,11 @@ public class BandUserManageServiceImpl implements BandUserManageService {
      * @param bandName 그룹 명
      * @param userNo   회원 번호
      * @throws BandUserNotFoundException 그룹 회원이 존재 하지 않을 때 발생 exception
-     * @throws CreatorDeniedException    creator 권한이 없어 접근 거부일 때 발생 exception
      */
     @Override
     public void removeBandUser(String bandName, Long userNo) {
         BandUser bandUser = bandUserReadRepository.findBandUserByBandNameAndUserNo(bandName, userNo)
                 .orElseThrow(BandUserNotFoundException::new);
-
-        BandUserRole creatorRole = bandUserRoleReadRepository.findByRoleName(
-                BandUserRoleEnum.CREATOR.getRoleName()).orElseThrow(BandUserRoleNotFoundException::new);
-
-        if (bandUser.getBandUserRole().getBandUserRoleNo().equals(creatorRole.getBandUserRoleNo())) {
-            throw new CreatorDeniedException();
-        }
 
         bandUser.deleteBandUser();
     }
