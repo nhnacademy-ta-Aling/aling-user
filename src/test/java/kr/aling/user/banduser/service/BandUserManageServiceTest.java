@@ -63,7 +63,6 @@ class BandUserManageServiceTest {
     @DisplayName("그룹 회원 삭제 성공 테스트")
     void removeBandUser_successTest() {
         // given
-        String bandName = "bandName";
 
         // when
         when(bandUserReadRepository.findBandUserByBandNameAndUserNo(anyString(), anyLong())).thenReturn(

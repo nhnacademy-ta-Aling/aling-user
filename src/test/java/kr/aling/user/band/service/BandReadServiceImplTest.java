@@ -26,7 +26,6 @@ import kr.aling.user.banduser.repository.BandUserReadRepository;
 import kr.aling.user.common.dto.PageResponseDto;
 import kr.aling.user.common.feignclient.PostFeignClient;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
