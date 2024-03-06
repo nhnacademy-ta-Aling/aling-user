@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
  **/
 @FeignClient("aling-post")
 public interface PostFeignClient {
+
     @PostMapping("/api/v1/band-post-types")
     void requestMakeBandPostType(CreateBandPostTypeRequestExternalDto requestDto);
 

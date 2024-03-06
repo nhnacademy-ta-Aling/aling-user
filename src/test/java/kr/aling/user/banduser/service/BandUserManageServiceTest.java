@@ -40,6 +40,7 @@ import org.springframework.test.util.ReflectionTestUtils;
  **/
 @ExtendWith(SpringExtension.class)
 class BandUserManageServiceTest {
+
     BandUserRole bandUserRole;
     BandUser bandUser;
     @InjectMocks
@@ -146,6 +147,7 @@ class BandUserManageServiceTest {
 
         verify(bandUserReadRepository, times(1)).findBandUserByBandNameAndUserNo(anyString(), anyLong());
     }
+
     @Test
     @DisplayName("그룹 회원 추방 상태 변경 성공 테스트")
     void modifyBlockOfBandUser_success_test() {

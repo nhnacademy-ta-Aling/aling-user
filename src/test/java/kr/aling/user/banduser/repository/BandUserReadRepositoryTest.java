@@ -76,8 +76,10 @@ class BandUserReadRepositoryTest {
         assertThat(bandUserPage.getTotalPages()).isEqualTo(1L);
         assertThat(bandUserPage.getTotalElements()).isEqualTo(1L);
         assertThat(bandUserPage.getContent()).isNotNull();
-        assertThat(bandUserPage.getContent().get(0).getBandUserInfo().getBandUserRoleNo()).isEqualTo(bandUserRole.getBandUserRoleNo());
-        assertThat(bandUserPage.getContent().get(0).getBandUserInfo().getBandUserNo()).isEqualTo(bandUser.getBandUserNo());
+        assertThat(bandUserPage.getContent().get(0).getBandUserInfo().getBandUserRoleNo()).isEqualTo(
+                bandUserRole.getBandUserRoleNo());
+        assertThat(bandUserPage.getContent().get(0).getBandUserInfo().getBandUserNo()).isEqualTo(
+                bandUser.getBandUserNo());
         assertThat(bandUserPage.getContent().get(0).getUserInfo().getUserNo()).isEqualTo(alingUser.getUserNo());
         assertThat(bandUserPage.getContent().get(0).getUserInfo().getName()).isEqualTo(alingUser.getName());
         assertThat(bandUserPage.getContent().get(0).getUserInfo().getFileNo()).isEqualTo(alingUser.getFileNo());

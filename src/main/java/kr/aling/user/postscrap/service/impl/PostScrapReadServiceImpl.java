@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import kr.aling.user.common.annotation.ReadService;
 import kr.aling.user.common.dto.PageResponseDto;
-import kr.aling.user.common.feign.PostFeignClient;
+import kr.aling.user.common.feignclient.PostFeignClient;
 import kr.aling.user.post.dto.request.ReadPostsForScrapRequestDto;
 import kr.aling.user.post.exception.PostNotFoundException;
 import kr.aling.user.postscrap.dto.response.IsExistsPostScrapResponseDto;
