@@ -14,11 +14,15 @@ import kr.aling.user.companyuser.dummy.CompanyUserDummy;
 import kr.aling.user.companyuser.entity.CompanyUser;
 import kr.aling.user.companyuser.repository.CompanyUserManageRepository;
 import kr.aling.user.companyuser.service.CompanyUserManageService;
+import kr.aling.user.role.entity.Role;
+import kr.aling.user.role.repository.RoleReadRepository;
 import kr.aling.user.user.dummy.UserDummy;
 import kr.aling.user.user.entity.AlingUser;
 import kr.aling.user.user.exception.UserEmailAlreadyUsedException;
 import kr.aling.user.user.repository.UserManageRepository;
 import kr.aling.user.user.repository.UserReadRepository;
+import kr.aling.user.userrole.entity.UserRole;
+import kr.aling.user.userrole.repository.UserRoleManageRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,6 +43,8 @@ class CompanyAlingUserManageServiceTest {
     CompanyUserManageRepository companyUserManageRepository;
     UserManageRepository userManageRepository;
     UserReadRepository userReadRepository;
+    UserRoleManageRepository userRoleManageRepository;
+    RoleReadRepository roleReadRepository;
     PasswordEncoder passwordEncoder;
 
     @BeforeEach
@@ -46,11 +52,13 @@ class CompanyAlingUserManageServiceTest {
         companyUserManageRepository = Mockito.mock(CompanyUserManageRepository.class);
         userManageRepository = Mockito.mock(UserManageRepository.class);
         userReadRepository = Mockito.mock(UserReadRepository.class);
+        userRoleManageRepository = Mockito.mock(UserRoleManageRepository.class);
+        roleReadRepository = Mockito.mock(RoleReadRepository.class);
 
         passwordEncoder = new BCryptPasswordEncoder();
         companyUserManageService =
                 new CompanyUserManageServiceImpl(userManageRepository, userReadRepository, companyUserManageRepository,
-                        passwordEncoder);
+                        userRoleManageRepository, roleReadRepository, passwordEncoder);
     }
 
     @Test
@@ -59,10 +67,14 @@ class CompanyAlingUserManageServiceTest {
         AlingUser alingUser = UserDummy.dummyEncoder(passwordEncoder);
         ReflectionTestUtils.setField(alingUser, "userNo", 10_000_000L);
         CompanyUser companyUser = CompanyUserDummy.dummy(alingUser);
+        Role role = new Role(2, "ROLE_COMPANY");
+        UserRole userRole = new UserRole(new UserRole.Pk(alingUser.getUserNo(), role.getRoleNo()), alingUser, role);
 
         when(userManageRepository.save(any())).thenReturn(alingUser);
         when(companyUserManageRepository.save(any())).thenReturn(companyUser);
         when(userReadRepository.existsByEmail(anyString())).thenReturn(Boolean.FALSE);
+        when(roleReadRepository.findByName(anyString())).thenReturn(role);
+        when(userRoleManageRepository.save(any())).thenReturn(userRole);
 
         CreateCompanyUserRequestDto requestDto = new CreateCompanyUserRequestDto();
         ReflectionTestUtils.setField(requestDto, "email", alingUser.getEmail());

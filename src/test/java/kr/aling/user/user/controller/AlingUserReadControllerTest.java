@@ -153,7 +153,7 @@ class AlingUserReadControllerTest {
 
         //when
         ResultActions perform = mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/api/v1/users/login")
+                RestDocumentationRequestBuilders.post("/api/v1/users/login")
                         .content(objectMapper.writeValueAsString(requestDto))
                         .contentType(MediaType.APPLICATION_JSON));
 
