@@ -96,14 +96,14 @@ class BandManageControllerTest {
         // then
         mockMvc.perform(post(bandUrl)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header(ConstantUtil.X_TEMP_USER_NO, userNo)
+                        .header(ConstantUtil.X_USER_NO, userNo)
                         .content(objectMapper.writeValueAsString(createBandRequestDto)))
                 .andExpect(status().isCreated())
                 .andDo(document("band-create",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestHeaders(
-                                headerWithName(ConstantUtil.X_TEMP_USER_NO).description(
+                                headerWithName(ConstantUtil.X_USER_NO).description(
                                                 "회원 번호")
                                         .attributes(key(REQUIRED).value(REQUIRED_YES))
                         ),
@@ -168,7 +168,7 @@ class BandManageControllerTest {
         // then
         mockMvc.perform(post(bandUrl)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header(ConstantUtil.X_TEMP_USER_NO, userNo)
+                        .header(ConstantUtil.X_USER_NO, userNo)
                         .content(objectMapper.writeValueAsString(createBandRequestDto)))
                 .andExpect(status().isBadRequest());
 
@@ -193,7 +193,7 @@ class BandManageControllerTest {
         // then
         mockMvc.perform(post(bandUrl)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header(ConstantUtil.X_TEMP_USER_NO, userNo)
+                        .header(ConstantUtil.X_USER_NO, userNo)
                         .content(objectMapper.writeValueAsString(createBandRequestDto)))
                 .andExpect(status().isBadRequest());
 
@@ -218,7 +218,7 @@ class BandManageControllerTest {
         // then
         mockMvc.perform(post(bandUrl)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header(ConstantUtil.X_TEMP_USER_NO, userNo)
+                        .header(ConstantUtil.X_USER_NO, userNo)
                         .content(objectMapper.writeValueAsString(createBandRequestDto)))
                 .andExpect(status().isBadRequest());
 
@@ -243,7 +243,7 @@ class BandManageControllerTest {
         // then
         mockMvc.perform(post(bandUrl)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header(ConstantUtil.X_TEMP_USER_NO, userNo)
+                        .header(ConstantUtil.X_USER_NO, userNo)
                         .content(objectMapper.writeValueAsString(createBandRequestDto)))
                 .andExpect(status().isBadRequest());
 
@@ -268,7 +268,7 @@ class BandManageControllerTest {
         // then
         mockMvc.perform(post(bandUrl)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header(ConstantUtil.X_TEMP_USER_NO, userNo)
+                        .header(ConstantUtil.X_USER_NO, userNo)
                         .content(objectMapper.writeValueAsString(createBandRequestDto)))
                 .andExpect(status().isBadRequest());
 
