@@ -59,7 +59,7 @@ public class UserReadController {
     @GetMapping
     @RequestMapping("/my-bands")
     public ResponseEntity<List<GetBandDetailInfoResponseDto>> getJoinedBandInfoList(
-            @RequestHeader(ConstantUtil.X_TEMP_USER_NO) Long userNo) {
+            @RequestHeader(ConstantUtil.X_USER_NO) Long userNo) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(bandReadService.getJoinedBandInfoList(userNo));
