@@ -12,8 +12,8 @@ import kr.aling.user.band.repository.BandReadRepository;
 import kr.aling.user.band.service.BandReadService;
 import kr.aling.user.banduser.dto.response.GetBandUserInfoResponseDto;
 import kr.aling.user.banduser.repository.BandUserReadRepository;
-import kr.aling.user.common.adaptor.AlingPostAdaptor;
 import kr.aling.user.common.dto.PageResponseDto;
+import kr.aling.user.common.feignclient.PostFeignClient;
 import kr.aling.user.common.utils.PageUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -33,7 +33,7 @@ public class BandReadServiceImpl implements BandReadService {
 
     private final BandReadRepository bandReadRepository;
     private final BandUserReadRepository bandUserReadRepository;
-    private final AlingPostAdaptor alingPostAdaptor;
+    private final PostFeignClient postFeignClient;
 
     /**
      * {@inheritDoc}
@@ -100,7 +100,6 @@ public class BandReadServiceImpl implements BandReadService {
         Band band = bandReadRepository.findByName(bandName)
                 .orElseThrow(BandNotFoundException::new);
 
-        return alingPostAdaptor
-                .getBandPostTypeList(band.getBandNo());
+        return postFeignClient.requestGetBandPostTypeList(band.getBandNo());
     }
 }

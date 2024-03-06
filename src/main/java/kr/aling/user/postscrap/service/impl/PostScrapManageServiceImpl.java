@@ -2,7 +2,7 @@ package kr.aling.user.postscrap.service.impl;
 
 import java.util.Objects;
 import kr.aling.user.common.annotation.ManageService;
-import kr.aling.user.common.feign.PostFeignClient;
+import kr.aling.user.common.feignclient.PostFeignClient;
 import kr.aling.user.post.exception.PostNotFoundException;
 import kr.aling.user.postscrap.entity.PostScrap;
 import kr.aling.user.postscrap.entity.PostScrap.Pk;

@@ -3,7 +3,6 @@ package kr.aling.user.band.service.impl;
 import kr.aling.user.band.dto.request.CreateBandPostTypeRequestDto;
 import kr.aling.user.band.dto.request.CreateBandRequestDto;
 import kr.aling.user.band.dto.request.ModifyBandRequestDto;
-import kr.aling.user.band.dto.request.external.CreateBandPostTypeDefaultRequestDto;
 import kr.aling.user.band.dto.request.external.CreateBandPostTypeRequestExternalDto;
 import kr.aling.user.band.entity.Band;
 import kr.aling.user.band.exception.BandAlreadyExistsException;
@@ -18,8 +17,9 @@ import kr.aling.user.banduser.repository.BandUserReadRepository;
 import kr.aling.user.banduserrole.entity.BandUserRole;
 import kr.aling.user.banduserrole.exception.BandUserRoleNotFoundException;
 import kr.aling.user.banduserrole.repository.BandUserRoleReadRepository;
-import kr.aling.user.common.adaptor.AlingPostAdaptor;
+import kr.aling.user.common.enums.BandPostTypeEnum;
 import kr.aling.user.common.enums.BandUserRoleEnum;
+import kr.aling.user.common.feignclient.PostFeignClient;
 import kr.aling.user.user.entity.AlingUser;
 import kr.aling.user.user.exception.UserNotFoundException;
 import kr.aling.user.user.repository.UserReadRepository;
@@ -46,7 +46,7 @@ public class BandManageServiceImpl implements BandManageService {
     private final BandUserRoleReadRepository bandUserRoleReadRepository;
     private final BandUserReadRepository bandUserReadRepository;
     private final BandUserManageRepository bandUserManageRepository;
-    private final AlingPostAdaptor alingPostAdaptor;
+    private final PostFeignClient postFeignClient;
 
     /**
      * {@inheritDoc}
@@ -80,7 +80,8 @@ public class BandManageServiceImpl implements BandManageService {
                 .fileNo(createBandRequestDto.getFileNo())
                 .build());
 
-        alingPostAdaptor.makeDefaultBandPostType(new CreateBandPostTypeDefaultRequestDto(band.getBandNo()));
+        postFeignClient.requestMakeBandPostType(
+                new CreateBandPostTypeRequestExternalDto(band.getBandNo(), BandPostTypeEnum.DEFAULT.getTypeName()));
 
         bandUserManageRepository.save(BandUser.builder()
                 .bandUserRole(bandUserRole)
@@ -99,8 +100,7 @@ public class BandManageServiceImpl implements BandManageService {
      */
     @Override
     public void updateBandInfo(String bandName, ModifyBandRequestDto modifyDto) {
-        if (!bandName.equals(modifyDto.getNewBandName())
-                && bandReadRepository.existsBandByName(modifyDto.getNewBandName())) {
+        if (bandReadRepository.existsBandByName(modifyDto.getNewBandName())) {
             throw new BandAlreadyExistsException();
         }
 
@@ -140,7 +140,7 @@ public class BandManageServiceImpl implements BandManageService {
         Band band = bandReadRepository.findByName(bandName)
                 .orElseThrow(BandNotFoundException::new);
 
-        alingPostAdaptor.makeBandPostType(
+        postFeignClient.requestMakeBandPostType(
                 new CreateBandPostTypeRequestExternalDto(band.getBandNo(), requestDto.getName()));
     }
 }
