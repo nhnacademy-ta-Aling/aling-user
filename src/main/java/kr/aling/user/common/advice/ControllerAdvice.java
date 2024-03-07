@@ -3,9 +3,12 @@ package kr.aling.user.common.advice;
 import javax.validation.ConstraintViolationException;
 import kr.aling.user.band.exception.BandAccessDeniedException;
 import kr.aling.user.band.exception.BandAlreadyExistsException;
+import kr.aling.user.band.exception.BandDeniedException;
 import kr.aling.user.band.exception.BandLimitExceededException;
 import kr.aling.user.band.exception.BandNotFoundException;
+import kr.aling.user.banduser.exception.BandUserAlreadyExistsException;
 import kr.aling.user.banduser.exception.BandUserNotFoundException;
+import kr.aling.user.banduser.exception.BandUserRoleDeniedException;
 import kr.aling.user.banduserrole.exception.BandUserRoleNotFoundException;
 import kr.aling.user.common.exception.CustomException;
 import kr.aling.user.mail.exception.MailAuthNumberInvalidException;
@@ -39,7 +42,7 @@ public class ControllerAdvice {
      * @since : 1.0
      */
     @ExceptionHandler({ConstraintViolationException.class, MailAuthNumberInvalidException.class,
-            BandLimitExceededException.class})
+            BandLimitExceededException.class, BandDeniedException.class, BandUserRoleDeniedException.class})
     public ResponseEntity<String> handleBadRequestException(Exception e) {
         log.error(DEFAULT_HANDLE_MESSAGE, HttpStatus.BAD_REQUEST, e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -78,7 +81,8 @@ public class ControllerAdvice {
      * @author : 이수정
      * @since : 1.0
      */
-    @ExceptionHandler({UserEmailAlreadyUsedException.class, BandAlreadyExistsException.class})
+    @ExceptionHandler({UserEmailAlreadyUsedException.class, BandAlreadyExistsException.class,
+            BandUserAlreadyExistsException.class})
     public ResponseEntity<String> handleConflictException(Exception e) {
         log.error(DEFAULT_HANDLE_MESSAGE, HttpStatus.CONFLICT, e.getMessage());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
