@@ -53,6 +53,7 @@ import org.springframework.test.util.ReflectionTestUtils;
  **/
 @ExtendWith(SpringExtension.class)
 class BandUserManageServiceTest {
+
     BandUserRole bandUserRole;
     BandUser bandUser;
     @InjectMocks

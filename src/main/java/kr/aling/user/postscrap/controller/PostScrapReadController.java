@@ -1,6 +1,7 @@
 package kr.aling.user.postscrap.controller;
 
 import java.util.List;
+import kr.aling.user.common.annotation.InjectUserInfo;
 import kr.aling.user.common.dto.PageResponseDto;
 import kr.aling.user.postscrap.dto.response.IsExistsPostScrapResponseDto;
 import kr.aling.user.postscrap.dto.response.NumberOfPostScrapResponseDto;
@@ -67,9 +68,10 @@ public class PostScrapReadController {
      * @author 이수정
      * @since 1.0
      */
+    @InjectUserInfo
     @GetMapping("/posts")
-    public ResponseEntity<PageResponseDto<ReadPostScrapsPostResponseDto>> getPostScrapsPost(@RequestParam Long userNo,
-            @PageableDefault(size = 20) Pageable pageable) {
+    public ResponseEntity<PageResponseDto<ReadPostScrapsPostResponseDto>> getPostScrapsPost(
+            @RequestParam(required = false) Long userNo, @PageableDefault(size = 20) Pageable pageable) {
         return ResponseEntity.ok(postScrapReadService.getPostScrapsPost(userNo, pageable));
     }
 

@@ -5,10 +5,14 @@ import kr.aling.user.companyuser.dto.response.CreateCompanyUserResponseDto;
 import kr.aling.user.companyuser.entity.CompanyUser;
 import kr.aling.user.companyuser.repository.CompanyUserManageRepository;
 import kr.aling.user.companyuser.service.CompanyUserManageService;
+import kr.aling.user.role.entity.Role;
+import kr.aling.user.role.repository.RoleReadRepository;
 import kr.aling.user.user.entity.AlingUser;
 import kr.aling.user.user.exception.UserEmailAlreadyUsedException;
 import kr.aling.user.user.repository.UserManageRepository;
 import kr.aling.user.user.repository.UserReadRepository;
+import kr.aling.user.userrole.entity.UserRole;
+import kr.aling.user.userrole.repository.UserRoleManageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,7 +32,10 @@ public class CompanyUserManageServiceImpl implements CompanyUserManageService {
     private final UserManageRepository userManageRepository;
     private final UserReadRepository userReadRepository;
     private final CompanyUserManageRepository companyUserManageRepository;
+    private final UserRoleManageRepository userRoleManageRepository;
+    private final RoleReadRepository roleReadRepository;
     private final PasswordEncoder passwordEncoder;
+    private static final String ROLE_COMPANY = "ROLE_COMPANY";
 
     /**
      * {@inheritDoc}
@@ -38,6 +45,8 @@ public class CompanyUserManageServiceImpl implements CompanyUserManageService {
         if (Boolean.TRUE.equals(userReadRepository.existsByEmail(requestDto.getEmail()))) {
             throw new UserEmailAlreadyUsedException(requestDto.getEmail());
         }
+
+        Role role = roleReadRepository.findByName(ROLE_COMPANY);
 
         AlingUser alingUser = AlingUser.builder()
                 .email(requestDto.getEmail())
@@ -56,6 +65,9 @@ public class CompanyUserManageServiceImpl implements CompanyUserManageService {
                 .build();
 
         companyUserManageRepository.save(companyUser);
+
+        UserRole userRole = new UserRole(new UserRole.Pk(alingUser.getUserNo(), role.getRoleNo()), alingUser, role);
+        userRoleManageRepository.save(userRole);
 
         return new CreateCompanyUserResponseDto(companyUser.getAlingUser().getName());
     }

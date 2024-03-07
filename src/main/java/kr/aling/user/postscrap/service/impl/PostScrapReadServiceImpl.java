@@ -5,7 +5,6 @@ import java.util.Objects;
 import kr.aling.user.common.annotation.ReadService;
 import kr.aling.user.common.dto.PageResponseDto;
 import kr.aling.user.common.feignclient.PostFeignClient;
-import kr.aling.user.common.utils.PageUtils;
 import kr.aling.user.post.dto.request.ReadPostsForScrapRequestDto;
 import kr.aling.user.post.exception.PostNotFoundException;
 import kr.aling.user.postscrap.dto.response.IsExistsPostScrapResponseDto;
@@ -18,7 +17,6 @@ import kr.aling.user.postscrap.service.PostScrapReadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.support.PageableExecutionUtils;
 
 /**
  * 게시물 스크랩 조회 Service 구현체.
@@ -72,7 +70,12 @@ public class PostScrapReadServiceImpl implements PostScrapReadService {
         List<ReadPostScrapsPostResponseDto> postScraps = Objects.requireNonNull(postFeignClient.getPostsForScrap(
                 new ReadPostsForScrapRequestDto(postNos.getContent())).getBody()).getInfos();
 
-        return PageUtils.convert(PageableExecutionUtils.getPage(postScraps, postNos.getPageable(), postScraps::size));
+        return new PageResponseDto<>(
+                postNos.getPageable().getPageNumber(),
+                postNos.getTotalPages(),
+                postNos.getTotalElements(),
+                postScraps
+        );
     }
 
     /**
