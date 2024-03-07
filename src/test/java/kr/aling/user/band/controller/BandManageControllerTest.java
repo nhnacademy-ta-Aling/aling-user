@@ -566,13 +566,13 @@ class BandManageControllerTest {
         mockMvc.perform(
                         RestDocumentationRequestBuilders.put(bandUrl + "/{bandName}/users/{targetUserNo}/role-delegation",
                                         bandName, targetUserNo)
-                                .header(ConstantUtil.X_TEMP_USER_NO, userNo))
+                                .header(ConstantUtil.X_USER_NO, userNo))
                 .andExpect(status().isOk())
                 .andDo(document("band-modify-creator",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestHeaders(
-                                headerWithName(ConstantUtil.X_TEMP_USER_NO).description("회원 번호")
+                                headerWithName(ConstantUtil.X_USER_NO).description("회원 번호")
                                         .attributes(key(REQUIRED).value(REQUIRED_YES))
                                         .attributes(key("valid").value(""))
                         ),

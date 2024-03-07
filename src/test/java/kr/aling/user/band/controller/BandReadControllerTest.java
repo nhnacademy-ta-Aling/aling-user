@@ -1,6 +1,6 @@
 package kr.aling.user.band.controller;
 
-import static kr.aling.user.common.utils.ConstantUtil.X_TEMP_USER_NO;
+import static kr.aling.user.common.utils.ConstantUtil.X_USER_NO;
 import static kr.aling.user.util.RestDocsUtil.REQUIRED;
 import static kr.aling.user.util.RestDocsUtil.REQUIRED_NO;
 import static kr.aling.user.util.RestDocsUtil.REQUIRED_YES;
@@ -130,7 +130,7 @@ class BandReadControllerTest {
         when(bandReadService.getBandDetailInfo(anyString(), anyLong())).thenReturn(getResponseDto);
 
         mockMvc.perform(RestDocumentationRequestBuilders.get(bandUrl + "/{bandName}", bandName)
-                        .header(X_TEMP_USER_NO, 1L)
+                        .header(X_USER_NO, 1L)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("bandInfo.bandNo").value(getResponseDto.getBandInfo().getBandNo()))
@@ -149,7 +149,7 @@ class BandReadControllerTest {
                         preprocessResponse(prettyPrint()),
 
                         requestHeaders(
-                                headerWithName(X_TEMP_USER_NO).description("유저 번호")
+                                headerWithName(X_USER_NO).description("유저 번호")
                                         .attributes(key(REQUIRED).value(REQUIRED_YES))
                         ),
 
