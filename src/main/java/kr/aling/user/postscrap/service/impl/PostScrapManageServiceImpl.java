@@ -1,6 +1,7 @@
 package kr.aling.user.postscrap.service.impl;
 
 import java.util.Objects;
+import java.util.Optional;
 import kr.aling.user.common.annotation.ManageService;
 import kr.aling.user.common.feignclient.PostFeignClient;
 import kr.aling.user.post.exception.PostNotFoundException;
@@ -46,11 +47,11 @@ public class PostScrapManageServiceImpl implements PostScrapManageService {
         }
 
         Pk pk = new Pk(userNo, postNo);
-        if (postScrapReadRepository.existsById(pk)) {
-            postScrapManageRepository.deleteById(pk);
+        Optional<PostScrap> postScrap = postScrapReadRepository.findById(pk);
+        if (postScrap.isPresent()) {
+            postScrapManageRepository.delete(postScrap.get());
         } else {
-            PostScrap postScrap = new PostScrap(pk, alingUser);
-            postScrapManageRepository.save(postScrap);
+            postScrapManageRepository.save(new PostScrap(pk, alingUser));
         }
     }
 }
