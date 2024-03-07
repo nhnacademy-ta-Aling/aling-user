@@ -82,7 +82,7 @@ class BandReadControllerTest {
 
     @BeforeEach
     void setUp() {
-        getBandInfoResponseDto = new GetBandInfoResponseDto(1L, "bandName",1L, "band information", true, true, false);
+        getBandInfoResponseDto = new GetBandInfoResponseDto(1L, "bandName", 1L, "band information", true, true, false);
         getBandUserInfoResponseDto = new GetBandUserInfoResponseDto(1L, 1);
         getUserSimpleInfoResponseDto = new GetUserSimpleInfoResponseDto(1L, 1L, "user name");
     }
@@ -122,7 +122,8 @@ class BandReadControllerTest {
     @DisplayName("그룹명으로 그룹 상세 정보 조회 성공")
     void bandDetailInfo_successTest() throws Exception {
         // given
-        GetBandInfoWithBandUserResponseDto getResponseDto = new GetBandInfoWithBandUserResponseDto(getBandInfoResponseDto, getBandUserInfoResponseDto);
+        GetBandInfoWithBandUserResponseDto getResponseDto =
+                new GetBandInfoWithBandUserResponseDto(getBandInfoResponseDto, getBandUserInfoResponseDto);
         String bandName = "testBandName";
 
         // when
@@ -140,7 +141,8 @@ class BandReadControllerTest {
                 .andExpect(jsonPath("bandInfo.isViewContent").value(getResponseDto.getBandInfo().getIsViewContent()))
                 .andExpect(jsonPath("bandInfo.isUpload").value(getResponseDto.getBandInfo().getIsUpload()))
                 .andExpect(jsonPath("bandUserInfo.bandUserNo").value(getResponseDto.getBandUserInfo().getBandUserNo()))
-                .andExpect(jsonPath("bandUserInfo.bandUserRoleNo").value(getResponseDto.getBandUserInfo().getBandUserRoleNo()))
+                .andExpect(jsonPath("bandUserInfo.bandUserRoleNo").value(
+                        getResponseDto.getBandUserInfo().getBandUserRoleNo()))
                 .andDo(print())
                 .andDo(document("band-get-detail-by-bandName",
                         preprocessRequest(prettyPrint()),
@@ -177,14 +179,14 @@ class BandReadControllerTest {
         // given
         String bandName = "bandName";
         PageResponseDto<GetBandInfoResponseDto> pageResponseDto
-                = new PageResponseDto<>(0, 1, 1L , List.of(getBandInfoResponseDto));
+                = new PageResponseDto<>(0, 1, 1L, List.of(getBandInfoResponseDto));
 
         // when
         when(bandReadService.getSearchBandInfoList(anyString(), any(Pageable.class))).thenReturn(pageResponseDto);
 
         // then
         mockMvc.perform(RestDocumentationRequestBuilders.get(bandUrl + "/search")
-                .param("bandName", bandName)
+                        .param("bandName", bandName)
                         .param("page", "0")
                         .param("size", "10")
                         .accept(MediaType.APPLICATION_JSON))
@@ -197,7 +199,8 @@ class BandReadControllerTest {
                 .andExpect(jsonPath("$.content[0].fileNo").value(pageResponseDto.getContent().get(0).getFileNo()))
                 .andExpect(jsonPath("$.content[0].info").value(pageResponseDto.getContent().get(0).getInfo()))
                 .andExpect(jsonPath("$.content[0].isEnter").value(pageResponseDto.getContent().get(0).getIsEnter()))
-                .andExpect(jsonPath("$.content[0].isViewContent").value(pageResponseDto.getContent().get(0).getIsViewContent()))
+                .andExpect(jsonPath("$.content[0].isViewContent").value(
+                        pageResponseDto.getContent().get(0).getIsViewContent()))
                 .andExpect(jsonPath("$.content[0].isUpload").value(pageResponseDto.getContent().get(0).getIsUpload()))
                 .andDo(print())
                 .andDo(document("band-get-page-by-bandName",
@@ -236,7 +239,7 @@ class BandReadControllerTest {
                 new GetBandUserAndUserInfoResponseDto(getBandUserInfoResponseDto, getUserSimpleInfoResponseDto);
 
         PageResponseDto<GetBandUserAndUserInfoResponseDto> pageResponseDto
-                = new PageResponseDto<>(0, 1, 1L , List.of(getBandUserAndUserInfoResponseDto));
+                = new PageResponseDto<>(0, 1, 1L, List.of(getBandUserAndUserInfoResponseDto));
 
         // when
         when(bandUserReadService.getBandUserList(anyString(), any())).thenReturn(pageResponseDto);
@@ -245,15 +248,20 @@ class BandReadControllerTest {
         mockMvc.perform(RestDocumentationRequestBuilders.get(bandUrl + "/{bandName}/users", "test-band")
                         .param("page", "0")
                         .param("size", "1")
-                .accept(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("pageNumber").value(0))
                 .andExpect(jsonPath("totalPages").value(1))
-                .andExpect(jsonPath("$.content[0].bandUserInfo.bandUserNo").value(pageResponseDto.getContent().get(0).getBandUserInfo().getBandUserNo()))
-                .andExpect(jsonPath("$.content[0].bandUserInfo.bandUserRoleNo").value(pageResponseDto.getContent().get(0).getBandUserInfo().getBandUserRoleNo()))
-                .andExpect(jsonPath("$.content[0].userInfo.userNo").value(pageResponseDto.getContent().get(0).getUserInfo().getUserNo()))
-                .andExpect(jsonPath("$.content[0].userInfo.fileNo").value(pageResponseDto.getContent().get(0).getUserInfo().getFileNo()))
-                .andExpect(jsonPath("$.content[0].userInfo.name").value(pageResponseDto.getContent().get(0).getUserInfo().getName()))
+                .andExpect(jsonPath("$.content[0].bandUserInfo.bandUserNo").value(
+                        pageResponseDto.getContent().get(0).getBandUserInfo().getBandUserNo()))
+                .andExpect(jsonPath("$.content[0].bandUserInfo.bandUserRoleNo").value(
+                        pageResponseDto.getContent().get(0).getBandUserInfo().getBandUserRoleNo()))
+                .andExpect(jsonPath("$.content[0].userInfo.userNo").value(
+                        pageResponseDto.getContent().get(0).getUserInfo().getUserNo()))
+                .andExpect(jsonPath("$.content[0].userInfo.fileNo").value(
+                        pageResponseDto.getContent().get(0).getUserInfo().getFileNo()))
+                .andExpect(jsonPath("$.content[0].userInfo.name").value(
+                        pageResponseDto.getContent().get(0).getUserInfo().getName()))
                 .andDo(print())
                 .andDo(document("band-get-user-list",
                         preprocessRequest(prettyPrint()),
@@ -297,7 +305,7 @@ class BandReadControllerTest {
         when(bandReadService.getBandPostTypeList(anyString())).thenReturn(list);
 
         mockMvc.perform(RestDocumentationRequestBuilders.get(bandUrl + "/{bandName}/band-post-types", "test-band")
-                    .accept(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].name").value(list.get(0).getName()))
                 .andDo(print())
@@ -325,7 +333,7 @@ class BandReadControllerTest {
         when(bandUserReadService.getBandUserInfo(anyLong(), anyLong())).thenReturn(getBandUserAuthResponseDto);
 
         mockMvc.perform(RestDocumentationRequestBuilders.get(bandUrl + "/{bandNo}/users/{userNo}/role", 1L, 1L)
-                    .accept(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("bandUserRoleName").value(getBandUserAuthResponseDto.getBandUserRoleName()))
                 .andDo(print())

@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class CreateBandPostTypeRequestDto {
+
     @NotBlank
     @Size(max = 10)
     private String name;

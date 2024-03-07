@@ -55,6 +55,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest(BandManageController.class)
 @MockBean(JpaMetamodelMappingContext.class)
 class BandManageControllerTest {
+
     CreateBandRequestDto createBandRequestDto;
     ModifyBandRequestDto modifyBandRequestDto;
     ModifyRoleOfBandUserRequestDto modifyBandUserRequestDto;
@@ -180,7 +181,7 @@ class BandManageControllerTest {
         // given
         Long userNo = 1L;
 
-        ReflectionTestUtils.setField(createBandRequestDto, "bandName", "i" .repeat(31));
+        ReflectionTestUtils.setField(createBandRequestDto, "bandName", "i".repeat(31));
         ReflectionTestUtils.setField(createBandRequestDto, "isEnter", false);
         ReflectionTestUtils.setField(createBandRequestDto, "isViewContent", false);
         ReflectionTestUtils.setField(createBandRequestDto, "bandInfo", "I'm band!");
@@ -258,7 +259,7 @@ class BandManageControllerTest {
         ReflectionTestUtils.setField(createBandRequestDto, "bandName", "testBandName");
         ReflectionTestUtils.setField(createBandRequestDto, "isEnter", false);
         ReflectionTestUtils.setField(createBandRequestDto, "isViewContent", false);
-        ReflectionTestUtils.setField(createBandRequestDto, "bandInfo", "testBand10" .repeat(101));
+        ReflectionTestUtils.setField(createBandRequestDto, "bandInfo", "testBand10".repeat(101));
         ReflectionTestUtils.setField(createBandRequestDto, "fileNo", null);
 
         // when
@@ -352,7 +353,7 @@ class BandManageControllerTest {
         // given
         String bandName = "bandName";
 
-        ReflectionTestUtils.setField(modifyBandRequestDto, "newBandName", "i" .repeat(31));
+        ReflectionTestUtils.setField(modifyBandRequestDto, "newBandName", "i".repeat(31));
         ReflectionTestUtils.setField(modifyBandRequestDto, "isEnter", true);
         ReflectionTestUtils.setField(modifyBandRequestDto, "isViewContent", true);
         ReflectionTestUtils.setField(modifyBandRequestDto, "bandInfo", "This is band information.");
@@ -427,7 +428,7 @@ class BandManageControllerTest {
         ReflectionTestUtils.setField(modifyBandRequestDto, "newBandName", "testBandName");
         ReflectionTestUtils.setField(modifyBandRequestDto, "isEnter", true);
         ReflectionTestUtils.setField(modifyBandRequestDto, "isViewContent", null);
-        ReflectionTestUtils.setField(modifyBandRequestDto, "bandInfo", "testBand10" .repeat(101));
+        ReflectionTestUtils.setField(modifyBandRequestDto, "bandInfo", "testBand10".repeat(101));
         ReflectionTestUtils.setField(modifyBandRequestDto, "fileNo", 1L);
 
         // when
@@ -683,7 +684,7 @@ class BandManageControllerTest {
         // given
         String bandName = "bandName";
 
-        ReflectionTestUtils.setField(createBandPostTypeRequestDto, "name", "a" .repeat(11));
+        ReflectionTestUtils.setField(createBandPostTypeRequestDto, "name", "a".repeat(11));
 
         // when
         doNothing().when(bandManageService).makeBandCategory(anyString(), any(CreateBandPostTypeRequestDto.class));

@@ -98,6 +98,8 @@ class PostScrapReadServiceImplTest {
         Page<Long> page = mock(Page.class);
         when(postScrapReadRepository.findPostNoByUserNo(anyLong(), any())).thenReturn(page);
         when(page.getPageable()).thenReturn(pageable);
+        when(page.getTotalPages()).thenReturn(1);
+        when(page.getTotalElements()).thenReturn(1L);
 
         ResponseEntity<ReadPostsForScrapResponseDto> responseEntity = mock(ResponseEntity.class);
         when(postFeignClient.getPostsForScrap(any())).thenReturn(responseEntity);

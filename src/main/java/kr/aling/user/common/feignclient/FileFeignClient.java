@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  **/
 @FeignClient("aling-file")
 public interface FileFeignClient {
+
     @GetMapping("/api/v1/files/{fileNo}")
     GetFileInfoResponseDto requestFileInfo(@PathVariable("fileNo") Long fileNo);
 }

@@ -2,6 +2,8 @@ package kr.aling.user.postscrap.repository.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+import kr.aling.user.postscrap.dto.response.ReadPostScrapsUserResponseDto;
 import kr.aling.user.postscrap.entity.PostScrap;
 import kr.aling.user.postscrap.repository.PostScrapReadRepository;
 import kr.aling.user.user.dummy.UserDummy;
@@ -30,7 +32,7 @@ class PostScrapReadRepositoryImplTest {
         // given
         Pageable pageable = PageRequest.of(0, 3);
         AlingUser alingUser = testEntityManager.persist(UserDummy.dummy());
-        PostScrap postScrap = testEntityManager.persist(
+        testEntityManager.persist(
                 new PostScrap(PostScrap.Pk.builder().userNo(alingUser.getUserNo()).postNo(1L).build(), alingUser));
 
         // when
@@ -39,5 +41,24 @@ class PostScrapReadRepositoryImplTest {
         // then
         assertThat(page).isNotNull();
         assertThat(page.getContent().get(0).longValue()).isEqualTo(1L);
+    }
+
+    @Test
+    @DisplayName("게시물을 스크랩한 회원의 간단 정보 목록 조회")
+    void getUsersByPostNo() {
+        // given
+        Long postNo = 1L;
+        AlingUser alingUser = testEntityManager.persist(UserDummy.dummy());
+        testEntityManager.persist(
+                new PostScrap(PostScrap.Pk.builder().userNo(alingUser.getUserNo()).postNo(postNo).build(), alingUser));
+
+        // when
+        List<ReadPostScrapsUserResponseDto> list = postScrapReadRepository.getUsersByPostNo(postNo);
+
+        // then
+        assertThat(list).isNotNull();
+        assertThat(list.get(0).getUserNo()).isEqualTo(alingUser.getUserNo());
+        assertThat(list.get(0).getName()).isEqualTo(alingUser.getName());
+        assertThat(list.get(0).getFileNo()).isEqualTo(alingUser.getFileNo());
     }
 }

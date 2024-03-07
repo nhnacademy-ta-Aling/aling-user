@@ -332,7 +332,7 @@ class BandManageServiceImplTest {
         when(bandReadRepository.findByName(anyString())).thenReturn(Optional.empty());
 
         // then
-        assertThatThrownBy(() ->  bandManageService.makeBandCategory(bandName, createBandPostTypeRequestDto))
+        assertThatThrownBy(() -> bandManageService.makeBandCategory(bandName, createBandPostTypeRequestDto))
                 .isInstanceOf(BandNotFoundException.class)
                 .hasMessage(BandNotFoundException.MESSAGE);
 
