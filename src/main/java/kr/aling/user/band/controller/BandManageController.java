@@ -3,6 +3,7 @@ package kr.aling.user.band.controller;
 import javax.validation.Valid;
 import kr.aling.user.band.dto.request.CreateBandPostTypeRequestDto;
 import kr.aling.user.band.dto.request.CreateBandRequestDto;
+import kr.aling.user.band.dto.request.ModifyBandPostTypeRequestDto;
 import kr.aling.user.band.dto.request.ModifyBandRequestDto;
 import kr.aling.user.band.service.BandManageService;
 import kr.aling.user.banduser.dto.request.ModifyRoleOfBandUserRequestDto;
@@ -90,7 +91,24 @@ public class BandManageController {
     }
 
     /**
-     * 그룹을 탈퇴 하기 위한 메서입니다.
+     * 그룹에 가입 하기 위한 메서드입니다.
+     *
+     * @param bandName 그룹 명
+     * @param userNo 회원 번호
+     * @return 201 created
+     */
+    @PostMapping("/{bandName}/users")
+    public ResponseEntity<Void> joinBand(@PathVariable("bandName") String bandName,
+                                         @RequestHeader(ConstantUtil.X_TEMP_USER_NO) Long userNo) {
+        bandUserManageService.makeBandUser(bandName, userNo);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .build();
+    }
+
+    /**
+     * 그룹을 탈퇴 하기 위한 메서드입니다.
      *
      * @param bandName 탈퇴할 그룹 명
      * @param userNo   탈퇴할 유저 번호
@@ -181,10 +199,48 @@ public class BandManageController {
     @PostMapping("/{bandName}/post-types")
     public ResponseEntity<Void> makeBandCategory(@PathVariable("bandName") String bandName,
                                                  @Valid @RequestBody CreateBandPostTypeRequestDto requestDto) {
-        bandManageService.makeBandCategory(bandName, requestDto);
+        bandManageService.makeBandPostType(bandName, requestDto);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
+                .build();
+    }
+
+    /**
+     * 그룹 게시글 분류를 수정 하기 위한 메서드 입니다.
+     *
+     * @param bandName 그룹 명
+     * @param postTypeNo 수정할 그룹 게시글 분류 번호
+     * @param requestDto 그룹 게시글 분류 수정 정보를 담은 dto
+     * @return 201 created
+     */
+    @BandAdminAuth
+    @PutMapping("/{bandName}/post-types/{postTypeNo}")
+    public ResponseEntity<Void> updateBandCategory(@PathVariable("bandName") String bandName,
+                                                   @PathVariable("postTypeNo") Long postTypeNo,
+                                                   @Valid @RequestBody ModifyBandPostTypeRequestDto requestDto) {
+        bandManageService.modifyBandPostType(bandName, postTypeNo, requestDto);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .build();
+    }
+
+    /**
+     * 그룹 게시글 분류를 삭제 하기 위한 메서드 입니다.
+     *
+     * @param bandName 그룹 명
+     * @param postTypeNo 삭제할 그룹 게시글 분류 번호
+     * @return 204 no content
+     */
+    @BandAdminAuth
+    @DeleteMapping("/{bandName}/post-types/{postTypeNo}")
+    public ResponseEntity<Void> deleteBandCategory(@PathVariable("bandName") String bandName,
+                                                   @PathVariable("postTypeNo") Long postTypeNo) {
+        bandManageService.deleteBandPostType(bandName, postTypeNo);
+
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
                 .build();
     }
 }
