@@ -15,11 +15,11 @@ import org.springframework.data.domain.Pageable;
 public interface BandUserReadService {
 
     /**
-     * 그룹 번호를 통해 해당 그룹의 그룹 회원 리스트를 조회 하는 메서드.
+     * 그룹 명을 통해 해당 그룹의 그룹 회원 리스트를 조회 하는 메서드.
      *
      * @param bandName 그룹 명
      * @param pageable pageable
-     * @return 그룹 회원 정보 dto 페이
+     * @return 그룹 회원 정보 dto 페이지
      */
     PageResponseDto<GetBandUserAndUserInfoResponseDto> getBandUserList(String bandName, Pageable pageable);
 
