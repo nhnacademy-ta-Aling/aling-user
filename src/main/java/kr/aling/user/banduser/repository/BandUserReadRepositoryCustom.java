@@ -47,13 +47,22 @@ public interface BandUserReadRepositoryCustom {
     Optional<GetBandUserAuthResponseDto> getBandUserInfoByBandNoAndUserNo(Long bandNo, Long userNo);
 
     /**
-     * 그룹 명과 회원 번호로 그룹 회원을 조회 하기 위한 메서드입니다.<br> 그룹 회원 수정 시 사용 됩니다.
+     * 그룹 명과 회원 번호로 그룹 회원을 조회 하기 위한 메서드입니다.
      *
      * @param bandName 그룹 명
      * @param userNo   회원 번호
      * @return 그룹 회원 entity
      */
     Optional<BandUser> findBandUserByBandNameAndUserNo(String bandName, Long userNo);
+
+    /**
+     * 그룹 회원의 추방 여부를 조회 하기 위한 메서드 입니다.
+     *
+     * @param bandName 그룹 명
+     * @param userNo 회원 번호
+     * @return 그룹 회원의 추방 여부
+     */
+    boolean getIsBlockBandUser(String bandName, Long userNo);
 
     /**
      * 특정 회원의 특정 그룹 회원 권한 보유 개수 count 쿼리.

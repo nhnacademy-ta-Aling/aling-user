@@ -104,6 +104,7 @@ public class BandReadRepositoryImpl extends QuerydslRepositorySupport implements
                 .innerJoin(bandUser.band, band)
                 .innerJoin(bandUser.alingUser, alingUser)
                 .where(alingUser.userNo.eq(userNo)
+                        .and(alingUser.isDelete.isFalse())
                         .and(bandUser.isDelete.isFalse())
                         .and(bandUser.isBlock.isFalse())
                         .and(band.isDelete.isFalse()))
@@ -118,5 +119,63 @@ public class BandReadRepositoryImpl extends QuerydslRepositorySupport implements
                         bandUser.bandUserNo,
                         bandUser.bandUserRole.bandUserRoleNo))
                 .fetch();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param bandName 그룹 명
+     * @return Optional 그룹 엔티티
+     */
+    @Override
+    public Optional<Band> getByName(String bandName) {
+        QBand band = QBand.band;
+
+        return Optional.ofNullable(from(band)
+                .where(band.isDelete.isFalse()
+                        .and(band.name.eq(bandName)))
+                .select(band)
+                .fetchOne());
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param bandName 그룹 명
+     * @return 그룹 존재 여부
+     */
+    @Override
+    public boolean existsNonDeleteBandByName(String bandName) {
+        QBand band = QBand.band;
+
+        return (from(band)
+                .where(band.isDelete.isFalse()
+                        .and(band.name.eq(bandName)))
+                .select(band)
+                .fetchOne()) != null;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param bandName 그룹 명
+     * @return 그룹 내 그룹 회원 수
+     */
+    @Override
+    public long getCountBandUser(String bandName) {
+        QBandUser bandUser = QBandUser.bandUser;
+        QAlingUser alingUser = QAlingUser.alingUser;
+        QBand band = QBand.band;
+
+        return from(bandUser)
+                .innerJoin(bandUser.band, band)
+                .innerJoin(bandUser.alingUser, alingUser)
+                .where(band.name.eq(bandName)
+                        .and(alingUser.isDelete.isFalse())
+                        .and(bandUser.isDelete.isFalse())
+                        .and(bandUser.isBlock.isFalse())
+                        .and(band.isDelete.isFalse()))
+                .select(bandUser.count())
+                .fetchOne();
     }
 }

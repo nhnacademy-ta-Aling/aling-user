@@ -66,4 +66,20 @@ public class UserReadRepositoryImpl extends QuerydslRepositorySupport implements
                 .where(user.userNo.eq(userNo))
                 .fetch();
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param userNo 회원 번호
+     * @return optional 회원 엔티티
+     */
+    @Override
+    public Optional<AlingUser> getByUserNo(Long userNo) {
+        QAlingUser user = QAlingUser.alingUser;
+        return Optional.ofNullable(from(user)
+                .where(user.userNo.eq(userNo)
+                        .and(user.isDelete.isFalse())
+                        .and(user.isBlock.isFalse()))
+                .fetchOne());
+    }
 }
