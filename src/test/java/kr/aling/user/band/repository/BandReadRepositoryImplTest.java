@@ -3,6 +3,7 @@ package kr.aling.user.band.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.Optional;
 import kr.aling.user.band.dto.response.GetBandDetailInfoResponseDto;
 import kr.aling.user.band.dto.response.GetBandInfoResponseDto;
 import kr.aling.user.band.dummy.BandDummy;
@@ -86,7 +87,7 @@ class BandReadRepositoryImplTest {
     }
 
     @Test
-    @DisplayName("그룹 명을 통해 그룹 목록을 조회 하는 메서드")
+    @DisplayName("그룹 명을 통해 그룹 목록을 조회 테스트")
     void getSearchBandInfoListByBandName_success_test() {
         // given
         Pageable pageable = PageRequest.of(0, 10);
@@ -108,7 +109,7 @@ class BandReadRepositoryImplTest {
     }
 
     @Test
-    @DisplayName("회원이 가입한 그룹 목록 조회 메서드")
+    @DisplayName("회원이 가입한 그룹 목록 조회 테스트")
     void getJoinedBandInfoListByUserNo_success_test() {
         // given
 
@@ -126,5 +127,59 @@ class BandReadRepositoryImplTest {
         assertThat(result.get(0).getIsUpload()).isEqualTo(band.getIsUpload());
         assertThat(result.get(0).getIsEnter()).isEqualTo(band.getIsEnter());
         assertThat(result.get(0).getIsViewContent()).isEqualTo(band.getIsViewContent());
+    }
+
+    @Test
+    @DisplayName("그룹 명을 통해 그룹 조회 테스트")
+    void getByName_successTest() {
+        // given
+        String bandName = band.getName();
+
+        // when
+
+        // then
+        Optional<Band> resultOptional = bandReadRepository.getByName(bandName);
+        assertThat(resultOptional).isPresent();
+
+        Band result = resultOptional.get();
+        assertThat(result.getBandNo()).isEqualTo(band.getBandNo());
+        assertThat(result.getName()).isEqualTo(band.getName());
+        assertThat(result.getInfo()).isEqualTo(band.getInfo());
+        assertThat(result.getIsEnter()).isEqualTo(band.getIsEnter());
+        assertThat(result.getIsViewContent()).isEqualTo(band.getIsViewContent());
+        assertThat(result.getIsUpload()).isEqualTo(band.getIsUpload());
+        assertThat(result.getIsDelete()).isEqualTo(band.getIsDelete());
+        assertThat(result.getFileNo()).isEqualTo(band.getFileNo());
+        assertThat(result.getFixPostNo()).isEqualTo(band.getFixPostNo());
+    }
+
+    @Test
+    @DisplayName("그룹 명을 통해 그룹 존재 여부 조회 테스트")
+    void existsNonDeleteBandByName_successTest() {
+        // given
+        String bandName = band.getName();
+        String nonBandName = "qwopriuqpwoireuwqo";
+
+        // when
+
+        // then
+        boolean result = bandReadRepository.existsNonDeleteBandByName(bandName);
+        assertThat(result).isTrue();
+
+        boolean notExistsResult = bandReadRepository.existsNonDeleteBandByName(nonBandName);
+        assertThat(notExistsResult).isFalse();
+    }
+
+    @Test
+    @DisplayName("그룹 명을 통해 그룹 회원 수 조회 테스트")
+    void getCountBandUser() {
+        // given
+        String bandName = band.getName();
+
+        // when
+
+        // then
+        long countBandUser = bandReadRepository.getCountBandUser(bandName);
+        assertThat(countBandUser).isEqualTo(1L);
     }
 }

@@ -76,8 +76,10 @@ class BandUserReadRepositoryTest {
         assertThat(bandUserPage.getTotalPages()).isEqualTo(1L);
         assertThat(bandUserPage.getTotalElements()).isEqualTo(1L);
         assertThat(bandUserPage.getContent()).isNotNull();
-        assertThat(bandUserPage.getContent().get(0).getBandUserInfo().getBandUserRoleNo()).isEqualTo(bandUserRole.getBandUserRoleNo());
-        assertThat(bandUserPage.getContent().get(0).getBandUserInfo().getBandUserNo()).isEqualTo(bandUser.getBandUserNo());
+        assertThat(bandUserPage.getContent().get(0).getBandUserInfo().getBandUserRoleNo()).isEqualTo(
+                bandUserRole.getBandUserRoleNo());
+        assertThat(bandUserPage.getContent().get(0).getBandUserInfo().getBandUserNo()).isEqualTo(
+                bandUser.getBandUserNo());
         assertThat(bandUserPage.getContent().get(0).getUserInfo().getUserNo()).isEqualTo(alingUser.getUserNo());
         assertThat(bandUserPage.getContent().get(0).getUserInfo().getName()).isEqualTo(alingUser.getName());
         assertThat(bandUserPage.getContent().get(0).getUserInfo().getFileNo()).isEqualTo(alingUser.getFileNo());
@@ -140,6 +142,22 @@ class BandUserReadRepositoryTest {
         assertThat(bandUserResult.get().getIsBlock()).isEqualTo(bandUser.getIsBlock());
         assertThat(bandUserResult.get().getBlockReason()).isEqualTo(bandUser.getBlockReason());
         assertThat(bandUserResult.get().getIsDelete()).isEqualTo(bandUser.getIsDelete());
+    }
+
+    @Test
+    @DisplayName("그룹 회원의 추방 여부 조회 테스트")
+    void getIsBlockBandUser_successTest() {
+        // given
+        String bandName = band.getName();
+        Long userNo = alingUser.getUserNo();
+
+        // when
+
+        // then
+        boolean isBlockBandUser = bandUserReadRepository.getIsBlockBandUser(bandName, userNo);
+
+        assertThat(isBlockBandUser).isEqualTo(bandUser.getIsBlock());
+
     }
 
     @Test
