@@ -105,7 +105,7 @@ class AlingUserReadControllerTest {
         // then
         mockMvc.perform(RestDocumentationRequestBuilders.get(url + "/my-bands")
                         .accept(MediaType.APPLICATION_JSON)
-                        .header(ConstantUtil.X_TEMP_USER_NO, userNo))
+                        .header(ConstantUtil.X_USER_NO, userNo))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$[0].bandNo").value(getBandDetailInfoResponseDto.getBandNo()))
@@ -121,7 +121,7 @@ class AlingUserReadControllerTest {
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestHeaders(
-                                headerWithName(ConstantUtil.X_TEMP_USER_NO).description("회원 번호")
+                                headerWithName(ConstantUtil.X_USER_NO).description("회원 번호")
                                         .attributes(key(REQUIRED).value(REQUIRED_YES))
                         ),
                         responseFields(
