@@ -52,6 +52,7 @@ public class UserReadServiceImpl implements UserReadService {
      * @param userNo 조회할 회원의 번호
      * @return 조회된 회원 Entity
      */
+    @Transactional(readOnly = true)
     @Override
     public AlingUser getAlingUserByUserNo(Long userNo) {
         return userReadRepository.findById(userNo)
@@ -61,8 +62,8 @@ public class UserReadServiceImpl implements UserReadService {
     /**
      * {@inheritDoc}
      */
-    @Override
     @Transactional(readOnly = true)
+    @Override
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
         LoginInfoResponseDto response = userReadRepository.findByEmailForLogin(loginRequestDto.getEmail())
                 .orElseThrow(UserNotFoundException::new);
