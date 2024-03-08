@@ -1,6 +1,5 @@
 package kr.aling.user.band.repository;
 
-import java.util.Optional;
 import kr.aling.user.band.entity.Band;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -19,12 +18,4 @@ public interface BandReadRepository extends JpaRepository<Band, Long>, BandReadR
      * @return 존재 여부 boolean
      */
     boolean existsBandByName(String bandName);
-
-    /**
-     * 그룹 명으로 그룹을 조회 해오는 메서드 입니다.
-     *
-     * @param bandName 그룹 명
-     * @return Optional 그룹 엔티티
-     */
-    Optional<Band> findByName(String bandName);
 }

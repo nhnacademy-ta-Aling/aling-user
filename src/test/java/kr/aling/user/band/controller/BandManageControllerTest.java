@@ -3,6 +3,7 @@ package kr.aling.user.band.controller;
 import static kr.aling.user.util.RestDocsUtil.REQUIRED;
 import static kr.aling.user.util.RestDocsUtil.REQUIRED_NO;
 import static kr.aling.user.util.RestDocsUtil.REQUIRED_YES;
+import static kr.aling.user.util.RestDocsUtil.VALID;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -12,6 +13,7 @@ import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
@@ -26,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.aling.user.band.dto.request.CreateBandPostTypeRequestDto;
 import kr.aling.user.band.dto.request.CreateBandRequestDto;
+import kr.aling.user.band.dto.request.ModifyBandPostTypeRequestDto;
 import kr.aling.user.band.dto.request.ModifyBandRequestDto;
 import kr.aling.user.band.service.BandManageService;
 import kr.aling.user.banduser.dto.request.ModifyRoleOfBandUserRequestDto;
@@ -453,7 +456,7 @@ class BandManageControllerTest {
         doNothing().when(bandManageService).removeBand(anyString());
 
         // then
-        mockMvc.perform(RestDocumentationRequestBuilders.delete(bandUrl + "/{bandName}", bandName))
+        mockMvc.perform(delete(bandUrl + "/{bandName}", bandName))
                 .andExpect(status().isNoContent())
                 .andDo(document("band-delete",
                         preprocessRequest(prettyPrint()),
@@ -463,6 +466,49 @@ class BandManageControllerTest {
                         )));
 
         verify(bandManageService, times(1)).removeBand(anyString());
+    }
+
+    @Test
+    @DisplayName("그룹 가입 성공")
+    void joinBand_successTest() throws Exception {
+        // given
+        String bandName = "bandName";
+        Long userNo = 1L;
+
+        // when
+        doNothing().when(bandUserManageService).makeBandUser(anyString(), anyLong());
+
+        // then
+        mockMvc.perform(post(bandUrl + "/{bandName}/users", bandName)
+                        .header(ConstantUtil.X_USER_NO, userNo))
+                .andExpect(status().isCreated())
+                .andDo(document("band-create-user",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        requestHeaders(
+                                headerWithName(ConstantUtil.X_USER_NO).description("회원 번호")
+                                        .attributes(key(REQUIRED).value(REQUIRED_YES))
+                        )));
+
+        verify(bandUserManageService, times(1)).makeBandUser(anyString(), anyLong());
+    }
+
+    @Test
+    @DisplayName("그룹 가입 실패_회원 번호 헤더가 없는 경우")
+    void joinBand_failTest_nonUserNoHeader() throws Exception {
+        // given
+        String bandName = "bandName";
+        String userNo = "";
+
+        // when
+        doNothing().when(bandUserManageService).makeBandUser(anyString(), anyLong());
+
+        // then
+        mockMvc.perform(post(bandUrl + "/{bandName}/users", bandName)
+                        .header(ConstantUtil.X_USER_NO, userNo))
+                .andExpect(status().isBadRequest());
+
+        verify(bandUserManageService, times(0)).makeBandUser(anyString(), anyLong());
     }
 
     @Test
@@ -477,7 +523,7 @@ class BandManageControllerTest {
 
         // then
         mockMvc.perform(
-                        RestDocumentationRequestBuilders.delete(bandUrl + "/{bandName}/users/{userNo}", bandName, userNo))
+                        delete(bandUrl + "/{bandName}/users/{userNo}", bandName, userNo))
                 .andExpect(status().isNoContent())
                 .andDo(document("band-delete-user",
                         preprocessRequest(prettyPrint()),
@@ -636,7 +682,7 @@ class BandManageControllerTest {
         ReflectionTestUtils.setField(createBandPostTypeRequestDto, "name", "homework");
 
         // when
-        doNothing().when(bandManageService).makeBandCategory(anyString(), any(CreateBandPostTypeRequestDto.class));
+        doNothing().when(bandManageService).makeBandPostType(anyString(), any(CreateBandPostTypeRequestDto.class));
 
         // then
         mockMvc.perform(RestDocumentationRequestBuilders.post(bandUrl + "/{bandName}/post-types", bandName)
@@ -655,7 +701,7 @@ class BandManageControllerTest {
                                         .attributes(key("valid").value("Not Blank, 최대 10글자"))
                         )));
 
-        verify(bandManageService, times(1)).makeBandCategory(anyString(), any(CreateBandPostTypeRequestDto.class));
+        verify(bandManageService, times(1)).makeBandPostType(anyString(), any(CreateBandPostTypeRequestDto.class));
     }
 
     @Test
@@ -667,7 +713,7 @@ class BandManageControllerTest {
         ReflectionTestUtils.setField(createBandPostTypeRequestDto, "name", "  ");
 
         // when
-        doNothing().when(bandManageService).makeBandCategory(anyString(), any(CreateBandPostTypeRequestDto.class));
+        doNothing().when(bandManageService).makeBandPostType(anyString(), any(CreateBandPostTypeRequestDto.class));
 
         // then
         mockMvc.perform(post(bandUrl + "/{bandName}/post-types", bandName)
@@ -675,7 +721,7 @@ class BandManageControllerTest {
                         .content(objectMapper.writeValueAsString(createBandPostTypeRequestDto)))
                 .andExpect(status().isBadRequest());
 
-        verify(bandManageService, times(0)).makeBandCategory(anyString(), any(CreateBandPostTypeRequestDto.class));
+        verify(bandManageService, times(0)).makeBandPostType(anyString(), any(CreateBandPostTypeRequestDto.class));
     }
 
     @Test
@@ -687,7 +733,7 @@ class BandManageControllerTest {
         ReflectionTestUtils.setField(createBandPostTypeRequestDto, "name", "a".repeat(11));
 
         // when
-        doNothing().when(bandManageService).makeBandCategory(anyString(), any(CreateBandPostTypeRequestDto.class));
+        doNothing().when(bandManageService).makeBandPostType(anyString(), any(CreateBandPostTypeRequestDto.class));
 
         // then
         mockMvc.perform(post(bandUrl + "/{bandName}/post-types", bandName)
@@ -695,6 +741,119 @@ class BandManageControllerTest {
                         .content(objectMapper.writeValueAsString(createBandPostTypeRequestDto)))
                 .andExpect(status().isBadRequest());
 
-        verify(bandManageService, times(0)).makeBandCategory(anyString(), any(CreateBandPostTypeRequestDto.class));
+        verify(bandManageService, times(0)).makeBandPostType(anyString(), any(CreateBandPostTypeRequestDto.class));
+    }
+
+    @Test
+    @DisplayName("그룹 게시글 분류 수정 성공")
+    void updateBandCategory_successTest() throws Exception {
+        // given
+        String bandName = "bandName";
+        Long postTypeNo = 1L;
+        ModifyBandPostTypeRequestDto requestDto = new ModifyBandPostTypeRequestDto();
+
+        ReflectionTestUtils.setField(requestDto, "bandPostTypeName", "newName");
+
+        // when
+        doNothing().when(bandManageService)
+                .modifyBandPostType(anyString(), anyLong(), any(ModifyBandPostTypeRequestDto.class));
+
+        // then
+        mockMvc.perform(RestDocumentationRequestBuilders.put(bandUrl + "/{bandName}/post-types/{postTypeNo}", bandName,
+                                postTypeNo)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(requestDto)))
+                .andExpect(status().isCreated())
+                .andDo(document("band-modify-post-type",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                pathParameters(
+                                        parameterWithName("bandName").description("그룹 명"),
+                                        parameterWithName("postTypeNo").description("그룹 게시글 분류 번호")
+                                ),
+                                requestFields(
+                                        fieldWithPath("bandPostTypeName").type(String.class).description("수정 그룹 게시글 분류 명")
+                                                .attributes(key(REQUIRED).value(REQUIRED_YES))
+                                                .attributes(key(VALID).value("Not Blank, 최대 10자"))
+                                )
+                        )
+                );
+
+        verify(bandManageService, times(1)).modifyBandPostType(anyString(), anyLong(),
+                any(ModifyBandPostTypeRequestDto.class));
+    }
+
+    @Test
+    @DisplayName("그룹 게시글 분류 수정 실패_그룹 게시글 분류 명이 blank")
+    void updateBandCategory_failTest_nameIsBlank() throws Exception {
+        // given
+        String bandName = "bandName";
+        Long postTypeNo = 1L;
+        ModifyBandPostTypeRequestDto requestDto = new ModifyBandPostTypeRequestDto();
+
+        ReflectionTestUtils.setField(requestDto, "bandPostTypeName", "a".repeat(11));
+
+        // when
+        doNothing().when(bandManageService)
+                .modifyBandPostType(anyString(), anyLong(), any(ModifyBandPostTypeRequestDto.class));
+
+        // then
+        mockMvc.perform(RestDocumentationRequestBuilders.put(bandUrl + "/{bandName}/post-types/{postTypeNo}", bandName,
+                                postTypeNo)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(requestDto)))
+                .andExpect(status().isBadRequest());
+
+        verify(bandManageService, times(0)).modifyBandPostType(anyString(), anyLong(),
+                any(ModifyBandPostTypeRequestDto.class));
+    }
+
+    @Test
+    @DisplayName("그룹 게시글 분류 수정 실패_그룹 게시글 분류 명 사이즈 초과")
+    void updateBandCategory_failTest_nameSizeExceeded() throws Exception {
+        // given
+        String bandName = "bandName";
+        Long postTypeNo = 1L;
+        ModifyBandPostTypeRequestDto requestDto = new ModifyBandPostTypeRequestDto();
+
+        ReflectionTestUtils.setField(requestDto, "bandPostTypeName", "a".repeat(11));
+
+        // when
+        doNothing().when(bandManageService)
+                .modifyBandPostType(anyString(), anyLong(), any(ModifyBandPostTypeRequestDto.class));
+
+        // then
+        mockMvc.perform(RestDocumentationRequestBuilders.put(bandUrl + "/{bandName}/post-types/{postTypeNo}", bandName,
+                                postTypeNo)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(requestDto)))
+                .andExpect(status().isBadRequest());
+
+        verify(bandManageService, times(0)).modifyBandPostType(anyString(), anyLong(),
+                any(ModifyBandPostTypeRequestDto.class));
+    }
+
+    @Test
+    @DisplayName("그룹 게시글 분류 삭제 성공")
+    void deleteBandCategory_successTest() throws Exception {
+        // given
+        String bandName = "bandName";
+        Long postTypeNo = 1L;
+
+        // when
+        doNothing().when(bandManageService).deleteBandPostType(anyString(), anyLong());
+
+        // then
+        mockMvc.perform(delete(bandUrl + "/{bandName}/post-types/{postTypeNo}", bandName, postTypeNo))
+                .andExpect(status().isNoContent())
+                .andDo(document("band-delete-post-type",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        pathParameters(
+                                parameterWithName("bandName").description("그룹 명"),
+                                parameterWithName("postTypeNo").description("그룹 게시글 분류 번호")
+                        )));
+
+        verify(bandManageService, times(1)).deleteBandPostType(anyString(), anyLong());
     }
 }

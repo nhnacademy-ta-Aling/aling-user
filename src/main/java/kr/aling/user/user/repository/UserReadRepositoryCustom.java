@@ -3,6 +3,7 @@ package kr.aling.user.user.repository;
 import java.util.List;
 import java.util.Optional;
 import kr.aling.user.user.dto.response.LoginInfoResponseDto;
+import kr.aling.user.user.entity.AlingUser;
 import org.springframework.data.repository.NoRepositoryBean;
 
 /**
@@ -37,4 +38,12 @@ public interface UserReadRepositoryCustom {
      * @return 권한 리스트
      */
     List<String> findRolesByUserNo(Long userNo);
+
+    /**
+     * 회원 번호로 회원을 조회 하는 메서드.
+     *
+     * @param userNo 회원 번호
+     * @return optional 회원 엔티티
+     */
+    Optional<AlingUser> getByUserNo(Long userNo);
 }

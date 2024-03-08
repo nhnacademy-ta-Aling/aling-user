@@ -14,8 +14,8 @@ public class BandDummy {
         return Band.builder()
                 .name("dummyBandName")
                 .info("dummyBandInfo")
-                .isEnter(true)
-                .isViewContent(true)
+                .isEnter(false)
+                .isViewContent(false)
                 .fileNo(1L)
                 .build();
     }
@@ -24,8 +24,8 @@ public class BandDummy {
         return Band.builder()
                 .name("dummyBandName")
                 .info("dummyBandInfo")
-                .isEnter(false)
-                .isViewContent(false)
+                .isEnter(true)
+                .isViewContent(true)
                 .fileNo(1L)
                 .build();
     }

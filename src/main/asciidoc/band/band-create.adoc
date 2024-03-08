@@ -45,3 +45,23 @@ operation::band-create-post-type[snippets='path-parameters']
 
 operation::band-create-post-type[snippets='request-fields']
 
+
+==== 그룹 회원 생성
+
+그룹 회원 가입 시 사용 되는 그룹 회원 생성 API
+
+===== 요청
+
+operation::band-create-user[snippets='http-request']
+
+===== 응답
+
+operation::band-create-user[snippets='http-response']
+
+===== 파라미터 설명
+
+====== 요청 헤더
+
+operation::band-create-user[snippets='request-headers']
+
+

@@ -145,6 +145,22 @@ class BandUserReadRepositoryTest {
     }
 
     @Test
+    @DisplayName("그룹 회원의 추방 여부 조회 테스트")
+    void getIsBlockBandUser_successTest() {
+        // given
+        String bandName = band.getName();
+        Long userNo = alingUser.getUserNo();
+
+        // when
+
+        // then
+        boolean isBlockBandUser = bandUserReadRepository.getIsBlockBandUser(bandName, userNo);
+
+        assertThat(isBlockBandUser).isEqualTo(bandUser.getIsBlock());
+
+    }
+
+    @Test
     @DisplayName("회원의 그룹 권한 개수 조회 메서드 테스트")
     void countByUserNoAndBandUserRoleName() {
         // given

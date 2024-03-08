@@ -1,20 +1,30 @@
 package kr.aling.user.banduser.service;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 import kr.aling.user.band.dummy.BandDummy;
+import kr.aling.user.band.entity.Band;
+import kr.aling.user.band.exception.BandDeniedException;
+import kr.aling.user.band.exception.BandNotFoundException;
+import kr.aling.user.band.repository.BandReadRepository;
 import kr.aling.user.banduser.dto.request.ModifyRoleOfBandUserRequestDto;
 import kr.aling.user.banduser.dummy.BandUserDummy;
 import kr.aling.user.banduser.entity.BandUser;
+import kr.aling.user.banduser.exception.BandUserAlreadyExistsException;
 import kr.aling.user.banduser.exception.BandUserNotFoundException;
+import kr.aling.user.banduser.exception.BandUserRoleDeniedException;
+import kr.aling.user.banduser.repository.BandUserManageRepository;
 import kr.aling.user.banduser.repository.BandUserReadRepository;
 import kr.aling.user.banduser.service.impl.BandUserManageServiceImpl;
 import kr.aling.user.banduserrole.dummy.BandUserRoleDummy;
@@ -23,6 +33,9 @@ import kr.aling.user.banduserrole.exception.BandUserRoleNotFoundException;
 import kr.aling.user.banduserrole.repository.BandUserRoleReadRepository;
 import kr.aling.user.common.enums.BandUserRoleEnum;
 import kr.aling.user.user.dummy.UserDummy;
+import kr.aling.user.user.entity.AlingUser;
+import kr.aling.user.user.exception.UserNotFoundException;
+import kr.aling.user.user.repository.UserReadRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,6 +59,12 @@ class BandUserManageServiceTest {
     @InjectMocks
     private BandUserManageServiceImpl bandUserManageService;
     @Mock
+    private BandReadRepository bandReadRepository;
+    @Mock
+    private UserReadRepository userReadRepository;
+    @Mock
+    private BandUserManageRepository bandUserManageRepository;
+    @Mock
     private BandUserReadRepository bandUserReadRepository;
     @Mock
     private BandUserRoleReadRepository bandUserRoleReadRepository;
@@ -59,6 +78,182 @@ class BandUserManageServiceTest {
         ReflectionTestUtils.setField(bandUserRole, "bandUserRoleNo", 1);
     }
 
+    @Test
+    @DisplayName("그룹 회원 생성 성공 테스트")
+    void makeBandUser_successTest() {
+        // given
+        String bandName = "bandName";
+        Long userNo = 1L;
+
+        // when
+        when(bandReadRepository.getByName(anyString())).thenReturn(Optional.ofNullable(mock(Band.class)));
+        when(userReadRepository.getByUserNo(anyLong())).thenReturn(Optional.ofNullable(mock(AlingUser.class)));
+        when(bandUserRoleReadRepository.findByRoleName(anyString())).thenReturn(
+                Optional.ofNullable(mock(BandUserRole.class)));
+        when(bandUserReadRepository.findBandUserByBandNameAndUserNo(anyString(), anyLong()))
+                .thenReturn(Optional.empty());
+        when(bandUserReadRepository.getIsBlockBandUser(anyString(), anyLong())).thenReturn(false);
+        when(bandUserManageRepository.save(any(BandUser.class))).thenReturn(mock(BandUser.class));
+
+        // then
+        assertDoesNotThrow(() -> bandUserManageService.makeBandUser(bandName, userNo));
+
+        verify(bandReadRepository, times(1)).getByName(anyString());
+        verify(userReadRepository, times(1)).getByUserNo(anyLong());
+        verify(bandUserRoleReadRepository, times(1)).findByRoleName(anyString());
+        verify(bandUserReadRepository, times(1)).findBandUserByBandNameAndUserNo(anyString(), anyLong());
+        verify(bandUserReadRepository, times(1)).getIsBlockBandUser(anyString(), anyLong());
+        verify(bandUserManageRepository, times(1)).save(any(BandUser.class));
+    }
+
+    @Test
+    @DisplayName("그룹 회원 생성 실패 테스트_그룹이 존재 하지 않을 경우")
+    void makeBandUser_failTest_bandNotFoundException() {
+        // given
+        String bandName = "bandName";
+        Long userNo = 1L;
+
+        // when
+        when(bandReadRepository.getByName(anyString())).thenReturn(Optional.empty());
+        when(userReadRepository.getByUserNo(anyLong())).thenReturn(Optional.ofNullable(mock(AlingUser.class)));
+        when(bandUserRoleReadRepository.findByRoleName(anyString())).thenReturn(
+                Optional.ofNullable(mock(BandUserRole.class)));
+        when(bandUserReadRepository.findBandUserByBandNameAndUserNo(anyString(), anyLong()))
+                .thenReturn(Optional.empty());
+        when(bandUserReadRepository.getIsBlockBandUser(anyString(), anyLong())).thenReturn(false);
+        when(bandUserManageRepository.save(any(BandUser.class))).thenReturn(mock(BandUser.class));
+
+        // then
+        assertThatThrownBy(() -> bandUserManageService.makeBandUser(bandName, userNo))
+                .isInstanceOf(BandNotFoundException.class)
+                .hasMessageContaining(BandNotFoundException.MESSAGE);
+
+        verify(bandReadRepository, times(1)).getByName(anyString());
+        verify(userReadRepository, times(0)).getByUserNo(anyLong());
+        verify(bandUserRoleReadRepository, times(0)).findByRoleName(anyString());
+        verify(bandUserReadRepository, times(0)).findBandUserByBandNameAndUserNo(anyString(), anyLong());
+        verify(bandUserReadRepository, times(0)).getIsBlockBandUser(anyString(), anyLong());
+        verify(bandUserManageRepository, times(0)).save(any(BandUser.class));
+    }
+
+    @Test
+    @DisplayName("그룹 회원 생성 실패 테스트_회원이 존재 하지 않을 경우")
+    void makeBandUser_failTest_userNotFoundException() {
+        // given
+        String bandName = "bandName";
+        Long userNo = 1L;
+
+        // when
+        when(bandReadRepository.getByName(anyString())).thenReturn(Optional.ofNullable(mock(Band.class)));
+        when(userReadRepository.getByUserNo(anyLong())).thenReturn(Optional.empty());
+        when(bandUserRoleReadRepository.findByRoleName(anyString())).thenReturn(
+                Optional.ofNullable(mock(BandUserRole.class)));
+        when(bandUserReadRepository.findBandUserByBandNameAndUserNo(anyString(), anyLong()))
+                .thenReturn(Optional.empty());
+        when(bandUserReadRepository.getIsBlockBandUser(anyString(), anyLong())).thenReturn(false);
+        when(bandUserManageRepository.save(any(BandUser.class))).thenReturn(mock(BandUser.class));
+
+        // then
+        assertThatThrownBy(() -> bandUserManageService.makeBandUser(bandName, userNo))
+                .isInstanceOf(UserNotFoundException.class)
+                .hasMessageContaining(UserNotFoundException.MESSAGE);
+
+        verify(bandReadRepository, times(1)).getByName(anyString());
+        verify(userReadRepository, times(1)).getByUserNo(anyLong());
+        verify(bandUserRoleReadRepository, times(0)).findByRoleName(anyString());
+        verify(bandUserReadRepository, times(0)).findBandUserByBandNameAndUserNo(anyString(), anyLong());
+        verify(bandUserReadRepository, times(0)).getIsBlockBandUser(anyString(), anyLong());
+        verify(bandUserManageRepository, times(0)).save(any(BandUser.class));
+    }
+
+    @Test
+    @DisplayName("그룹 회원 생성 실패 테스트_그룹 회원 권한이 존재 하지 않을 경우")
+    void makeBandUser_failTest_bandUserRoleNotFoundException() {
+        // given
+        String bandName = "bandName";
+        Long userNo = 1L;
+
+        // when
+        when(bandReadRepository.getByName(anyString())).thenReturn(Optional.ofNullable(mock(Band.class)));
+        when(userReadRepository.getByUserNo(anyLong())).thenReturn(Optional.ofNullable(mock(AlingUser.class)));
+        when(bandUserRoleReadRepository.findByRoleName(anyString())).thenReturn(Optional.empty());
+        when(bandUserReadRepository.findBandUserByBandNameAndUserNo(anyString(), anyLong()))
+                .thenReturn(Optional.empty());
+        when(bandUserReadRepository.getIsBlockBandUser(anyString(), anyLong())).thenReturn(false);
+        when(bandUserManageRepository.save(any(BandUser.class))).thenReturn(mock(BandUser.class));
+
+        // then
+        assertThatThrownBy(() -> bandUserManageService.makeBandUser(bandName, userNo))
+                .isInstanceOf(BandUserRoleNotFoundException.class)
+                .hasMessageContaining(BandUserRoleNotFoundException.MESSAGE);
+
+        verify(bandReadRepository, times(1)).getByName(anyString());
+        verify(userReadRepository, times(1)).getByUserNo(anyLong());
+        verify(bandUserRoleReadRepository, times(1)).findByRoleName(anyString());
+        verify(bandUserReadRepository, times(0)).findBandUserByBandNameAndUserNo(anyString(), anyLong());
+        verify(bandUserReadRepository, times(0)).getIsBlockBandUser(anyString(), anyLong());
+        verify(bandUserManageRepository, times(0)).save(any(BandUser.class));
+    }
+
+    @Test
+    @DisplayName("그룹 회원 생성 실패 테스트_그룹 회원이 이미 존재 하는 경우")
+    void makeBandUser_failTest_bandUserAlreadyExistsExceptionn() {
+        // given
+        String bandName = "bandName";
+        Long userNo = 1L;
+
+        // when
+        when(bandReadRepository.getByName(anyString())).thenReturn(Optional.ofNullable(mock(Band.class)));
+        when(userReadRepository.getByUserNo(anyLong())).thenReturn(Optional.ofNullable(mock(AlingUser.class)));
+        when(bandUserRoleReadRepository.findByRoleName(anyString())).thenReturn(
+                Optional.ofNullable(mock(BandUserRole.class)));
+        when(bandUserReadRepository.findBandUserByBandNameAndUserNo(anyString(), anyLong()))
+                .thenReturn(Optional.of(mock(BandUser.class)));
+        when(bandUserReadRepository.getIsBlockBandUser(anyString(), anyLong())).thenReturn(false);
+        when(bandUserManageRepository.save(any(BandUser.class))).thenReturn(mock(BandUser.class));
+
+        // then
+        assertThatThrownBy(() -> bandUserManageService.makeBandUser(bandName, userNo))
+                .isInstanceOf(BandUserAlreadyExistsException.class)
+                .hasMessageContaining(BandUserAlreadyExistsException.MESSAGE);
+
+        verify(bandReadRepository, times(1)).getByName(anyString());
+        verify(userReadRepository, times(1)).getByUserNo(anyLong());
+        verify(bandUserRoleReadRepository, times(1)).findByRoleName(anyString());
+        verify(bandUserReadRepository, times(1)).findBandUserByBandNameAndUserNo(anyString(), anyLong());
+        verify(bandUserReadRepository, times(0)).getIsBlockBandUser(anyString(), anyLong());
+        verify(bandUserManageRepository, times(0)).save(any(BandUser.class));
+    }
+
+    @Test
+    @DisplayName("그룹 회원 생성 실패 테스트_추방된 회원이 가입 하려고 하는 경우")
+    void makeBandUser_failTest_bandDeniedException() {
+        // given
+        String bandName = "bandName";
+        Long userNo = 1L;
+
+        // when
+        when(bandReadRepository.getByName(anyString())).thenReturn(Optional.ofNullable(mock(Band.class)));
+        when(userReadRepository.getByUserNo(anyLong())).thenReturn(Optional.ofNullable(mock(AlingUser.class)));
+        when(bandUserRoleReadRepository.findByRoleName(anyString())).thenReturn(
+                Optional.ofNullable(mock(BandUserRole.class)));
+        when(bandUserReadRepository.findBandUserByBandNameAndUserNo(anyString(), anyLong()))
+                .thenReturn(Optional.empty());
+        when(bandUserReadRepository.getIsBlockBandUser(anyString(), anyLong())).thenReturn(true);
+        when(bandUserManageRepository.save(any(BandUser.class))).thenReturn(null);
+
+        // then
+        assertThatThrownBy(() -> bandUserManageService.makeBandUser(bandName, userNo))
+                .isInstanceOf(BandDeniedException.class)
+                .hasMessageContaining(BandDeniedException.MESSAGE);
+
+        verify(bandReadRepository, times(1)).getByName(anyString());
+        verify(userReadRepository, times(1)).getByUserNo(anyLong());
+        verify(bandUserRoleReadRepository, times(1)).findByRoleName(anyString());
+        verify(bandUserReadRepository, times(1)).findBandUserByBandNameAndUserNo(anyString(), anyLong());
+        verify(bandUserReadRepository, times(1)).getIsBlockBandUser(anyString(), anyLong());
+        verify(bandUserManageRepository, times(0)).save(any(BandUser.class));
+    }
 
     @Test
     @DisplayName("그룹 회원 삭제 성공 테스트")
@@ -88,6 +283,25 @@ class BandUserManageServiceTest {
         assertThatThrownBy(() -> bandUserManageService.removeBandUser("band name", 1L))
                 .isInstanceOf(BandUserNotFoundException.class)
                 .hasMessage(BandUserNotFoundException.MESSAGE);
+
+        verify(bandUserReadRepository, times(1)).findBandUserByBandNameAndUserNo(anyString(), anyLong());
+    }
+
+    @Test
+    @DisplayName("그룹 회원 삭제 실패 테스트 - 그룹의 creator를 지우려고 시도 할 경우")
+    void removeBandUser_failTest_bandUserRoleDeniedException() {
+        // given
+        BandUserRole creator = BandUserRoleDummy.dummyCreator();
+        BandUser bandCreator = BandUserDummy.dummy(creator, BandDummy.dummyPublicBand(), UserDummy.dummy());
+
+        // when
+        when(bandUserReadRepository.findBandUserByBandNameAndUserNo(anyString(), anyLong())).thenReturn(
+                Optional.ofNullable(bandCreator));
+
+        // then
+        assertThatThrownBy(() -> bandUserManageService.removeBandUser("band name", 1L))
+                .isInstanceOf(BandUserRoleDeniedException.class)
+                .hasMessage(BandUserRoleDeniedException.MESSAGE);
 
         verify(bandUserReadRepository, times(1)).findBandUserByBandNameAndUserNo(anyString(), anyLong());
     }

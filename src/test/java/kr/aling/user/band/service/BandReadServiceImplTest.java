@@ -206,7 +206,7 @@ class BandReadServiceImplTest {
         ReflectionTestUtils.setField(getBandPostTypeResponseDto, "name", "typeName");
 
         // when
-        when(bandReadRepository.findByName(anyString())).thenReturn(Optional.ofNullable(mock(Band.class)));
+        when(bandReadRepository.getByName(anyString())).thenReturn(Optional.ofNullable(mock(Band.class)));
         when(postFeignClient.requestGetBandPostTypeList(anyLong())).thenReturn(List.of(getBandPostTypeResponseDto));
 
         // then
@@ -214,7 +214,7 @@ class BandReadServiceImplTest {
 
         assertThat(bandPostTypeList.get(0).getName()).isEqualTo(getBandPostTypeResponseDto.getName());
 
-        verify(bandReadRepository, times(1)).findByName(anyString());
+        verify(bandReadRepository, times(1)).getByName(anyString());
         verify(postFeignClient, times(1)).requestGetBandPostTypeList(anyLong());
     }
 
@@ -225,7 +225,7 @@ class BandReadServiceImplTest {
         String bandName = "bandName";
 
         // when
-        when(bandReadRepository.findByName(anyString())).thenReturn(Optional.empty());
+        when(bandReadRepository.getByName(anyString())).thenReturn(Optional.empty());
 
         // then
         assertThatThrownBy(() -> bandReadService.getBandPostTypeList(bandName))

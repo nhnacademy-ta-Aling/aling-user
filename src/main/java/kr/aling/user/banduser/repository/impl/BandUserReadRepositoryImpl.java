@@ -3,6 +3,7 @@ package kr.aling.user.banduser.repository.impl;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import kr.aling.user.band.entity.QBand;
 import kr.aling.user.banduser.dto.response.BandPostUerQueryDto;
@@ -165,6 +166,33 @@ public class BandUserReadRepositoryImpl extends QuerydslRepositorySupport implem
                                 .and(bandUser.isDelete.isFalse()))
                         .select(bandUser)
                         .fetchOne());
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param bandName 그룹 명
+     * @param userNo 회원 번호
+     * @return 그룹 회원의 추방 여부
+     */
+    @Override
+    public boolean getIsBlockBandUser(String bandName, Long userNo) {
+        QBandUser bandUser = QBandUser.bandUser;
+        QAlingUser alingUser = QAlingUser.alingUser;
+        QBand band = QBand.band;
+
+        BandUser result = from(bandUser)
+                .innerJoin(bandUser.band, band)
+                .innerJoin(bandUser.alingUser, alingUser)
+                .where(bandUser.alingUser.userNo.eq(userNo)
+                        .and(band.name.eq(bandName))
+                        .and(alingUser.isDelete.isFalse())
+                        .and(band.isDelete.isFalse())
+                        .and(bandUser.isBlock.isTrue()))
+                .select(bandUser)
+                .fetchFirst();
+
+        return !Objects.isNull(result);
     }
 
     /**

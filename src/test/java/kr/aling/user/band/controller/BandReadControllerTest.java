@@ -65,20 +65,16 @@ import org.springframework.test.web.servlet.MockMvc;
 @MockBean(JpaMetamodelMappingContext.class)
 class BandReadControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
-    private BandReadService bandReadService;
-
-    @MockBean
-    private BandUserReadService bandUserReadService;
-
     private final String bandUrl = "/api/v1/bands";
-
     GetBandInfoResponseDto getBandInfoResponseDto;
     GetBandUserInfoResponseDto getBandUserInfoResponseDto;
     GetUserSimpleInfoResponseDto getUserSimpleInfoResponseDto;
+    @Autowired
+    private MockMvc mockMvc;
+    @MockBean
+    private BandReadService bandReadService;
+    @MockBean
+    private BandUserReadService bandUserReadService;
 
     @BeforeEach
     void setUp() {
@@ -298,6 +294,7 @@ class BandReadControllerTest {
     @DisplayName("특정 그룹의 그룹 게시글 분류 리스트 조회 API 테스트")
     void bandPostTypeList_api_test() throws Exception {
         GetBandPostTypeResponseDto getBandPostTypeResponseDto = new GetBandPostTypeResponseDto();
+        ReflectionTestUtils.setField(getBandPostTypeResponseDto, "bandPostTypeNo", 1L);
         ReflectionTestUtils.setField(getBandPostTypeResponseDto, "name", "post type name");
 
         List<GetBandPostTypeResponseDto> list = List.of(getBandPostTypeResponseDto);
@@ -307,6 +304,7 @@ class BandReadControllerTest {
         mockMvc.perform(RestDocumentationRequestBuilders.get(bandUrl + "/{bandName}/band-post-types", "test-band")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].bandPostTypeNo").value(list.get(0).getBandPostTypeNo()))
                 .andExpect(jsonPath("$[0].name").value(list.get(0).getName()))
                 .andDo(print())
                 .andDo(document("band-get-post-type-list",
@@ -318,7 +316,8 @@ class BandReadControllerTest {
                         ),
 
                         responseFields(
-                                fieldWithPath("[].name").description("그룹 게시글 분류 이름")
+                                fieldWithPath("[].bandPostTypeNo").type(Number.class).description("그룹 게시글 분류 번호"),
+                                fieldWithPath("[].name").type(String.class).description("그룹 게시글 분류 이름")
                         )
                 ));
 

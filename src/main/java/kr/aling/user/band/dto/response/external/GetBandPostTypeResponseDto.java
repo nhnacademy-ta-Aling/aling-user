@@ -13,5 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GetBandPostTypeResponseDto {
 
+    private Long bandPostTypeNo;
     private String name;
 }

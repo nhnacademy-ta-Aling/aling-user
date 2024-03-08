@@ -97,7 +97,7 @@ public class BandReadServiceImpl implements BandReadService {
      */
     @Override
     public List<GetBandPostTypeResponseDto> getBandPostTypeList(String bandName) {
-        Band band = bandReadRepository.findByName(bandName)
+        Band band = bandReadRepository.getByName(bandName)
                 .orElseThrow(BandNotFoundException::new);
 
         return postFeignClient.requestGetBandPostTypeList(band.getBandNo());
