@@ -1,7 +1,7 @@
 package kr.aling.user.banduser.exception;
 
 /**
- * Some description here.
+ * 그룹 회원이 이미 존재 할 때 발생 하는 exception.
  *
  * @author 정유진
  * @since 1.0
