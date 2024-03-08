@@ -9,12 +9,16 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Optional;
 import kr.aling.user.common.feignclient.PostFeignClient;
 import kr.aling.user.post.dto.response.IsExistsPostResponseDto;
 import kr.aling.user.post.exception.PostNotFoundException;
+import kr.aling.user.postscrap.entity.PostScrap;
+import kr.aling.user.postscrap.entity.PostScrap.Pk;
 import kr.aling.user.postscrap.repository.PostScrapManageRepository;
 import kr.aling.user.postscrap.repository.PostScrapReadRepository;
 import kr.aling.user.postscrap.service.PostScrapManageService;
+import kr.aling.user.user.dummy.UserDummy;
 import kr.aling.user.user.exception.UserNotFoundException;
 import kr.aling.user.user.service.UserReadService;
 import org.junit.jupiter.api.BeforeEach;
@@ -63,7 +67,8 @@ class PostScrapManageServiceImplTest {
         ReflectionTestUtils.setField(responseDto, "isExists", Boolean.TRUE);
         when(responseEntity.getBody()).thenReturn(responseDto);
 
-        when(postScrapReadRepository.existsById(any())).thenReturn(Boolean.TRUE);
+        PostScrap postScrap = new PostScrap(new Pk(userNo, postNo), UserDummy.dummy());
+        when(postScrapReadRepository.findById(any())).thenReturn(Optional.of(postScrap));
 
         // when
         postScrapManageService.postScrap(postNo, userNo);
@@ -71,8 +76,8 @@ class PostScrapManageServiceImplTest {
         // then
         verify(userReadService, times(1)).getAlingUserByUserNo(anyLong());
         verify(postFeignClient, times(1)).isExistsPost(anyLong());
-        verify(postScrapReadRepository, times(1)).existsById(any());
-        verify(postScrapManageRepository, times(1)).deleteById(any());
+        verify(postScrapReadRepository, times(1)).findById(any());
+        verify(postScrapManageRepository, times(1)).delete(any());
         verify(postScrapManageRepository, never()).save(any());
     }
 
@@ -90,7 +95,8 @@ class PostScrapManageServiceImplTest {
         ReflectionTestUtils.setField(responseDto, "isExists", Boolean.TRUE);
         when(responseEntity.getBody()).thenReturn(responseDto);
 
-        when(postScrapReadRepository.existsById(any())).thenReturn(Boolean.FALSE);
+        PostScrap postScrap = new PostScrap(new Pk(userNo, postNo), UserDummy.dummy());
+        when(postScrapReadRepository.findById(any())).thenReturn(Optional.empty());
 
         // when
         postScrapManageService.postScrap(postNo, userNo);
@@ -98,8 +104,8 @@ class PostScrapManageServiceImplTest {
         // then
         verify(userReadService, times(1)).getAlingUserByUserNo(anyLong());
         verify(postFeignClient, times(1)).isExistsPost(anyLong());
-        verify(postScrapReadRepository, times(1)).existsById(any());
-        verify(postScrapManageRepository, never()).deleteById(any());
+        verify(postScrapReadRepository, times(1)).findById(any());
+        verify(postScrapManageRepository, never()).delete(any());
         verify(postScrapManageRepository, times(1)).save(any());
     }
 
