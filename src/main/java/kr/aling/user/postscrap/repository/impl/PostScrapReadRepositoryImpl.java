@@ -40,6 +40,7 @@ public class PostScrapReadRepositoryImpl extends QuerydslRepositorySupport imple
 
         List<Long> postNos = from(postScrap)
                 .where(postScrap.pk.userNo.eq(userNo))
+                .orderBy(postScrap.createAt.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .select(postScrap.pk.postNo)
@@ -65,6 +66,7 @@ public class PostScrapReadRepositoryImpl extends QuerydslRepositorySupport imple
 
         return from(postScrap)
                 .where(postScrap.pk.postNo.eq(postNo).and(alingUser.isDelete.isFalse()))
+                .orderBy(postScrap.createAt.desc())
                 .select(Projections.constructor(ReadPostScrapsUserResponseDto.class,
                         alingUser.userNo,
                         alingUser.name,

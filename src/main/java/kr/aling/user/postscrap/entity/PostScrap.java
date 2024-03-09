@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
+import kr.aling.user.common.base.BaseCreateTimeEntity;
 import kr.aling.user.user.entity.AlingUser;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -29,7 +30,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "post_scrap")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PostScrap {
+public class PostScrap extends BaseCreateTimeEntity {
 
     @EmbeddedId
     private Pk pk;
