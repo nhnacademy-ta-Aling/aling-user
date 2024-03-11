@@ -3,11 +3,15 @@ package kr.aling.user.common.advice;
 import javax.validation.ConstraintViolationException;
 import kr.aling.user.band.exception.BandAccessDeniedException;
 import kr.aling.user.band.exception.BandAlreadyExistsException;
+import kr.aling.user.band.exception.BandDeniedException;
 import kr.aling.user.band.exception.BandLimitExceededException;
 import kr.aling.user.band.exception.BandNotFoundException;
+import kr.aling.user.banduser.exception.BandUserAlreadyExistsException;
 import kr.aling.user.banduser.exception.BandUserNotFoundException;
+import kr.aling.user.banduser.exception.BandUserRoleDeniedException;
 import kr.aling.user.banduserrole.exception.BandUserRoleNotFoundException;
 import kr.aling.user.common.exception.CustomException;
+import kr.aling.user.common.exception.UserInfoNotExistsException;
 import kr.aling.user.mail.exception.MailAuthNumberInvalidException;
 import kr.aling.user.post.exception.PostNotFoundException;
 import kr.aling.user.user.exception.UserEmailAlreadyUsedException;
@@ -21,8 +25,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
  * 전역 예외 핸들링 class.
  *
- * @author : 이수정
- * @since : 1.0
+ * @author 이수정
+ * @since 1.0
  */
 @Slf4j
 @RestControllerAdvice
@@ -35,14 +39,28 @@ public class ControllerAdvice {
      *
      * @param e 400에 해당하는 예외
      * @return 400 status response
-     * @author : 이수정
-     * @since : 1.0
+     * @author 이수정
+     * @since 1.0
      */
     @ExceptionHandler({ConstraintViolationException.class, MailAuthNumberInvalidException.class,
-            BandLimitExceededException.class})
+            BandLimitExceededException.class, BandDeniedException.class, BandUserRoleDeniedException.class})
     public ResponseEntity<String> handleBadRequestException(Exception e) {
         log.error(DEFAULT_HANDLE_MESSAGE, HttpStatus.BAD_REQUEST, e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    /**
+     * Http Status 401에 해당하는 예외를 공통 처리합니다.
+     *
+     * @param e 401에 해당하는 예외
+     * @return 401 status response
+     * @author 이수정
+     * @since 1.0
+     */
+    @ExceptionHandler({UserInfoNotExistsException.class})
+    public ResponseEntity<String> handleUnAuthorizedException(Exception e) {
+        log.error(DEFAULT_HANDLE_MESSAGE, HttpStatus.UNAUTHORIZED, e.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
     }
 
     /**
@@ -75,10 +93,11 @@ public class ControllerAdvice {
      *
      * @param e 409에 해당하는 예외
      * @return 409 status response
-     * @author : 이수정
-     * @since : 1.0
+     * @author 이수정
+     * @since 1.0
      */
-    @ExceptionHandler({UserEmailAlreadyUsedException.class, BandAlreadyExistsException.class})
+    @ExceptionHandler({UserEmailAlreadyUsedException.class, BandAlreadyExistsException.class,
+            BandUserAlreadyExistsException.class})
     public ResponseEntity<String> handleConflictException(Exception e) {
         log.error(DEFAULT_HANDLE_MESSAGE, HttpStatus.CONFLICT, e.getMessage());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
@@ -89,8 +108,8 @@ public class ControllerAdvice {
      *
      * @param e CustomException
      * @return CustomException의 Http status response
-     * @author : 이수정
-     * @since : 1.0
+     * @author 이수정
+     * @since 1.0
      */
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<String> handleCustomException(CustomException e) {

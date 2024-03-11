@@ -12,7 +12,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 import kr.aling.user.common.dto.PageResponseDto;
-import kr.aling.user.common.feign.PostFeignClient;
+import kr.aling.user.common.feignclient.PostFeignClient;
 import kr.aling.user.post.dto.response.IsExistsPostResponseDto;
 import kr.aling.user.post.dto.response.ReadPostsForScrapResponseDto;
 import kr.aling.user.post.exception.PostNotFoundException;
@@ -98,6 +98,8 @@ class PostScrapReadServiceImplTest {
         Page<Long> page = mock(Page.class);
         when(postScrapReadRepository.findPostNoByUserNo(anyLong(), any())).thenReturn(page);
         when(page.getPageable()).thenReturn(pageable);
+        when(page.getTotalPages()).thenReturn(1);
+        when(page.getTotalElements()).thenReturn(1L);
 
         ResponseEntity<ReadPostsForScrapResponseDto> responseEntity = mock(ResponseEntity.class);
         when(postFeignClient.getPostsForScrap(any())).thenReturn(responseEntity);

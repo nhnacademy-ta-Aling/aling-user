@@ -9,8 +9,8 @@ import kr.aling.user.banduser.dto.response.external.GetFileInfoResponseDto;
 import kr.aling.user.banduser.exception.BandUserNotFoundException;
 import kr.aling.user.banduser.repository.BandUserReadRepository;
 import kr.aling.user.banduser.service.BandUserReadService;
-import kr.aling.user.common.adaptor.AlingFileAdaptor;
 import kr.aling.user.common.dto.PageResponseDto;
+import kr.aling.user.common.feignclient.FileFeignClient;
 import kr.aling.user.common.utils.PageUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BandUserReadServiceImpl implements BandUserReadService {
 
     private final BandUserReadRepository bandUserReadRepository;
-    private final AlingFileAdaptor alingFileAdaptor;
+    private final FileFeignClient fileFeignClient;
 
     /**
      * {@inheritDoc}
@@ -76,7 +76,7 @@ public class BandUserReadServiceImpl implements BandUserReadService {
                     bandPostUerQueryDto.getUsername());
         } else {
             GetFileInfoResponseDto getFileInfoResponseDto =
-                    alingFileAdaptor.requestFileInfo(bandPostUerQueryDto.getFileNo());
+                    fileFeignClient.requestFileInfo(bandPostUerQueryDto.getFileNo());
 
             return new GetPostWriterResponseDto(
                     bandPostUerQueryDto.getUserNo(),

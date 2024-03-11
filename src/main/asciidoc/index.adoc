@@ -14,5 +14,4 @@ Aling User API 명세서
 
 == API
 
-// 그룹 회원
-include::banduser/band-user.adoc[]
+include::band/band.adoc[]

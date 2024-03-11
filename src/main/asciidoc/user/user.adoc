@@ -1,0 +1,7 @@
+=== 회원 (user)
+회원 관련 API
+
+include::../user/user-create.adoc[]
+include::../user/user-delete.adoc[]
+include::../user/user-get.adoc[]
+include::../user/user-modify.adoc[]

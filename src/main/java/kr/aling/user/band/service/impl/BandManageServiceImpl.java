@@ -2,24 +2,28 @@ package kr.aling.user.band.service.impl;
 
 import kr.aling.user.band.dto.request.CreateBandPostTypeRequestDto;
 import kr.aling.user.band.dto.request.CreateBandRequestDto;
+import kr.aling.user.band.dto.request.ModifyBandPostTypeRequestDto;
 import kr.aling.user.band.dto.request.ModifyBandRequestDto;
-import kr.aling.user.band.dto.request.external.CreateBandPostTypeDefaultRequestDto;
 import kr.aling.user.band.dto.request.external.CreateBandPostTypeRequestExternalDto;
+import kr.aling.user.band.dto.request.external.ModifyBandPostTypeRequestExternalDto;
 import kr.aling.user.band.entity.Band;
 import kr.aling.user.band.exception.BandAlreadyExistsException;
+import kr.aling.user.band.exception.BandDeniedException;
 import kr.aling.user.band.exception.BandLimitExceededException;
 import kr.aling.user.band.exception.BandNotFoundException;
 import kr.aling.user.band.repository.BandManageRepository;
 import kr.aling.user.band.repository.BandReadRepository;
 import kr.aling.user.band.service.BandManageService;
 import kr.aling.user.banduser.entity.BandUser;
+import kr.aling.user.banduser.exception.BandUserNotFoundException;
 import kr.aling.user.banduser.repository.BandUserManageRepository;
 import kr.aling.user.banduser.repository.BandUserReadRepository;
 import kr.aling.user.banduserrole.entity.BandUserRole;
 import kr.aling.user.banduserrole.exception.BandUserRoleNotFoundException;
 import kr.aling.user.banduserrole.repository.BandUserRoleReadRepository;
-import kr.aling.user.common.adaptor.AlingPostAdaptor;
+import kr.aling.user.common.enums.BandPostTypeEnum;
 import kr.aling.user.common.enums.BandUserRoleEnum;
+import kr.aling.user.common.feignclient.PostFeignClient;
 import kr.aling.user.user.entity.AlingUser;
 import kr.aling.user.user.exception.UserNotFoundException;
 import kr.aling.user.user.repository.UserReadRepository;
@@ -46,7 +50,7 @@ public class BandManageServiceImpl implements BandManageService {
     private final BandUserRoleReadRepository bandUserRoleReadRepository;
     private final BandUserReadRepository bandUserReadRepository;
     private final BandUserManageRepository bandUserManageRepository;
-    private final AlingPostAdaptor alingPostAdaptor;
+    private final PostFeignClient postFeignClient;
 
     /**
      * {@inheritDoc}
@@ -80,7 +84,8 @@ public class BandManageServiceImpl implements BandManageService {
                 .fileNo(createBandRequestDto.getFileNo())
                 .build());
 
-        alingPostAdaptor.makeDefaultBandPostType(new CreateBandPostTypeDefaultRequestDto(band.getBandNo()));
+        postFeignClient.requestMakeBandPostType(
+                new CreateBandPostTypeRequestExternalDto(band.getBandNo(), BandPostTypeEnum.DEFAULT.getTypeName()));
 
         bandUserManageRepository.save(BandUser.builder()
                 .bandUserRole(bandUserRole)
@@ -104,7 +109,7 @@ public class BandManageServiceImpl implements BandManageService {
             throw new BandAlreadyExistsException();
         }
 
-        Band band = bandReadRepository.findByName(bandName)
+        Band band = bandReadRepository.getByName(bandName)
                 .orElseThrow(BandNotFoundException::new);
 
         band.updateBand(modifyDto.getNewBandName(),
@@ -122,9 +127,18 @@ public class BandManageServiceImpl implements BandManageService {
      */
     @Override
     public void removeBand(String bandName) {
-        Band band = bandReadRepository.findByName(bandName)
+        Band band = bandReadRepository.getByName(bandName)
                 .orElseThrow(BandNotFoundException::new);
 
+        if (bandReadRepository.getCountBandUser(bandName) > 1) {
+            throw new BandDeniedException();
+        }
+
+        BandUser bandCreator =
+                bandUserReadRepository.findByBand_NameAndBandUserRole_RoleName(bandName,
+                        BandUserRoleEnum.CREATOR.getRoleName()).orElseThrow(BandUserNotFoundException::new);
+
+        bandCreator.deleteBandUser();
         band.deleteBand();
     }
 
@@ -136,11 +150,44 @@ public class BandManageServiceImpl implements BandManageService {
      * @throws BandNotFoundException 그룹을 찾을 수 없을 경우 발생 exception
      */
     @Override
-    public void makeBandCategory(String bandName, CreateBandPostTypeRequestDto requestDto) {
-        Band band = bandReadRepository.findByName(bandName)
+    public void makeBandPostType(String bandName, CreateBandPostTypeRequestDto requestDto) {
+        Band band = bandReadRepository.getByName(bandName)
                 .orElseThrow(BandNotFoundException::new);
 
-        alingPostAdaptor.makeBandPostType(
+        postFeignClient.requestMakeBandPostType(
                 new CreateBandPostTypeRequestExternalDto(band.getBandNo(), requestDto.getName()));
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param bandName 그룹 명
+     * @param postTypeNo 수정할 그룹 게시글 분류 번호
+     * @param requestDto 그룹 게시글 분류 수정 정보를 담은 dto
+     * @throws BandNotFoundException 그룹이 존재 하지 않을 경우 발생 exception
+     */
+    @Override
+    public void modifyBandPostType(String bandName, Long postTypeNo, ModifyBandPostTypeRequestDto requestDto) {
+        Band band = bandReadRepository.getByName(bandName)
+                .orElseThrow(BandNotFoundException::new);
+
+        postFeignClient.requestUpdateBandPostType(postTypeNo,
+                new ModifyBandPostTypeRequestExternalDto(band.getBandNo(), requestDto.getBandPostTypeName()));
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param bandName 그룹 명
+     * @param postTypeNo 삭제할 그룹 게시글 분류 번호
+     * @throws BandNotFoundException 그룹이 존재 하지 않을 경우 발생 exception
+     */
+    @Override
+    public void deleteBandPostType(String bandName, Long postTypeNo) {
+        if (!bandReadRepository.existsNonDeleteBandByName(bandName)) {
+            throw new BandNotFoundException();
+        }
+
+        postFeignClient.requestDeleteBandPostType(postTypeNo);
     }
 }

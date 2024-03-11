@@ -59,7 +59,7 @@ public class BandReadController {
      */
     @GetMapping("/{bandName}")
     public ResponseEntity<GetBandInfoWithBandUserResponseDto> bandDetailInfo(@PathVariable("bandName") String bandName,
-            @RequestHeader(ConstantUtil.X_TEMP_USER_NO)
+            @RequestHeader(ConstantUtil.X_USER_NO)
             Long userNo) {
 
         return ResponseEntity

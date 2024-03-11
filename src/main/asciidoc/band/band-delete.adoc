@@ -1,0 +1,61 @@
+:toc:
+
+==== 그룹 삭제
+
+그룹 삭제 API
+
+===== 요청
+
+operation::band-delete[snippets='http-request']
+
+===== 응답
+
+operation::band-delete[snippets='http-response']
+
+===== 파라미터 설명
+
+====== 요청 Path Variable
+
+operation::band-delete[snippets='path-parameters']
+
+
+==== 그룹 회원 삭제
+
+그룹 회원 삭제 API
+
+===== 요청
+
+operation::band-delete-user[snippets='http-request']
+
+===== 응답
+
+operation::band-delete-user[snippets='http-response']
+
+===== 파라미터 설명
+
+====== 요청 Path Variable
+
+operation::band-delete-user[snippets='path-parameters']
+
+
+==== 그룹 회원 삭제
+
+그룹 회원 탈퇴 시 사용 되는 그룹 회원 삭제 API
+
+===== 요청
+
+operation::band-delete-user[snippets='http-request']
+
+===== 응답
+
+operation::band-delete-user[snippets='http-response']
+
+===== 파라미터 설명
+
+====== 요청 헤더
+
+operation::band-delete-user[snippets='request-headers']
+
+====== 요청 Path Variable
+
+operation::band-delete-user[snippets='path-parameters']

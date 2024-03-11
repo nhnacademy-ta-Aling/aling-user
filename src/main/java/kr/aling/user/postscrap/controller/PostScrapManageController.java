@@ -1,5 +1,6 @@
 package kr.aling.user.postscrap.controller;
 
+import kr.aling.user.common.annotation.InjectUserInfo;
 import kr.aling.user.postscrap.service.PostScrapManageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +32,9 @@ public class PostScrapManageController {
      * @author 이수정
      * @since 1.0
      */
+    @InjectUserInfo
     @PostMapping("/{postNo}")
-    public ResponseEntity<Void> postScrap(@PathVariable Long postNo, @RequestParam Long userNo) {
+    public ResponseEntity<Void> postScrap(@PathVariable Long postNo, @RequestParam(required = false) Long userNo) {
         postScrapManageService.postScrap(postNo, userNo);
         return ResponseEntity.ok().build();
     }

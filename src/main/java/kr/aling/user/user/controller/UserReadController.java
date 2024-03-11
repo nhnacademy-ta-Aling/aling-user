@@ -15,6 +15,7 @@ import kr.aling.user.user.dto.resquest.ReadPostAuthorInfoRequestDto;
 import kr.aling.user.user.service.UserInfoReadService;
 import kr.aling.user.user.service.UserReadService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/users")
 @RestController
+@Slf4j
 public class UserReadController {
 
     private final UserReadService userReadService;
@@ -64,7 +66,7 @@ public class UserReadController {
     @GetMapping
     @RequestMapping("/my-bands")
     public ResponseEntity<List<GetBandDetailInfoResponseDto>> getJoinedBandInfoList(
-            @RequestHeader(ConstantUtil.X_TEMP_USER_NO) Long userNo) {
+            @RequestHeader(ConstantUtil.X_USER_NO) Long userNo) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(bandReadService.getJoinedBandInfoList(userNo));
@@ -76,7 +78,7 @@ public class UserReadController {
      * @param loginRequestDto id, 비밀번호
      * @return 로그인 정보
      */
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody @Valid LoginRequestDto loginRequestDto) {
         return ResponseEntity.status(HttpStatus.OK).body(userReadService.login(loginRequestDto));
     }

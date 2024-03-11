@@ -6,11 +6,10 @@ package kr.aling.user.banduser.exception;
  * @author : 정유진
  * @since : 1.0
  **/
-public class CreatorDeniedException extends RuntimeException {
+public class BandUserRoleDeniedException extends RuntimeException {
+    public static final String MESSAGE = "Denied due to band user role.";
 
-    public static final String MESSAGE = "Creator can't leave band.";
-
-    public CreatorDeniedException() {
+    public BandUserRoleDeniedException() {
         super(MESSAGE);
     }
 }

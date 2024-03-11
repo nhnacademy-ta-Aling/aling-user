@@ -1,0 +1,118 @@
+:toc:
+
+==== 그룹 수정
+
+그룹 수정 API
+
+===== 요청
+
+operation::band-modify[snippets='http-request']
+
+===== 응답
+
+operation::band-modify[snippets='http-response']
+
+===== 파라미터 설명
+
+====== 요청 Path Variable
+
+operation::band-modify[snippets='path-parameters']
+
+====== 요청 Body
+
+operation::band-modify[snippets='request-fields']
+
+
+==== 그룹 게시글 분류 수정
+
+그룹 게시글 분류 수정 API
+
+===== 요청
+
+operation::band-modify-post-type[snippets='http-request']
+
+===== 응답
+
+operation::band-modify-post-type[snippets='http-response']
+
+===== 파라미터 설명
+
+====== 요청 헤더
+
+operation::band-modify-post-type[snippets='request-headers']
+
+====== 요청 Path Variable
+
+operation::band-modify-post-type[snippets='path-parameters']
+
+====== 요청 Body
+
+operation::band-modify-post-type[snippets='request-fields']
+
+
+==== 그룹 creator 권한 위임
+
+그룹 creator 권한 위임 API
+
+===== 요청
+
+operation::band-modify-creator[snippets='http-request']
+
+===== 응답
+
+operation::band-modify-creator[snippets='http-response']
+
+===== 파라미터 설명
+
+====== 요청 헤더
+
+operation::band-modify-creator[snippets='request-headers']
+
+====== 요청 Path Variable
+
+operation::band-modify-creator[snippets='path-parameters']
+
+
+==== 그룹 회원 추방 여부 변경
+
+그룹 회원 추방 여부 변경 API
+
+===== 요청
+
+operation::band-modify-user-block[snippets='http-request']
+
+===== 응답
+
+operation::band-modify-user-block[snippets='http-response']
+
+===== 파라미터 설명
+
+====== 요청 Path Variable
+
+operation::band-modify-user-block[snippets='path-parameters']
+
+
+==== 그룹 회원 권한 변경
+
+그룹 회원 권한 변경 API
+
+===== 요청
+
+operation::band-modify-user-of-role[snippets='http-request']
+
+===== 응답
+
+operation::band-modify-user-of-role[snippets='http-response']
+
+===== 파라미터 설명
+
+====== 요청 Path Variable
+
+operation::band-modify-user-of-role[snippets='path-parameters']
+
+====== 요청 Body
+
+operation::band-modify-user-of-role[snippets='request-fields']
+
+
+

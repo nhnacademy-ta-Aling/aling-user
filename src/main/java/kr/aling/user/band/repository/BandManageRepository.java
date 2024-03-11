@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author : 정유진
  * @since : 1.0
  **/
-public interface BandManageRepository extends JpaRepository<Band, Long>, BandManageRepositoryCustom {
+public interface BandManageRepository extends JpaRepository<Band, Long> {
 
 }

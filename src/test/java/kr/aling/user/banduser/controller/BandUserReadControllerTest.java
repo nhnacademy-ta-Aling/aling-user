@@ -28,6 +28,12 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.MockMvc;
 
+/**
+ * 그룹 회원 조회 컨트롤러 테스트.
+ *
+ * @author : 정유진
+ * @since : 1.0
+ **/
 @MockBean(JpaMetamodelMappingContext.class)
 @WebMvcTest(BandUserReadController.class)
 @AutoConfigureRestDocs(uriPort = 9020)
@@ -62,7 +68,7 @@ class BandUserReadControllerTest {
                 .andExpect(jsonPath("username").value(getPostWriterResponseDto.getUsername()))
                 .andExpect(jsonPath("profilePath").value(getPostWriterResponseDto.getProfilePath()))
                 .andDo(print())
-                .andDo(document("band-user-get-by-bandUserNo",
+                .andDo(document("banduser-get-by-bandUserNo",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
 
