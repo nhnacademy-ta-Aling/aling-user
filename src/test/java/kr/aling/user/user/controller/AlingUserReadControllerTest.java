@@ -30,6 +30,7 @@ import kr.aling.user.band.service.BandReadService;
 import kr.aling.user.common.utils.ConstantUtil;
 import kr.aling.user.user.dto.response.LoginResponseDto;
 import kr.aling.user.user.dto.resquest.LoginRequestDto;
+import kr.aling.user.user.service.UserInfoReadService;
 import kr.aling.user.user.service.UserReadService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -57,6 +58,9 @@ class AlingUserReadControllerTest {
     private UserReadService userReadService;
     @MockBean
     private BandReadService bandReadService;
+
+    @MockBean
+    private UserInfoReadService userInfoReadService;
 
     private final String url = "/api/v1/users";
 
