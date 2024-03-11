@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.Set;
 import kr.aling.user.banduser.entity.BandUser;
 import kr.aling.user.banduser.repository.BandUserReadRepository;
-import kr.aling.user.common.feign.FileFeignClient;
+import kr.aling.user.common.feignclient.FileFeignClient;
 import kr.aling.user.user.dto.response.ReadPostAuthorInfoResponseDto;
 import kr.aling.user.user.dto.response.ReadUserInfoResponseDto;
 import kr.aling.user.user.dto.resquest.ReadPostAuthorInfoRequestDto;
