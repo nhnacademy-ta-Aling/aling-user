@@ -47,17 +47,16 @@ public interface BandManageService {
     /**
      * 그룹 게시글 분류를 수정 하기 위한 메서드 입니다.
      *
-     * @param bandName 그룹 명
+     * @param bandName   그룹 명
      * @param postTypeNo 수정할 그룹 게시글 분류 번호
      * @param requestDto 그룹 게시글 분류 수정 정보를 담은 dto
      */
     void modifyBandPostType(String bandName, Long postTypeNo, ModifyBandPostTypeRequestDto requestDto);
 
     /**
-     * 그룹 게시글 분류를 삭제 하기 위한 메서드입니다.<br>
-     * 삭제되지 않은 그룹 게시글이 존재할 경우 그룹 게시글 분류가 삭제되지 않습니다.
+     * 그룹 게시글 분류를 삭제 하기 위한 메서드입니다.<br> 삭제되지 않은 그룹 게시글이 존재할 경우 그룹 게시글 분류가 삭제되지 않습니다.
      *
-     * @param bandName 그룹 명
+     * @param bandName   그룹 명
      * @param postTypeNo 삭제할 그룹 게시글 분류 번호
      */
     void deleteBandPostType(String bandName, Long postTypeNo);

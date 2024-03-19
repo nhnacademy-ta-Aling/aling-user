@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class ReadPostAuthorInfoRequestDto {
+
     private Long postNo;
 
     private boolean isBandPost;

@@ -8,6 +8,7 @@ import kr.aling.user.user.dto.resquest.ReadPostAuthorInfoRequestDto;
 
 /**
  * 유저 정보 조회 서비스 인터페이스입니다.
+ *
  * @author : 이성준
  * @since : 1.0
  */

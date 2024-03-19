@@ -59,7 +59,7 @@ public interface BandUserReadRepositoryCustom {
      * 그룹 회원의 추방 여부를 조회 하기 위한 메서드 입니다.
      *
      * @param bandName 그룹 명
-     * @param userNo 회원 번호
+     * @param userNo   회원 번호
      * @return 그룹 회원의 추방 여부
      */
     boolean getIsBlockBandUser(String bandName, Long userNo);
