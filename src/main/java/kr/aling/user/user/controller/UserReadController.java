@@ -3,6 +3,7 @@ package kr.aling.user.user.controller;
 import java.util.List;
 import java.util.Set;
 import javax.validation.Valid;
+import javax.ws.rs.core.MediaType;
 import kr.aling.user.band.dto.response.GetBandDetailInfoResponseDto;
 import kr.aling.user.band.service.BandReadService;
 import kr.aling.user.common.utils.ConstantUtil;
@@ -78,7 +79,7 @@ public class UserReadController {
      * @param loginRequestDto id, 비밀번호
      * @return 로그인 정보
      */
-    @PostMapping("/login")
+    @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<LoginResponseDto> login(@RequestBody @Valid LoginRequestDto loginRequestDto) {
         return ResponseEntity.status(HttpStatus.OK).body(userReadService.login(loginRequestDto));
     }
