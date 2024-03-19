@@ -8,10 +8,8 @@ import kr.aling.user.band.dto.response.GetBandDetailInfoResponseDto;
 import kr.aling.user.band.service.BandReadService;
 import kr.aling.user.common.utils.ConstantUtil;
 import kr.aling.user.user.dto.response.IsExistsUserResponseDto;
-import kr.aling.user.user.dto.response.LoginResponseDto;
 import kr.aling.user.user.dto.response.ReadPostAuthorInfoResponseDto;
 import kr.aling.user.user.dto.response.ReadUserInfoResponseDto;
-import kr.aling.user.user.dto.resquest.LoginRequestDto;
 import kr.aling.user.user.dto.resquest.ReadPostAuthorInfoRequestDto;
 import kr.aling.user.user.service.UserInfoReadService;
 import kr.aling.user.user.service.UserReadService;
@@ -93,7 +91,8 @@ public class UserReadController {
      * @since : 1.0
      */
     @PostMapping
-    public ResponseEntity<List<ReadPostAuthorInfoResponseDto>> requestPostAuthorInfos(@RequestBody Set<ReadPostAuthorInfoRequestDto> requests){
+    public ResponseEntity<List<ReadPostAuthorInfoResponseDto>> requestPostAuthorInfos(
+            @RequestBody Set<ReadPostAuthorInfoRequestDto> requests) {
         return ResponseEntity.status(HttpStatus.OK).body(userInfoReadService.requestPostAuthorInfo(requests));
     }
 
@@ -106,7 +105,7 @@ public class UserReadController {
      * @since : 1.0
      */
     @GetMapping("/{userNo}")
-    public ResponseEntity<ReadUserInfoResponseDto> requestNormalUserInfo(@PathVariable Long userNo){
+    public ResponseEntity<ReadUserInfoResponseDto> requestNormalUserInfo(@PathVariable Long userNo) {
         return ResponseEntity.status(HttpStatus.OK).body(userInfoReadService.readNormalUser(userNo));
     }
 
@@ -119,7 +118,7 @@ public class UserReadController {
      * @since : 1.0
      */
     @GetMapping
-    public ResponseEntity<List<ReadUserInfoResponseDto>> requestUserInfos(@RequestParam List<Long> userNoList){
+    public ResponseEntity<List<ReadUserInfoResponseDto>> requestUserInfos(@RequestParam List<Long> userNoList) {
         return ResponseEntity.status(HttpStatus.OK).body(userInfoReadService.readUserInfos(userNoList));
     }
 }

@@ -1,15 +1,11 @@
 package kr.aling.user.user.service.impl;
 
-import kr.aling.user.user.dto.response.LoginInfoResponseDto;
-import kr.aling.user.user.dto.response.LoginResponseDto;
-import kr.aling.user.user.dto.resquest.LoginRequestDto;
 import kr.aling.user.user.entity.AlingUser;
 import kr.aling.user.user.exception.UserNotFoundException;
 import kr.aling.user.user.repository.UserReadRepository;
 import kr.aling.user.user.service.UserReadService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserReadServiceImpl implements UserReadService {
 
     private final UserReadRepository userReadRepository;
-    private final PasswordEncoder passwordEncoder;
 
     /**
      * {@inheritDoc}
