@@ -13,6 +13,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public class LoginInfoResponseDto {
 
-    private final Long userNo;
-    private final String password;
+    private Long userNo;
+    private String password;
 }

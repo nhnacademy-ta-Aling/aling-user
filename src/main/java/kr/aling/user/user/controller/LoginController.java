@@ -3,7 +3,6 @@ package kr.aling.user.user.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.validation.Valid;
-import javax.ws.rs.core.MediaType;
 import kr.aling.user.user.dto.response.LoginResponseDto;
 import kr.aling.user.user.dto.resquest.LoginRequestDto;
 import kr.aling.user.user.service.LoginService;
@@ -38,7 +37,7 @@ public class LoginController {
      * @param loginRequestDto 아이디, 비밀번호가 담긴 요청 Dto
      * @return 유저 아이디와 역할을 헤더로 반환
      */
-    @PostMapping(consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @PostMapping
     public ResponseEntity<Void> login(@RequestBody @Valid LoginRequestDto loginRequestDto)
             throws JsonProcessingException {
         LoginResponseDto loginResponseDto = loginService.login(loginRequestDto);
