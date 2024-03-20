@@ -2,6 +2,8 @@ package kr.aling.user.normaluser.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -19,6 +21,7 @@ import kr.aling.user.user.dummy.UserDummy;
 import kr.aling.user.user.entity.AlingUser;
 import kr.aling.user.user.exception.UserEmailAlreadyUsedException;
 import kr.aling.user.user.service.UserManageService;
+import kr.aling.user.userrole.service.UserRoleManageService;
 import kr.aling.user.wantjobtype.dto.response.ReadWantJobTypeResponseDto;
 import kr.aling.user.wantjobtype.dummy.WantJobTypeDummy;
 import kr.aling.user.wantjobtype.entity.WantJobType;
@@ -40,6 +43,8 @@ class NormalUserManageServiceImplTest {
     private UserManageService userManageService;
     private WantJobTypeReadService wantJobTypeReadService;
 
+    private UserRoleManageService userRoleManageService;
+
     @BeforeEach
     void setUp() {
         normalUserManageRepository = mock(NormalUserManageRepository.class);
@@ -47,10 +52,13 @@ class NormalUserManageServiceImplTest {
         userManageService = mock(UserManageService.class);
         wantJobTypeReadService = mock(WantJobTypeReadService.class);
 
+        userRoleManageService = mock(UserRoleManageService.class);
+
         normalUserManageService = new NormalUserManageServiceImpl(
                 normalUserManageRepository,
                 userManageService,
-                wantJobTypeReadService
+                wantJobTypeReadService,
+                userRoleManageService
         );
     }
 
@@ -67,9 +75,10 @@ class NormalUserManageServiceImplTest {
                 normalUser.getPhoneNo(), normalUser.getBirth().format(DateTimeFormatter.ofPattern(BIRTH_PATTERN))
         );
 
-        when(userManageService.registerUser(any())).thenReturn(new CreateUserResponseDto(alingUser.getUserNo()));
+        when(userManageService.registerUser(any())).thenReturn(new CreateUserResponseDto(1L));
         when(wantJobTypeReadService.findByWantJobTypeNo(any())).thenReturn(new ReadWantJobTypeResponseDto(wantJobType));
         when(normalUserManageRepository.save(any())).thenReturn(normalUser);
+        doNothing().when(userRoleManageService).registerDefaultUserRole(anyLong());
 
         // when
         normalUserManageService.registerNormalUser(requestDto);
@@ -78,6 +87,7 @@ class NormalUserManageServiceImplTest {
         verify(userManageService, times(1)).registerUser(any());
         verify(wantJobTypeReadService, times(1)).findByWantJobTypeNo(any());
         verify(normalUserManageRepository, times(1)).save(any());
+        verify(userRoleManageService, times(1)).registerDefaultUserRole(anyLong());
     }
 
     @Test

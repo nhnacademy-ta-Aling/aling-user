@@ -1,6 +1,6 @@
 package kr.aling.user.user.service.impl;
 
-import javax.transaction.Transactional;
+import kr.aling.user.common.annotation.ManageService;
 import kr.aling.user.user.dto.response.CreateUserResponseDto;
 import kr.aling.user.user.dto.resquest.CreateUserRequestDto;
 import kr.aling.user.user.entity.AlingUser;
@@ -10,7 +10,6 @@ import kr.aling.user.user.repository.UserReadRepository;
 import kr.aling.user.user.service.UserManageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
 /**
  * 회원 CUD Service 구현체.
@@ -19,8 +18,7 @@ import org.springframework.stereotype.Service;
  * @since : 1.0
  */
 @RequiredArgsConstructor
-@Transactional
-@Service
+@ManageService
 public class UserManageServiceImpl implements UserManageService {
 
     private final PasswordEncoder passwordEncoder;
@@ -43,6 +41,7 @@ public class UserManageServiceImpl implements UserManageService {
                 .name(requestDto.getName())
                 .build();
         alingUser = userManageRepository.save(alingUser);
+
         return new CreateUserResponseDto(alingUser.getUserNo());
     }
 }
