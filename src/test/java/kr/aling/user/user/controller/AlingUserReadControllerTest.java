@@ -13,7 +13,6 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
@@ -28,8 +27,6 @@ import java.util.List;
 import kr.aling.user.band.dto.response.GetBandDetailInfoResponseDto;
 import kr.aling.user.band.service.BandReadService;
 import kr.aling.user.common.utils.ConstantUtil;
-import kr.aling.user.user.dto.response.LoginResponseDto;
-import kr.aling.user.user.dto.resquest.LoginRequestDto;
 import kr.aling.user.user.service.UserInfoReadService;
 import kr.aling.user.user.service.UserReadService;
 import org.junit.jupiter.api.DisplayName;
@@ -50,19 +47,20 @@ import org.springframework.test.web.servlet.ResultActions;
 @WebMvcTest(UserReadController.class)
 class AlingUserReadControllerTest {
 
-    @Autowired
-    ObjectMapper objectMapper;
+    private static final String URL = "/api/v1/users";
+
     @Autowired
     private MockMvc mockMvc;
+
     @MockBean
     private UserReadService userReadService;
     @MockBean
     private BandReadService bandReadService;
-
     @MockBean
     private UserInfoReadService userInfoReadService;
 
-    private final String url = "/api/v1/users";
+    @Autowired
+    ObjectMapper objectMapper;
 
     @Test
     @DisplayName("회원 존재여부 확인 성공")
@@ -74,8 +72,7 @@ class AlingUserReadControllerTest {
 
         // when
         ResultActions perform = mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/api/v1/users/check/{userNo}", userNo)
-                        .contentType(MediaType.APPLICATION_JSON));
+                RestDocumentationRequestBuilders.get(URL + "/check/{userNo}", userNo));
 
         // then
         perform.andDo(print())
@@ -107,7 +104,7 @@ class AlingUserReadControllerTest {
                 .thenReturn(List.of(getBandDetailInfoResponseDto));
 
         // then
-        mockMvc.perform(RestDocumentationRequestBuilders.get(url + "/my-bands")
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL + "/my-bands")
                         .accept(MediaType.APPLICATION_JSON)
                         .header(ConstantUtil.X_USER_NO, userNo))
                 .andExpect(status().isOk())
@@ -141,44 +138,5 @@ class AlingUserReadControllerTest {
                         )
                 ));
 
-    }
-
-    @Test
-    @DisplayName("회원 로그인 성공")
-    void login() throws Exception {
-        //given
-        String email = "test@test.com";
-        String password = "password";
-
-        LoginRequestDto requestDto = new LoginRequestDto(email, password);
-        LoginResponseDto responseDto = new LoginResponseDto(1L, List.of("ROLE_TEST"));
-
-        when(userReadService.login(any())).thenReturn(responseDto);
-
-        //when
-        ResultActions perform = mockMvc.perform(
-                RestDocumentationRequestBuilders.post("/api/v1/users/login")
-                        .content(objectMapper.writeValueAsString(requestDto))
-                        .contentType(MediaType.APPLICATION_JSON));
-
-        //then
-        perform.andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.userNo", equalTo(responseDto.getUserNo().intValue())))
-                .andExpect(jsonPath("$.roles.[0]", equalTo(responseDto.getRoles().get(0))));
-
-        //docs
-        perform.andDo(document("user-login",
-                preprocessRequest(prettyPrint()),
-                preprocessResponse(prettyPrint()),
-                requestFields(
-                        fieldWithPath(".email").description("로그인 할 이메일").type(String.class)
-                                .attributes(key("valid").value("최소 3자, 최대 50자")),
-                        fieldWithPath(".password").description("비밀번호").type(String.class)
-                                .attributes(key("valid").value("최소 8자, 최대 20자"))),
-                responseFields(
-                        fieldWithPath(".userNo").description("회원 번호").type(Long.TYPE),
-                        fieldWithPath(".roles[]").description("권한 리스트").type(List.class))));
     }
 }

@@ -13,7 +13,13 @@
             <appender-ref ref="console"/>
         </root>
 
-<!--        sql 문을 조회 하고 싶을 때 사용-->
+        <logger name="org.apache.http" level="OFF">
+            <appender-ref ref="console"/>
+        </logger>
+        <logger name="com.netflix.discovery" level="OFF">
+            <appender-ref ref="console"/>
+        </logger>
+
         <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="trace" additivity="false">
             <appender-ref ref="console"/>
         </logger>

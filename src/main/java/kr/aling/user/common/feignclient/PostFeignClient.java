@@ -31,7 +31,7 @@ public interface PostFeignClient {
 
     @PutMapping("/api/v1/band-post-types/{postTypeNo}")
     void requestUpdateBandPostType(@PathVariable("postTypeNo") Long postTypeNo,
-                                   ModifyBandPostTypeRequestExternalDto requestDto);
+            ModifyBandPostTypeRequestExternalDto requestDto);
 
     @DeleteMapping("/api/v1/band-post-types/{postTypeNo}")
     void requestDeleteBandPostType(@PathVariable("postTypeNo") Long postTypeNo);

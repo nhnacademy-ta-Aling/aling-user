@@ -11,11 +11,10 @@ import kr.aling.user.banduser.dto.request.ModifyRoleOfBandUserRequestDto;
 public interface BandUserManageService {
 
     /**
-     * 그룹 회원을 생성 하기 위한 메서드 입니다.<br>
-     * 추방된 회원은 다시 가입할 수 없습니다.
+     * 그룹 회원을 생성 하기 위한 메서드 입니다.<br> 추방된 회원은 다시 가입할 수 없습니다.
      *
      * @param bandName 그룹 명
-     * @param userNo 회원 번호
+     * @param userNo   회원 번호
      */
     void makeBandUser(String bandName, Long userNo);
 

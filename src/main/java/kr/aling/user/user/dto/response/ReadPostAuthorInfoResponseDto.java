@@ -12,6 +12,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ReadPostAuthorInfoResponseDto {
+
     private Long postNo;
     private ReadUserInfoResponseDto userInfo;
 }

@@ -161,7 +161,7 @@ public class BandManageServiceImpl implements BandManageService {
     /**
      * {@inheritDoc}
      *
-     * @param bandName 그룹 명
+     * @param bandName   그룹 명
      * @param postTypeNo 수정할 그룹 게시글 분류 번호
      * @param requestDto 그룹 게시글 분류 수정 정보를 담은 dto
      * @throws BandNotFoundException 그룹이 존재 하지 않을 경우 발생 exception
@@ -178,7 +178,7 @@ public class BandManageServiceImpl implements BandManageService {
     /**
      * {@inheritDoc}
      *
-     * @param bandName 그룹 명
+     * @param bandName   그룹 명
      * @param postTypeNo 삭제할 그룹 게시글 분류 번호
      * @throws BandNotFoundException 그룹이 존재 하지 않을 경우 발생 exception
      */

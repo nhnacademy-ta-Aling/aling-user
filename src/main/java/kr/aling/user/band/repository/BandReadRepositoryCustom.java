@@ -44,8 +44,7 @@ public interface BandReadRepositoryCustom {
     List<GetBandDetailInfoResponseDto> getJoinedBandInfoListByUserNo(Long userNo);
 
     /**
-     * 그룹 명으로 그룹 조회. <br>
-     * 삭제된 그룹일 경우 조회 되지 않습니다.
+     * 그룹 명으로 그룹 조회. <br> 삭제된 그룹일 경우 조회 되지 않습니다.
      *
      * @param bandName 그룹 명
      * @return Optional 그룹 엔티티
@@ -53,8 +52,7 @@ public interface BandReadRepositoryCustom {
     Optional<Band> getByName(String bandName);
 
     /**
-     * 그룹 명으로 그룹의 존재 여부 확인. <br>
-     * 없는 그룹 명 이거나 삭제된 그룹일 경우 false 를 반환 합니다.
+     * 그룹 명으로 그룹의 존재 여부 확인. <br> 없는 그룹 명 이거나 삭제된 그룹일 경우 false 를 반환 합니다.
      *
      * @param bandName 그룹 명
      * @return 그룹 존재 여부
@@ -62,8 +60,7 @@ public interface BandReadRepositoryCustom {
     boolean existsNonDeleteBandByName(String bandName);
 
     /**
-     * 그룹에 가입 되어 있는 그룹 회원 수 조회.<br>
-     * 그룹 에서 추방 되었거나 탈퇴된 그룹 회원은 카운트 되지 않습니다.
+     * 그룹에 가입 되어 있는 그룹 회원 수 조회.<br> 그룹 에서 추방 되었거나 탈퇴된 그룹 회원은 카운트 되지 않습니다.
      *
      * @param bandName 그룹 명
      * @return 그룹 내 그룹 회원 수
