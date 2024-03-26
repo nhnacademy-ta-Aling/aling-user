@@ -8,9 +8,9 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.Optional;
+import kr.aling.user.user.dto.request.LoginRequestDto;
 import kr.aling.user.user.dto.response.LoginInfoResponseDto;
 import kr.aling.user.user.dto.response.LoginResponseDto;
-import kr.aling.user.user.dto.resquest.LoginRequestDto;
 import kr.aling.user.user.exception.UserNotFoundException;
 import kr.aling.user.user.repository.UserReadRepository;
 import kr.aling.user.user.service.LoginService;

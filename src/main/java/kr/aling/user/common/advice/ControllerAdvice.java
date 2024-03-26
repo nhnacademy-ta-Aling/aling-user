@@ -14,6 +14,8 @@ import kr.aling.user.common.exception.CustomException;
 import kr.aling.user.common.exception.UserInfoNotExistsException;
 import kr.aling.user.mail.exception.MailAuthNumberInvalidException;
 import kr.aling.user.post.exception.PostNotFoundException;
+import kr.aling.user.user.exception.GithubAccessTokenNotExistsException;
+import kr.aling.user.user.exception.SocialEmailNotFoundException;
 import kr.aling.user.user.exception.UserEmailAlreadyUsedException;
 import kr.aling.user.user.exception.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +59,7 @@ public class ControllerAdvice {
      * @author 이수정
      * @since 1.0
      */
-    @ExceptionHandler({UserInfoNotExistsException.class})
+    @ExceptionHandler({UserInfoNotExistsException.class, GithubAccessTokenNotExistsException.class})
     public ResponseEntity<String> handleUnAuthorizedException(Exception e) {
         log.error(DEFAULT_HANDLE_MESSAGE, HttpStatus.UNAUTHORIZED, e.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
@@ -82,7 +84,8 @@ public class ControllerAdvice {
      * @return 404 status response
      */
     @ExceptionHandler({BandUserNotFoundException.class, BandUserRoleNotFoundException.class,
-            BandNotFoundException.class, PostNotFoundException.class, UserNotFoundException.class})
+            BandNotFoundException.class, PostNotFoundException.class,
+            UserNotFoundException.class, SocialEmailNotFoundException.class})
     public ResponseEntity<String> handleNotFoundException(Exception e) {
         log.error(DEFAULT_HANDLE_MESSAGE, HttpStatus.NOT_FOUND, e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

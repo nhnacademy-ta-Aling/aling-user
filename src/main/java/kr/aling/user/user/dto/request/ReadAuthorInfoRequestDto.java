@@ -1,4 +1,4 @@
-package kr.aling.user.user.dto.resquest;
+package kr.aling.user.user.dto.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,7 @@
 package kr.aling.user.user.service;
 
+import kr.aling.user.user.dto.request.LoginRequestDto;
 import kr.aling.user.user.dto.response.LoginResponseDto;
-import kr.aling.user.user.dto.resquest.LoginRequestDto;
 
 /**
  * 로그인 Service interface.
@@ -20,4 +20,14 @@ public interface LoginService {
      * @since 1.0
      */
     LoginResponseDto login(LoginRequestDto loginRequestDto);
+
+    /**
+     * Oauth GitHub 로그인합니다.
+     *
+     * @param code GitHub AccessToken을 요청하기 위한 code
+     * @return 로그인한 회원의 정보
+     * @author 이수정
+     * @since 1.0
+     */
+    LoginResponseDto github(String code);
 }
