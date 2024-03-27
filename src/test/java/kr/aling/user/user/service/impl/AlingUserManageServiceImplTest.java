@@ -9,8 +9,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import kr.aling.user.user.dto.request.CreateUserRequestDto;
 import kr.aling.user.user.dto.response.CreateUserResponseDto;
-import kr.aling.user.user.dto.resquest.CreateUserRequestDto;
 import kr.aling.user.user.dummy.UserDummy;
 import kr.aling.user.user.entity.AlingUser;
 import kr.aling.user.user.exception.UserEmailAlreadyUsedException;

@@ -1,8 +1,8 @@
 package kr.aling.user.user.service.impl;
 
 import kr.aling.user.common.annotation.ManageService;
+import kr.aling.user.user.dto.request.CreateUserRequestDto;
 import kr.aling.user.user.dto.response.CreateUserResponseDto;
-import kr.aling.user.user.dto.resquest.CreateUserRequestDto;
 import kr.aling.user.user.entity.AlingUser;
 import kr.aling.user.user.exception.UserEmailAlreadyUsedException;
 import kr.aling.user.user.repository.UserManageRepository;

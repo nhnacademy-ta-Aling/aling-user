@@ -1,5 +1,6 @@
-package kr.aling.user.user.dto.resquest;
+package kr.aling.user.user.dto.request;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import lombok.AccessLevel;
@@ -8,20 +9,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * 로그인시 파라미터를 담는 dto.
+ * 회원 등록 요청 파라미터를 담는 Dto.
  *
- * @author : 여운석
+ * @author : 이수정
  * @since : 1.0
- **/
+ */
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class LoginRequestDto {
+public class CreateUserRequestDto {
 
     @NotBlank
     @Size(min = 3, max = 100)
+    @Email
     private String email;
+
     @NotBlank
     @Size(min = 8, max = 20)
     private String password;
+
+    @NotBlank
+    @Size(min = 1, max = 50)
+    private String name;
 }

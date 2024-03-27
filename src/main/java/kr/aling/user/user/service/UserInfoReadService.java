@@ -2,9 +2,9 @@ package kr.aling.user.user.service;
 
 import java.util.List;
 import java.util.Set;
+import kr.aling.user.user.dto.request.ReadPostAuthorInfoRequestDto;
 import kr.aling.user.user.dto.response.ReadPostAuthorInfoResponseDto;
 import kr.aling.user.user.dto.response.ReadUserInfoResponseDto;
-import kr.aling.user.user.dto.resquest.ReadPostAuthorInfoRequestDto;
 
 /**
  * 유저 정보 조회 서비스 인터페이스입니다.

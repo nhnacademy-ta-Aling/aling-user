@@ -1,7 +1,7 @@
 package kr.aling.user.user.service;
 
+import kr.aling.user.user.dto.request.CreateUserRequestDto;
 import kr.aling.user.user.dto.response.CreateUserResponseDto;
-import kr.aling.user.user.dto.resquest.CreateUserRequestDto;
 
 /**
  * 회원 CUD Service interface.

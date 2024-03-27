@@ -7,7 +7,7 @@ import kr.aling.user.normaluser.dto.request.CreateNormalUserRequestDto;
 import kr.aling.user.normaluser.entity.NormalUser;
 import kr.aling.user.normaluser.repository.NormalUserManageRepository;
 import kr.aling.user.normaluser.service.NormalUserManageService;
-import kr.aling.user.user.dto.resquest.CreateUserRequestDto;
+import kr.aling.user.user.dto.request.CreateUserRequestDto;
 import kr.aling.user.user.service.UserManageService;
 import kr.aling.user.userrole.service.UserRoleManageService;
 import kr.aling.user.wantjobtype.entity.WantJobType;
