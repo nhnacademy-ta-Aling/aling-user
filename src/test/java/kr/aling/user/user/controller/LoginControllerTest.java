@@ -122,7 +122,44 @@ class LoginControllerTest {
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 requestParameters(
-                        parameterWithName("code").description("Github에서 받아온 code")
+                        parameterWithName("code").description("GitHub에서 받아온 code")
+                                .attributes(key(REQUIRED).value(REQUIRED_YES))
+                                .attributes(key(VALID).value(""))
+                ),
+                responseHeaders(
+                        headerWithName("X-User-No").description("회원 번호"),
+                        headerWithName("X-User-Role").description("회원 권한 리스트")
+                )));
+    }
+
+    @Test
+    @DisplayName("구글 로그인 성공")
+    void google() throws Exception {
+        //given
+        String code = "ABC123!@#";
+
+        LoginResponseDto responseDto = new LoginResponseDto(1L, List.of("ROLE_TEST"));
+
+        when(loginService.google(any())).thenReturn(responseDto);
+
+        //when
+        ResultActions perform = mockMvc.perform(
+                RestDocumentationRequestBuilders.get("/api/v1/login/oauth/google").param("code", code));
+
+        //then
+        perform.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(header().exists("X-User-No"))
+                .andExpect(header().string("X-User-No", String.valueOf(responseDto.getUserNo())))
+                .andExpect(header().exists("X-User-Role"))
+                .andExpect(header().string("X-User-Role", objectMapper.writeValueAsString(responseDto.getRoles())));
+
+        //docs
+        perform.andDo(document("oauth-google-login",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                requestParameters(
+                        parameterWithName("code").description("Google에서 받아온 code")
                                 .attributes(key(REQUIRED).value(REQUIRED_YES))
                                 .attributes(key(VALID).value(""))
                 ),

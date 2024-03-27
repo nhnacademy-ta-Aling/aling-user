@@ -20,9 +20,11 @@ import kr.aling.user.user.dto.response.LoginInfoResponseDto;
 import kr.aling.user.user.dto.response.LoginResponseDto;
 import kr.aling.user.user.dto.response.OauthGithubAccessTokenResponseDto;
 import kr.aling.user.user.dto.response.OauthGithubUserInfoResponseDto;
+import kr.aling.user.user.dto.response.OauthGoogleAccessTokenResponseDto;
+import kr.aling.user.user.dto.response.OauthGoogleUserInfoResponseDto;
 import kr.aling.user.user.dummy.UserDummy;
 import kr.aling.user.user.entity.AlingUser;
-import kr.aling.user.user.exception.GithubAccessTokenNotExistsException;
+import kr.aling.user.user.exception.SocialAccessTokenNotExistsException;
 import kr.aling.user.user.exception.SocialEmailNotFoundException;
 import kr.aling.user.user.exception.UserNotFoundException;
 import kr.aling.user.user.repository.UserReadRepository;
@@ -162,7 +164,7 @@ class LoginServiceImplTest {
 
         // when, then
         assertThatThrownBy(() -> loginService.github(code))
-                .isInstanceOf(GithubAccessTokenNotExistsException.class);
+                .isInstanceOf(SocialAccessTokenNotExistsException.class);
 
         verify(restTemplate, times(1)).exchange(anyString(), any(HttpMethod.class), any(), any(Class.class));
         verify(userReadRepository, never()).findByEmail(anyString());
@@ -237,6 +239,147 @@ class LoginServiceImplTest {
 
         // when, then
         assertThatThrownBy(() -> loginService.github(code))
+                .isInstanceOf(SocialEmailNotFoundException.class);
+
+        verify(restTemplate, times(2)).exchange(anyString(), any(HttpMethod.class), any(), any(Class.class));
+        verify(userReadRepository, times(1)).findByEmail(anyString());
+        verify(userReadRepository, never()).findRolesByUserNo(anyLong());
+    }
+
+    @Test
+    @DisplayName("구글 로그인 성공")
+    void google() {
+        // given
+        final String code = "ABC123!@#";
+        final long userNo = 1L;
+        final List<String> roles = List.of("ROLE_TEST");
+
+        AlingUser user = UserDummy.dummy();
+        ReflectionTestUtils.setField(user, "userNo", userNo);
+
+        final String accessTokenUrl = "https://oauth2.googleapis.com/token";
+
+        OauthGoogleAccessTokenResponseDto oauthGoogleAccessTokenResponseDto = new OauthGoogleAccessTokenResponseDto();
+        ReflectionTestUtils.setField(oauthGoogleAccessTokenResponseDto, "idToken", "ABC.DEF.GHI");
+
+        ResponseEntity accessTokenResponseEntity = mock(ResponseEntity.class);
+        when(restTemplate.exchange(eq(accessTokenUrl), eq(HttpMethod.POST), any(), any(Class.class)))
+                .thenReturn(accessTokenResponseEntity);
+        when(accessTokenResponseEntity.getBody()).thenReturn(oauthGoogleAccessTokenResponseDto);
+
+        OauthGoogleUserInfoResponseDto oauthGoogleUserInfoResponseDto = new OauthGoogleUserInfoResponseDto();
+        ReflectionTestUtils.setField(oauthGoogleUserInfoResponseDto, "email", user.getEmail());
+
+        ResponseEntity userResponseEntity = mock(ResponseEntity.class);
+        when(restTemplate.exchange(anyString(), eq(HttpMethod.GET), any(), any(Class.class)))
+                .thenReturn(userResponseEntity);
+        when(userResponseEntity.getBody()).thenReturn(oauthGoogleUserInfoResponseDto);
+
+        Optional<AlingUser> opsUser = Optional.of(user);
+        when(userReadRepository.findByEmail(anyString())).thenReturn(opsUser);
+
+        when(userReadRepository.findRolesByUserNo(anyLong())).thenReturn(roles);
+
+        // when
+        LoginResponseDto loginResponseDto = loginService.google(code);
+
+        // then
+        assertThat(loginResponseDto).isNotNull();
+        assertThat(loginResponseDto.getUserNo()).isEqualTo(userNo);
+        assertThat(loginResponseDto.getRoles()).isEqualTo(roles);
+    }
+
+
+    @Test
+    @DisplayName("구글 로그인 실패 - 구글 IdToken(JWT) 발급에 실패한 경우")
+    void google_fail_issueAccessToken() {
+        // given
+        final String code = "ABC123!@#";
+        final String accessTokenUrl = "https://oauth2.googleapis.com/token";
+
+        OauthGoogleAccessTokenResponseDto oauthGoogleAccessTokenResponseDto = new OauthGoogleAccessTokenResponseDto();
+
+        ResponseEntity accessTokenResponseEntity = mock(ResponseEntity.class);
+        when(restTemplate.exchange(eq(accessTokenUrl), eq(HttpMethod.POST), any(), any(Class.class)))
+                .thenReturn(accessTokenResponseEntity);
+        when(accessTokenResponseEntity.getBody()).thenReturn(oauthGoogleAccessTokenResponseDto);
+
+        // when, then
+        assertThatThrownBy(() -> loginService.google(code))
+                .isInstanceOf(SocialAccessTokenNotExistsException.class);
+
+        verify(restTemplate, times(1)).exchange(anyString(), any(HttpMethod.class), any(), any(Class.class));
+        verify(userReadRepository, never()).findByEmail(anyString());
+        verify(userReadRepository, never()).findRolesByUserNo(anyLong());
+    }
+
+
+    @Test
+    @DisplayName("구글 로그인 실패 - 구글 유저 정보 얻기에 실패한 경우")
+    void google_fail_getUserInfo() {
+        // given
+        final String code = "ABC123!@#";
+        final long userNo = 1L;
+
+        AlingUser user = UserDummy.dummy();
+        ReflectionTestUtils.setField(user, "userNo", userNo);
+
+        final String accessTokenUrl = "https://oauth2.googleapis.com/token";
+
+        OauthGoogleAccessTokenResponseDto oauthGoogleAccessTokenResponseDto = new OauthGoogleAccessTokenResponseDto();
+        ReflectionTestUtils.setField(oauthGoogleAccessTokenResponseDto, "idToken", "ABC.DEF.GHI");
+
+        ResponseEntity accessTokenResponseEntity = mock(ResponseEntity.class);
+        when(restTemplate.exchange(eq(accessTokenUrl), eq(HttpMethod.POST), any(), any(Class.class)))
+                .thenReturn(accessTokenResponseEntity);
+        when(accessTokenResponseEntity.getBody()).thenReturn(oauthGoogleAccessTokenResponseDto);
+
+        OauthGoogleUserInfoResponseDto oauthGoogleUserInfoResponseDto = new OauthGoogleUserInfoResponseDto();
+
+        ResponseEntity userResponseEntity = mock(ResponseEntity.class);
+        when(restTemplate.exchange(anyString(), eq(HttpMethod.GET), any(), any(Class.class)))
+                .thenReturn(userResponseEntity);
+        when(userResponseEntity.getBody()).thenReturn(oauthGoogleUserInfoResponseDto);
+
+        // when, then
+        assertThatThrownBy(() -> loginService.google(code))
+                .isInstanceOf(SocialEmailNotFoundException.class);
+
+        verify(restTemplate, times(2)).exchange(anyString(), any(HttpMethod.class), any(), any(Class.class));
+        verify(userReadRepository, never()).findByEmail(anyString());
+        verify(userReadRepository, never()).findRolesByUserNo(anyLong());
+    }
+
+    @Test
+    @DisplayName("구글 로그인 실패 - 얻어온 이메일이 DB상에 존재하지 않는 경우")
+    void google_fail_emailNotFound() {
+        // given
+        final String code = "ABC123!@#";
+        final long userNo = 1L;
+
+        AlingUser user = UserDummy.dummy();
+        ReflectionTestUtils.setField(user, "userNo", userNo);
+
+        final String accessTokenUrl = "https://oauth2.googleapis.com/token";
+
+        OauthGoogleAccessTokenResponseDto oauthGoogleAccessTokenResponseDto = new OauthGoogleAccessTokenResponseDto();
+        ReflectionTestUtils.setField(oauthGoogleAccessTokenResponseDto, "idToken", "ABC.DEF.GHI");
+
+        ResponseEntity accessTokenResponseEntity = mock(ResponseEntity.class);
+        when(restTemplate.exchange(eq(accessTokenUrl), eq(HttpMethod.POST), any(), any(Class.class)))
+                .thenReturn(accessTokenResponseEntity);
+        when(accessTokenResponseEntity.getBody()).thenReturn(oauthGoogleAccessTokenResponseDto);
+
+        OauthGoogleUserInfoResponseDto oauthGoogleUserInfoResponseDto = new OauthGoogleUserInfoResponseDto();
+        ReflectionTestUtils.setField(oauthGoogleUserInfoResponseDto, "email", user.getEmail());
+
+        ResponseEntity userResponseEntity = mock(ResponseEntity.class);
+        when(restTemplate.exchange(anyString(), eq(HttpMethod.GET), any(), any(Class.class)))
+                .thenReturn(userResponseEntity);
+        when(userResponseEntity.getBody()).thenReturn(oauthGoogleUserInfoResponseDto);
+
+        // when, then
+        assertThatThrownBy(() -> loginService.google(code))
                 .isInstanceOf(SocialEmailNotFoundException.class);
 
         verify(restTemplate, times(2)).exchange(anyString(), any(HttpMethod.class), any(), any(Class.class));
