@@ -30,4 +30,14 @@ public interface LoginService {
      * @since 1.0
      */
     LoginResponseDto github(String code);
+
+    /**
+     * Oauth Google 로그인합니다.
+     *
+     * @param code Google AccessToken을 요청하기 위한 code
+     * @return 로그인한 회원의 정보
+     * @author 이수정
+     * @since 1.0
+     */
+    LoginResponseDto google(String code);
 }
