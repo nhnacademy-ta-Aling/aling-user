@@ -57,6 +57,17 @@ public class LoginController {
     }
 
     /**
+     * Oauth2 Google 로그인 후 받은 code로 로그인을 수행합니다.
+     *
+     * @param code Google AccessToken을 받기 위한 code
+     * @return 유저 아이디와 역할을 헤더로 반환
+     */
+    @GetMapping("/oauth/google")
+    public ResponseEntity<Void> google(@RequestParam String code) throws JsonProcessingException {
+        return loginCommonResponse(loginService.google(code));
+    }
+
+    /**
      * 로그인 후 JWT AccessToken, RefreshToken에 담을 유저 아이디와 역할을 반환하기 위한 로그인 공통의 응답을 헤더로 반환합니다.
      *
      * @param loginResponseDto 회원의 유저 아이디와 역할을 담은 Dto
