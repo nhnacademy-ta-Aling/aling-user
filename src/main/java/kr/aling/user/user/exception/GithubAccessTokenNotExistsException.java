@@ -8,7 +8,9 @@ package kr.aling.user.user.exception;
  */
 public class GithubAccessTokenNotExistsException extends RuntimeException {
 
+    private static final String MESSAGE = "잘못된 code로 인한 예외나 다른 이유로, AccessToken을 받지 못하였습니다.";
+
     public GithubAccessTokenNotExistsException() {
-        super("잘못된 code로 인한 예외나 다른 이유로, AccessToken을 받지 못하였습니다.");
+        super(MESSAGE);
     }
 }
