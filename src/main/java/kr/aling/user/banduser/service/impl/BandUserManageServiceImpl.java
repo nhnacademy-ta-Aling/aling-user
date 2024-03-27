@@ -1,7 +1,7 @@
 package kr.aling.user.banduser.service.impl;
 
 import kr.aling.user.band.entity.Band;
-import kr.aling.user.band.exception.BandDeniedException;
+import kr.aling.user.band.exception.BandAccessDeniedException;
 import kr.aling.user.band.exception.BandNotFoundException;
 import kr.aling.user.band.repository.BandReadRepository;
 import kr.aling.user.banduser.dto.request.ModifyRoleOfBandUserRequestDto;
@@ -49,7 +49,7 @@ public class BandUserManageServiceImpl implements BandUserManageService {
      * @throws UserNotFoundException          회원을 찾을 수 없을 때 발생 하는 exception
      * @throws BandUserRoleNotFoundException  그룹 회원 권한을 찾을 수 없을 때 발생 하는 exception
      * @throws BandUserAlreadyExistsException 그룹 회원이 이미 존재할 경우 발생 하는 exception
-     * @throws BandDeniedException            추방된 회원일 경우 발생 하는 exception
+     * @throws BandAccessDeniedException            추방된 회원일 경우 발생 하는 exception
      */
     @Override
     public void makeBandUser(String bandName, Long userNo) {
@@ -64,7 +64,7 @@ public class BandUserManageServiceImpl implements BandUserManageService {
         }
 
         if (bandUserReadRepository.getIsBlockBandUser(bandName, userNo)) {
-            throw new BandDeniedException();
+            throw new BandAccessDeniedException();
         }
 
         bandUserManageRepository.save(

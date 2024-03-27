@@ -1,6 +1,7 @@
 package kr.aling.user.banduser.service.impl;
 
 import java.util.Objects;
+import kr.aling.user.band.exception.BandAccessDeniedException;
 import kr.aling.user.banduser.dto.response.BandPostUerQueryDto;
 import kr.aling.user.banduser.dto.response.GetBandUserAndUserInfoResponseDto;
 import kr.aling.user.banduser.dto.response.GetBandUserAuthResponseDto;
@@ -53,7 +54,7 @@ public class BandUserReadServiceImpl implements BandUserReadService {
     @Override
     public GetBandUserAuthResponseDto getBandUserInfo(Long bandNo, Long userNo) {
         return bandUserReadRepository.getBandUserInfoByBandNoAndUserNo(bandNo, userNo)
-                .orElseThrow(BandUserNotFoundException::new);
+                .orElseThrow(BandAccessDeniedException::new);
     }
 
     /**

@@ -3,7 +3,6 @@ package kr.aling.user.common.advice;
 import javax.validation.ConstraintViolationException;
 import kr.aling.user.band.exception.BandAccessDeniedException;
 import kr.aling.user.band.exception.BandAlreadyExistsException;
-import kr.aling.user.band.exception.BandDeniedException;
 import kr.aling.user.band.exception.BandLimitExceededException;
 import kr.aling.user.band.exception.BandNotFoundException;
 import kr.aling.user.banduser.exception.BandUserAlreadyExistsException;
@@ -43,7 +42,7 @@ public class ControllerAdvice {
      * @since 1.0
      */
     @ExceptionHandler({ConstraintViolationException.class, MailAuthNumberInvalidException.class,
-            BandLimitExceededException.class, BandDeniedException.class, BandUserRoleDeniedException.class})
+            BandLimitExceededException.class, BandUserRoleDeniedException.class})
     public ResponseEntity<String> handleBadRequestException(Exception e) {
         log.error(DEFAULT_HANDLE_MESSAGE, HttpStatus.BAD_REQUEST, e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
