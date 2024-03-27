@@ -14,7 +14,7 @@ import kr.aling.user.common.exception.CustomException;
 import kr.aling.user.common.exception.UserInfoNotExistsException;
 import kr.aling.user.mail.exception.MailAuthNumberInvalidException;
 import kr.aling.user.post.exception.PostNotFoundException;
-import kr.aling.user.user.exception.GithubAccessTokenNotExistsException;
+import kr.aling.user.user.exception.SocialAccessTokenNotExistsException;
 import kr.aling.user.user.exception.SocialEmailNotFoundException;
 import kr.aling.user.user.exception.UserEmailAlreadyUsedException;
 import kr.aling.user.user.exception.UserNotFoundException;
@@ -59,7 +59,7 @@ public class ControllerAdvice {
      * @author 이수정
      * @since 1.0
      */
-    @ExceptionHandler({UserInfoNotExistsException.class, GithubAccessTokenNotExistsException.class})
+    @ExceptionHandler({UserInfoNotExistsException.class, SocialAccessTokenNotExistsException.class})
     public ResponseEntity<String> handleUnAuthorizedException(Exception e) {
         log.error(DEFAULT_HANDLE_MESSAGE, HttpStatus.UNAUTHORIZED, e.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
