@@ -1,0 +1,23 @@
+:toc:
+
+==== 유저 로그인 API
+
+유저(일반) 로그인 API
+
+===== 요청
+
+operation::user-login[snippets='http-request']
+
+===== 응답
+
+operation::user-login[snippets='http-response']
+
+===== 파라미터 설명
+
+====== 요청 body
+
+operation::user-login[snippets='request-fields']
+
+====== 응답 헤더
+
+operation::user-login[snippets='response-headers']

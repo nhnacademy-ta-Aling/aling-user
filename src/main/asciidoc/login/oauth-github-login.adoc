@@ -1,0 +1,23 @@
+:toc:
+
+==== 깃허브 로그인 API
+
+Oauth2 깃허브 로그인 API
+
+===== 요청
+
+operation::oauth-github-login[snippets='http-request']
+
+===== 응답
+
+operation::oauth-github-login[snippets='http-response']
+
+===== 파라미터 설명
+
+====== 요청 파라미터
+
+operation::oauth-github-login[snippets='request-parameters']
+
+====== 응답 헤더
+
+operation::oauth-github-login[snippets='response-headers']
